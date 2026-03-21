@@ -1,5 +1,13 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# SQLite database
+/hotel.db
+/hotel.db-wal
+/hotel.db-shm
+
+# Local env
+.env.local
+
 # dependencies
 /node_modules
 /.pnp

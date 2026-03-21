@@ -1,6 +1,7 @@
 import { error, json, parseJson } from "@/lib/api";
 import { addBooking, getRoom } from "@/lib/store";
 import { publicBookingSchema } from "@/lib/schemas";
+import { sendBookingConfirmation } from "@/lib/email";
 
 function nightsBetween(checkIn: string, checkOut: string) {
   const start = new Date(checkIn);
@@ -32,6 +33,9 @@ export async function POST(request: Request) {
     status: "confirmed",
     totalAmount: room.price * nights,
   });
+
+  // Fire-and-forget — don't wait so the response stays fast
+  sendBookingConfirmation(booking).catch(() => {});
 
   return json({ booking }, { status: 201 });
 }
