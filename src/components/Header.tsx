@@ -1,0 +1,116 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import type { SiteSettings } from "@/types";
+
+const navLinks = [
+  { label: "Rooms & Suites", href: "#rooms-suites" },
+  { label: "Cuisine", href: "#cuisine" },
+  { label: "Spa & Wellness", href: "#spa-wellness" },
+  { label: "Events", href: "#events" },
+  { label: "Experiences", href: "#experiences" },
+  { label: "Gallery", href: "#gallery" },
+  { label: "Contact", href: "#contact" },
+];
+
+export default function Header({ settings }: { settings: SiteSettings }) {
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [menuOpen]);
+
+  return (
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "header-glass shadow-md" : "bg-transparent"}`}>
+      {/* Top Bar */}
+      <div className={`hidden md:flex items-center justify-between px-8 py-2 text-xs tracking-widest transition-colors duration-500 ${scrolled ? "text-charcoal" : "text-white"}`}>
+        <a href={`tel:${settings.phone.replace(/\s+/g, "")}`} className="font-sans font-light hover:text-gold transition-colors">{settings.phone}</a>
+        <div className="flex items-center gap-6">
+          <div className="flex items-center gap-2 font-sans">
+            <button className="hover:text-gold transition-colors font-semibold">EN</button>
+            <span className="opacity-40">|</span>
+            <button className="hover:text-gold transition-colors opacity-70">HI</button>
+          </div>
+          <a href="/booking" className="font-sans hover:text-gold transition-colors tracking-[0.2em]">MY BOOKING</a>
+        </div>
+      </div>
+
+      <div className={`hidden md:block mx-8 h-px transition-colors duration-500 ${scrolled ? "bg-gold/20" : "bg-white/20"}`} />
+
+      {/* Main Header */}
+      <div className="flex items-center justify-between px-4 sm:px-6 md:px-8 py-3 md:py-4">
+        <button onClick={() => setMenuOpen(!menuOpen)} className={`lg:hidden transition-colors p-1 ${scrolled ? "text-charcoal" : "text-white"}`} aria-label="Toggle menu">
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            {menuOpen ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" /> : <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" />}
+          </svg>
+        </button>
+
+        <div className="flex-1 text-center">
+          <a href="/" className="inline-block">
+            <h1 className={`font-serif text-base sm:text-lg md:text-xl lg:text-2xl tracking-[0.15em] uppercase transition-colors duration-500 ${scrolled ? "text-charcoal" : "text-white"}`}>
+              {settings.hotelName}
+              <span className="block text-[9px] sm:text-[10px] md:text-xs tracking-[0.3em] font-sans font-light mt-0.5">{settings.subtitle}</span>
+            </h1>
+          </a>
+        </div>
+
+        <a href="/booking" className="bg-gold hover:bg-gold-dark text-white font-sans text-[10px] sm:text-xs tracking-[0.2em] px-4 sm:px-6 py-2 sm:py-2.5 transition-colors duration-300">BOOK</a>
+      </div>
+
+      {/* Desktop Nav */}
+      <nav className="hidden lg:block">
+        <div className={`mx-8 h-px transition-colors duration-500 ${scrolled ? "bg-gold/20" : "bg-white/20"}`} />
+        <ul className="flex items-center justify-center gap-8 py-3 px-8">
+          {navLinks.map((link) => (
+            <li key={link.label}>
+              <a href={link.href} className={`relative font-sans text-[11px] tracking-[0.15em] uppercase transition-colors duration-300 hover:text-gold group ${scrolled ? "text-charcoal" : "text-white"}`}>
+                {link.label}
+                <span className="absolute -bottom-1 left-0 w-0 h-px bg-gold transition-all duration-300 group-hover:w-full" />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      {/* Mobile Menu */}
+      <div className={`lg:hidden fixed inset-0 top-0 z-40 transition-all duration-500 ${menuOpen ? "visible" : "invisible"}`}>
+        <div className={`absolute inset-0 bg-black/50 transition-opacity duration-500 ${menuOpen ? "opacity-100" : "opacity-0"}`} onClick={() => setMenuOpen(false)} />
+        <div className={`absolute top-0 left-0 bottom-0 w-72 bg-white shadow-2xl transition-transform duration-500 ${menuOpen ? "translate-x-0" : "-translate-x-full"}`}>
+          <div className="flex items-center justify-between px-6 py-5 border-b border-gold/10">
+            <div>
+              <h2 className="font-serif text-lg tracking-[0.1em] text-charcoal uppercase">{settings.hotelName}</h2>
+              <p className="font-sans text-[10px] tracking-[0.2em] text-text-light mt-1">{settings.subtitle}</p>
+            </div>
+            <button onClick={() => setMenuOpen(false)} className="text-charcoal p-1" aria-label="Close menu">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+          </div>
+          <div className="flex items-center justify-between px-6 py-3 border-b border-gray-100">
+            <a href={`tel:${settings.phone.replace(/\s+/g, "")}`} className="font-sans text-xs text-text-secondary">{settings.phone}</a>
+            <div className="flex items-center gap-3 font-sans text-xs">
+              <button className="text-gold font-semibold">EN</button>
+              <span className="opacity-30">|</span>
+              <button className="text-text-secondary">HI</button>
+            </div>
+          </div>
+          <ul className="py-4 overflow-y-auto max-h-[calc(100vh-180px)]">
+            {navLinks.map((link) => (
+              <li key={link.label}>
+                <a href={link.href} onClick={() => setMenuOpen(false)} className="block px-6 py-3.5 font-sans text-xs tracking-[0.15em] uppercase text-charcoal hover:text-gold hover:bg-beige/50 transition-colors">{link.label}</a>
+              </li>
+            ))}
+            <li><a href="/booking" onClick={() => setMenuOpen(false)} className="block px-6 py-3.5 font-sans text-xs tracking-[0.15em] uppercase text-gold font-semibold">BOOK NOW</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+  );
+}

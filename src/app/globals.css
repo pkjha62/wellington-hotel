@@ -1,0 +1,103 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-gold: #C5A258;
+  --color-gold-dark: #A8883E;
+  --color-gold-light: #D4B76A;
+  --color-charcoal: #1A1A1A;
+  --color-charcoal-dark: #111111;
+  --color-charcoal-light: #2D2D2D;
+  --color-beige: #F9F6F1;
+  --color-offwhite: #F9F9F9;
+  --color-white: #FFFFFF;
+  --color-text-primary: #1A1A1A;
+  --color-text-secondary: #555555;
+  --color-text-light: #888888;
+  --font-serif: var(--font-playfair);
+  --font-sans: var(--font-montserrat);
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Fade-in animation for scroll */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.animation-delay-200 {
+  animation-delay: 0.2s;
+}
+
+.animation-delay-400 {
+  animation-delay: 0.4s;
+}
+
+.animation-delay-600 {
+  animation-delay: 0.6s;
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-white);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans), sans-serif;
+}
+
+body::-webkit-scrollbar {
+  width: 10px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: rgba(197, 162, 88, 0.55);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif), serif;
+}
+
+/* Glass morphism header */
+.header-glass {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.92);
+  border-bottom: 1px solid rgba(197, 162, 88, 0.15);
+}
+
+.announcement-track {
+  display: inline-block;
+  min-width: 200%;
+  animation: marquee 22s linear infinite;
+}
