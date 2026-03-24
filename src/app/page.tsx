@@ -12,6 +12,7 @@ import Newsletter from "@/components/Newsletter";
 import ScrollProgress from "@/components/ScrollProgress";
 import StatsStrip from "@/components/StatsStrip";
 import Testimonials from "@/components/Testimonials";
+import WhatsAppButton from "@/components/WhatsAppButton";
 import { getAnnouncements, getExperiences, getGallery, getOfferings, getSettings, getStats, getTestimonials } from "@/lib/store";
 
 export default function Home() {
@@ -41,6 +42,7 @@ export default function Home() {
       </main>
       <Footer settings={settings} />
       <BackToTop />
+      <WhatsAppButton phone={settings.whatsappNumber} />
     </>
   );
 }

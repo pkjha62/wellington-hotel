@@ -226,8 +226,8 @@ export default function EntityManager<T extends { id: string }>({
       </div>
 
       {formOpen ? (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-black/50 px-4 py-10">
-          <div className="mx-auto max-w-3xl rounded-[30px] bg-white p-6 shadow-2xl sm:p-8">
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-black/50 px-0 py-0 sm:px-4 sm:py-10">
+          <div className="min-h-full sm:min-h-0 mx-auto sm:max-w-3xl rounded-none sm:rounded-[30px] bg-white p-6 shadow-2xl sm:p-8">
             <div className="mb-6 flex items-start justify-between gap-4">
               <div>
                 <h3 className="font-serif text-2xl uppercase tracking-[0.12em] text-charcoal">{editingItem ? `Edit ${title}` : createLabel}</h3>

@@ -1,0 +1,39 @@
+import { deleteStatFact, updateStatFact } from "@/lib/store";
+import { error, json, parseJson, requireAdmin } from "@/lib/api";
+import { statFactSchema } from "@/lib/schemas";
+
+export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
+  const admin = await requireAdmin();
+  if (!admin) {
+    return error("Unauthorized", 401);
+  }
+
+  const { id } = await params;
+  const body = await parseJson(request);
+  const parsed = statFactSchema.safeParse(body);
+  if (!parsed.success) {
+    return error(parsed.error.issues[0]?.message || "Invalid stat data");
+  }
+
+  const updated = updateStatFact(id, parsed.data);
+  if (!updated) {
+    return error("Stat not found", 404);
+  }
+
+  return json(updated);
+}
+
+export async function DELETE(_request: Request, { params }: { params: Promise<{ id: string }> }) {
+  const admin = await requireAdmin();
+  if (!admin) {
+    return error("Unauthorized", 401);
+  }
+
+  const { id } = await params;
+  const deleted = deleteStatFact(id);
+  if (!deleted) {
+    return error("Stat not found", 404);
+  }
+
+  return json({ success: true });
+}

@@ -1,6 +1,31 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { motion, useInView } from "framer-motion";
+
+function CountUp({ end, duration = 2 }: { end: number; duration?: number }) {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: true });
+
+  useEffect(() => {
+    if (!isInView) return;
+    let start = 0;
+    const step = end / (duration * 60);
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= end) {
+        setCount(end);
+        clearInterval(timer);
+      } else {
+        setCount(Math.floor(start));
+      }
+    }, 1000 / 60);
+    return () => clearInterval(timer);
+  }, [isInView, end, duration]);
+
+  return <span ref={ref}>{count}</span>;
+}
 
 export default function StatsStrip({
   stats,
@@ -31,7 +56,7 @@ export default function StatsStrip({
             transition={{ duration: 0.6, delay: index * 0.1 }}
             className="text-center"
           >
-            <p className="font-serif text-3xl text-gold sm:text-4xl">{item.value}</p>
+            <p className="font-serif text-3xl text-gold sm:text-4xl"><CountUp end={item.value} /></p>
             <p className="mt-2 font-sans text-[11px] uppercase tracking-[0.22em] text-white/65">{item.label}</p>
           </motion.div>
         ))}

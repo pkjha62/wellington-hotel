@@ -87,6 +87,10 @@ export const settingsSchema = z.object({
   facebookUrl: z.string().url().or(z.literal("#")),
   instagramUrl: z.string().url().or(z.literal("#")),
   twitterUrl: z.string().url().or(z.literal("#")),
+  whatsappNumber: z.string().min(7),
+  metaTitle: z.string().min(5),
+  metaDescription: z.string().min(10),
+  ogImage: z.string().url(),
 });
 
 export const announcementSchema = z.object({
@@ -95,4 +99,35 @@ export const announcementSchema = z.object({
   active: z.boolean(),
   startDate: z.string().min(1),
   endDate: z.string().min(1),
+});
+
+export const faqSchema = z.object({
+  question: z.string().min(5),
+  answer: z.string().min(10),
+  category: z.string().min(2),
+  order: z.coerce.number().int().nonnegative(),
+  visible: z.boolean(),
+});
+
+export const specialOfferSchema = z.object({
+  title: z.string().min(3),
+  description: z.string().min(10),
+  price: z.coerce.number().positive(),
+  image: z.string().url(),
+  validFrom: z.string().min(1),
+  validTo: z.string().min(1),
+  visible: z.boolean(),
+});
+
+export const statFactSchema = z.object({
+  label: z.string().min(2),
+  value: z.coerce.number().nonnegative(),
+  suffix: z.string(),
+  order: z.coerce.number().int().nonnegative(),
+  visible: z.boolean(),
+});
+
+export const changePasswordSchema = z.object({
+  currentPassword: z.string().min(6),
+  newPassword: z.string().min(6),
 });

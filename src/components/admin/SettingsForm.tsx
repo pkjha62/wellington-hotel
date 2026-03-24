@@ -58,6 +58,9 @@ export default function SettingsForm({ settings }: { settings: SiteSettings }) {
         ["facebookUrl", "Facebook URL"],
         ["instagramUrl", "Instagram URL"],
         ["twitterUrl", "Twitter URL"],
+        ["whatsappNumber", "WhatsApp number"],
+        ["metaTitle", "Meta title (SEO)"],
+        ["ogImage", "OG Image URL"],
       ].map(([name, label]) => (
         <label key={name} className="block">
           <span className="font-sans text-[11px] uppercase tracking-[0.18em] text-text-light">{label}</span>
@@ -70,6 +73,12 @@ export default function SettingsForm({ settings }: { settings: SiteSettings }) {
         <span className="font-sans text-[11px] uppercase tracking-[0.18em] text-text-light">Introduction body</span>
         <textarea {...register("introBody")} rows={6} className={inputClass} />
         {errors.introBody ? <span className="mt-2 block font-sans text-xs text-red-600">{errors.introBody.message}</span> : null}
+      </label>
+
+      <label className="md:col-span-2 block">
+        <span className="font-sans text-[11px] uppercase tracking-[0.18em] text-text-light">Meta description (SEO)</span>
+        <textarea {...register("metaDescription")} rows={3} className={inputClass} />
+        {errors.metaDescription ? <span className="mt-2 block font-sans text-xs text-red-600">{errors.metaDescription.message}</span> : null}
       </label>
 
       {error ? <p className="md:col-span-2 font-sans text-sm text-red-600">{error}</p> : null}

@@ -29,18 +29,11 @@ export default function Header({ settings }: { settings: SiteSettings }) {
   }, [menuOpen]);
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? "header-glass shadow-md" : "bg-transparent"}`}>
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${scrolled ? "header-glass shadow-md" : "bg-transparent backdrop-blur-0"}`}>
       {/* Top Bar */}
       <div className={`hidden md:flex items-center justify-between px-8 py-2 text-xs tracking-widest transition-colors duration-500 ${scrolled ? "text-charcoal" : "text-white"}`}>
         <a href={`tel:${settings.phone.replace(/\s+/g, "")}`} className="font-sans font-light hover:text-gold transition-colors">{settings.phone}</a>
-        <div className="flex items-center gap-6">
-          <div className="flex items-center gap-2 font-sans">
-            <button className="hover:text-gold transition-colors font-semibold">EN</button>
-            <span className="opacity-40">|</span>
-            <button className="hover:text-gold transition-colors opacity-70">HI</button>
-          </div>
-          <a href="/booking" className="font-sans hover:text-gold transition-colors tracking-[0.2em]">MY BOOKING</a>
-        </div>
+        <a href="/booking" className="font-sans hover:text-gold transition-colors tracking-[0.2em]">MY BOOKING</a>
       </div>
 
       <div className={`hidden md:block mx-8 h-px transition-colors duration-500 ${scrolled ? "bg-gold/20" : "bg-white/20"}`} />
@@ -62,7 +55,7 @@ export default function Header({ settings }: { settings: SiteSettings }) {
           </a>
         </div>
 
-        <a href="/booking" className="bg-gold hover:bg-gold-dark text-white font-sans text-[10px] sm:text-xs tracking-[0.2em] px-4 sm:px-6 py-2 sm:py-2.5 transition-colors duration-300">BOOK</a>
+        <a href="/booking" className="bg-gold hover:bg-gold-dark text-white font-sans text-xs tracking-[0.2em] px-5 sm:px-6 py-2.5 transition-colors duration-300">BOOK</a>
       </div>
 
       {/* Desktop Nav */}
@@ -93,13 +86,8 @@ export default function Header({ settings }: { settings: SiteSettings }) {
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" /></svg>
             </button>
           </div>
-          <div className="flex items-center justify-between px-6 py-3 border-b border-gray-100">
+          <div className="flex items-center px-6 py-3 border-b border-gray-100">
             <a href={`tel:${settings.phone.replace(/\s+/g, "")}`} className="font-sans text-xs text-text-secondary">{settings.phone}</a>
-            <div className="flex items-center gap-3 font-sans text-xs">
-              <button className="text-gold font-semibold">EN</button>
-              <span className="opacity-30">|</span>
-              <button className="text-text-secondary">HI</button>
-            </div>
           </div>
           <ul className="py-4 overflow-y-auto max-h-[calc(100vh-180px)]">
             {navLinks.map((link) => (

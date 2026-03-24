@@ -98,4 +98,37 @@ export interface SiteSettings {
   facebookUrl: string;
   instagramUrl: string;
   twitterUrl: string;
+  whatsappNumber: string;
+  metaTitle: string;
+  metaDescription: string;
+  ogImage: string;
+}
+
+export interface FAQ {
+  id: string;
+  question: string;
+  answer: string;
+  category: string;
+  order: number;
+  visible: boolean;
+}
+
+export interface SpecialOffer {
+  id: string;
+  title: string;
+  description: string;
+  price: number;
+  image: string;
+  validFrom: string;
+  validTo: string;
+  visible: boolean;
+}
+
+export interface StatFact {
+  id: string;
+  label: string;
+  value: number;
+  suffix: string;
+  order: number;
+  visible: boolean;
 }

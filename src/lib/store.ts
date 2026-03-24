@@ -6,7 +6,7 @@
 import type {
   Room, Booking, GalleryImage, Testimonial,
   Offering, Experience, Subscriber, SiteSettings,
-  Announcement,
+  Announcement, FAQ, SpecialOffer, StatFact,
 } from "@/types";
 
 function genId() {
@@ -33,6 +33,10 @@ let settings: SiteSettings = {
   facebookUrl: "#",
   instagramUrl: "#",
   twitterUrl: "#",
+  whatsappNumber: "+916432234567",
+  metaTitle: "The Deoghar Grand Hotel & Spa | Luxury Stay in Deoghar",
+  metaDescription: "Experience luxury hospitality near Baba Baidyanath Dham in Deoghar. Explore rooms, wellness, dining, events, and curated spiritual stays.",
+  ogImage: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&q=80",
 };
 
 let rooms: Room[] = [
@@ -87,6 +91,26 @@ let subscribers: Subscriber[] = [
 let announcements: Announcement[] = [
   { id: "a1", text: "Shravan season reservations are now open with temple-transfer packages.", type: "offer", active: true, startDate: "2026-05-01", endDate: "2026-08-31" },
   { id: "a2", text: "Live devotional music every Saturday evening in the courtyard lounge.", type: "event", active: true, startDate: "2026-01-01", endDate: "2026-12-31" },
+];
+
+let faqs: FAQ[] = [
+  { id: "faq1", question: "What are the check-in and check-out times?", answer: "Check-in is at 2:00 PM and check-out is at 12:00 noon. Early check-in and late check-out are available upon request and subject to availability.", category: "general", order: 1, visible: true },
+  { id: "faq2", question: "Is the hotel near Baba Baidyanath Dham?", answer: "Yes, The Deoghar Grand is located on Temple Road, just a 5-minute walk from Baba Baidyanath Dham.", category: "location", order: 2, visible: true },
+  { id: "faq3", question: "Do you provide airport or railway station transfers?", answer: "Yes, we provide paid transfers from Jasidih Junction railway station and Deoghar Airport. Please contact reception to arrange.", category: "transport", order: 3, visible: true },
+  { id: "faq4", question: "What is the cancellation policy?", answer: "Free cancellation up to 48 hours before check-in. Cancellations within 48 hours will be charged one night's stay.", category: "booking", order: 4, visible: true },
+  { id: "faq5", question: "Is parking available?", answer: "Yes, complimentary valet parking is available for all guests.", category: "general", order: 5, visible: true },
+];
+
+let specialOffers: SpecialOffer[] = [
+  { id: "so1", title: "Shravan Special Package", description: "3 nights stay with VIP darshan assistance, guided temple tour, and complimentary breakfast. Perfect for devotees visiting during the holy month.", price: 12000, image: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&q=80", validFrom: "2026-07-01", validTo: "2026-08-31", visible: true },
+  { id: "so2", title: "Weekend Wellness Retreat", description: "2 nights with full spa access, Ayurvedic consultation, yoga sessions, and gourmet dining experience.", price: 18000, image: "https://images.unsplash.com/photo-1540555700478-4be289fbec6d?w=800&q=80", validFrom: "2026-01-01", validTo: "2026-12-31", visible: true },
+];
+
+let statFacts: StatFact[] = [
+  { id: "sf1", label: "Luxury Rooms", value: 85, suffix: "+", order: 1, visible: true },
+  { id: "sf2", label: "Years of Hospitality", value: 15, suffix: "+", order: 2, visible: true },
+  { id: "sf3", label: "Happy Guests", value: 12000, suffix: "+", order: 3, visible: true },
+  { id: "sf4", label: "Guest Rating", value: 4.8, suffix: "★", order: 4, visible: true },
 ];
 
 // ─── Settings ────────────────────────────────────────────────────────────────
@@ -303,4 +327,82 @@ export function getStats() {
     totalSubscribers,
     activeAnnouncements,
   };
+}
+
+// ─── FAQs ────────────────────────────────────────────────────────────────────
+
+export function getFAQs(onlyVisible = false): FAQ[] {
+  const list = onlyVisible ? faqs.filter((f) => f.visible) : [...faqs];
+  return list.sort((a, b) => a.order - b.order);
+}
+export function addFAQ(data: Omit<FAQ, "id">): FAQ {
+  const f: FAQ = { ...data, id: genId() };
+  faqs.push(f);
+  return f;
+}
+export function updateFAQ(id: string, data: Partial<FAQ>): FAQ | null {
+  const idx = faqs.findIndex((f) => f.id === id);
+  if (idx === -1) return null;
+  faqs[idx] = { ...faqs[idx], ...data };
+  return faqs[idx];
+}
+export function deleteFAQ(id: string): boolean {
+  const len = faqs.length;
+  faqs = faqs.filter((f) => f.id !== id);
+  return faqs.length < len;
+}
+
+// ─── Special Offers ──────────────────────────────────────────────────────────
+
+export function getSpecialOffers(onlyVisible = false): SpecialOffer[] {
+  const list = onlyVisible ? specialOffers.filter((o) => o.visible) : [...specialOffers];
+  return list.sort((a, b) => a.validFrom.localeCompare(b.validFrom));
+}
+export function addSpecialOffer(data: Omit<SpecialOffer, "id">): SpecialOffer {
+  const o: SpecialOffer = { ...data, id: genId() };
+  specialOffers.push(o);
+  return o;
+}
+export function updateSpecialOffer(id: string, data: Partial<SpecialOffer>): SpecialOffer | null {
+  const idx = specialOffers.findIndex((o) => o.id === id);
+  if (idx === -1) return null;
+  specialOffers[idx] = { ...specialOffers[idx], ...data };
+  return specialOffers[idx];
+}
+export function deleteSpecialOffer(id: string): boolean {
+  const len = specialOffers.length;
+  specialOffers = specialOffers.filter((o) => o.id !== id);
+  return specialOffers.length < len;
+}
+
+// ─── Stat Facts ──────────────────────────────────────────────────────────────
+
+export function getStatFacts(onlyVisible = false): StatFact[] {
+  const list = onlyVisible ? statFacts.filter((s) => s.visible) : [...statFacts];
+  return list.sort((a, b) => a.order - b.order);
+}
+export function addStatFact(data: Omit<StatFact, "id">): StatFact {
+  const s: StatFact = { ...data, id: genId() };
+  statFacts.push(s);
+  return s;
+}
+export function updateStatFact(id: string, data: Partial<StatFact>): StatFact | null {
+  const idx = statFacts.findIndex((s) => s.id === id);
+  if (idx === -1) return null;
+  statFacts[idx] = { ...statFacts[idx], ...data };
+  return statFacts[idx];
+}
+export function deleteStatFact(id: string): boolean {
+  const len = statFacts.length;
+  statFacts = statFacts.filter((s) => s.id !== id);
+  return statFacts.length < len;
+}
+
+// ─── Admin Password ──────────────────────────────────────────────────────────
+
+export function getAdminPassword(): string {
+  return process.env.ADMIN_PASSWORD || "deoghar123";
+}
+export function getAdminUsername(): string {
+  return process.env.ADMIN_USERNAME || "admin";
 }

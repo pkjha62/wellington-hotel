@@ -1,9 +1,9 @@
 import { cookies } from "next/headers";
 import { error, issueAdminToken, json, parseJson } from "@/lib/api";
 import { loginSchema } from "@/lib/schemas";
+import { getAdminPassword } from "@/lib/auth";
 
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME || "admin";
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "deoghar123";
 
 export async function POST(request: Request) {
   const body = await parseJson(request);
@@ -15,7 +15,7 @@ export async function POST(request: Request) {
 
   if (
     parsed.data.username !== ADMIN_USERNAME ||
-    parsed.data.password !== ADMIN_PASSWORD
+    parsed.data.password !== getAdminPassword()
   ) {
     return error("Invalid credentials.", 401);
   }

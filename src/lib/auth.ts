@@ -4,6 +4,11 @@ const secret = new TextEncoder().encode(
   process.env.AUTH_SECRET || "deoghar-grand-hotel-secret-change-in-production"
 );
 
+let runtimePassword = process.env.ADMIN_PASSWORD || "deoghar123";
+
+export function getAdminPassword() { return runtimePassword; }
+export function setAdminPassword(pw: string) { runtimePassword = pw; }
+
 export async function createToken(payload: Record<string, unknown>) {
   return new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })

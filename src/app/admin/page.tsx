@@ -48,6 +48,8 @@ export default function AdminDashboardPage() {
               ["Manage Rooms", "/admin/rooms"],
               ["View Bookings", "/admin/bookings"],
               ["Approve Testimonials", "/admin/testimonials"],
+              ["Manage FAQs", "/admin/faqs"],
+              ["Special Offers", "/admin/offers"],
               ["Update Settings", "/admin/settings"],
             ].map(([label, href]) => (
               <Link key={href} href={href} className="rounded-2xl border border-stone-200 px-4 py-4 font-sans text-sm text-charcoal transition hover:border-gold hover:bg-beige">

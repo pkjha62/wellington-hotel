@@ -3,6 +3,16 @@
 import { motion } from "framer-motion";
 import type { SiteSettings } from "@/types";
 
+const columnStagger = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.1 } },
+};
+
+const columnItem = {
+  hidden: { opacity: 0, y: 30 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" as const } },
+};
+
 export default function Footer({ settings }: { settings: SiteSettings }) {
   const currentYear = new Date().getFullYear();
 
@@ -10,9 +20,17 @@ export default function Footer({ settings }: { settings: SiteSettings }) {
     <footer className="bg-charcoal-dark text-white">
       {/* Main footer */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-12 sm:py-16 md:py-20">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-12">
+        <motion.div
+          className="w-full h-px bg-gold/20 mb-10"
+          initial={{ scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1, ease: "easeOut" }}
+          style={{ originX: 0 }}
+        />
+        <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-12" variants={columnStagger} initial="hidden" whileInView="show" viewport={{ once: true }}>
           {/* Brand */}
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
+          <motion.div variants={columnItem}>
             <h3 className="font-serif text-lg sm:text-xl text-gold tracking-wider uppercase">{settings.hotelName}</h3>
             <p className="font-sans text-[10px] tracking-[0.3em] uppercase text-white/40 mt-1">{settings.subtitle}</p>
             <p className="font-sans text-xs sm:text-sm text-white/60 leading-relaxed mt-4">
@@ -21,7 +39,7 @@ export default function Footer({ settings }: { settings: SiteSettings }) {
           </motion.div>
 
           {/* Quick links */}
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }}>
+          <motion.div variants={columnItem}>
             <h4 className="font-sans text-xs tracking-[0.2em] uppercase text-gold mb-4 sm:mb-6">Quick Links</h4>
             <ul className="space-y-2 sm:space-y-3">
               {["Rooms & Suites", "Cuisine", "Events", "Spa & Wellness", "Gallery", "Experiences"].map((link) => (
@@ -33,7 +51,7 @@ export default function Footer({ settings }: { settings: SiteSettings }) {
           </motion.div>
 
           {/* Contact */}
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.2 }}>
+          <motion.div variants={columnItem}>
             <h4 className="font-sans text-xs tracking-[0.2em] uppercase text-gold mb-4 sm:mb-6">Contact</h4>
             <ul className="space-y-2 sm:space-y-3">
               <li className="font-sans text-xs sm:text-sm text-white/60">{settings.address}</li>
@@ -44,7 +62,7 @@ export default function Footer({ settings }: { settings: SiteSettings }) {
           </motion.div>
 
           {/* Social */}
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.3 }}>
+          <motion.div variants={columnItem}>
             <h4 className="font-sans text-xs tracking-[0.2em] uppercase text-gold mb-4 sm:mb-6">Follow Us</h4>
             <div className="flex gap-4">
               {[
@@ -59,7 +77,7 @@ export default function Footer({ settings }: { settings: SiteSettings }) {
             </div>
             <p className="font-sans text-xs text-white/40 mt-6">Member FHRAI</p>
           </motion.div>
-        </div>
+        </motion.div>
       </div>
 
       {/* Bottom bar */}
@@ -69,9 +87,9 @@ export default function Footer({ settings }: { settings: SiteSettings }) {
             &copy; {currentYear} {settings.hotelName} {settings.subtitle}. All rights reserved.
           </p>
           <div className="flex gap-4 sm:gap-6">
-            <a href="#" className="font-sans text-[10px] sm:text-xs text-white/40 hover:text-gold transition-colors">Privacy Policy</a>
-            <a href="#" className="font-sans text-[10px] sm:text-xs text-white/40 hover:text-gold transition-colors">Terms</a>
-            <a href="#" className="font-sans text-[10px] sm:text-xs text-white/40 hover:text-gold transition-colors">Cookies</a>
+            <a href="/privacy" className="font-sans text-[10px] sm:text-xs text-white/40 hover:text-gold transition-colors">Privacy Policy</a>
+            <a href="/terms" className="font-sans text-[10px] sm:text-xs text-white/40 hover:text-gold transition-colors">Terms</a>
+            <a href="/cookies" className="font-sans text-[10px] sm:text-xs text-white/40 hover:text-gold transition-colors">Cookies</a>
           </div>
         </div>
       </div>

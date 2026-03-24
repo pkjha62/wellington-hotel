@@ -16,10 +16,10 @@ interface OfferingProps {
 
 function OfferingBlock({ id, title, subtitle, description, image, imageAlt, reverse = false }: OfferingProps) {
   return (
-    <div id={id} className={`flex flex-col ${reverse ? "lg:flex-row-reverse" : "lg:flex-row"} min-h-[400px] sm:min-h-[500px] lg:min-h-[600px]`}>
+    <div id={id} className={`flex flex-col ${reverse ? "lg:flex-row-reverse" : "lg:flex-row"} min-h-[350px] sm:min-h-[500px] lg:min-h-[600px]`}>
       {/* Image slides in from the outer edge, after text */}
       <motion.div
-        className="relative w-full lg:w-1/2 min-h-[250px] sm:min-h-[350px] lg:min-h-full overflow-hidden group"
+        className="relative w-full lg:w-1/2 min-h-[200px] sm:min-h-[350px] lg:min-h-full overflow-hidden group"
         initial={{ opacity: 0, clipPath: reverse ? "inset(0 0% 0 100%)" : "inset(0 100% 0 0%)" }}
         whileInView={{ opacity: 1, clipPath: "inset(0 0% 0 0%)" }}
         viewport={{ once: true, margin: "-100px" }}

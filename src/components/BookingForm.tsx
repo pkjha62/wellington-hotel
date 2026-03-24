@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -19,8 +20,16 @@ function nightsBetween(checkIn: string, checkOut: string) {
   return Math.max(1, Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)));
 }
 
+function guestsFromParam(param: string | null): number {
+  if (!param) return 2;
+  const match = param.match(/(\d)/);
+  return match ? parseInt(match[1]) : 2;
+}
+
 export default function BookingForm({ rooms }: { rooms: Room[] }) {
+  const searchParams = useSearchParams();
   const [message, setMessage] = useState("");
+  const [bookingRef, setBookingRef] = useState("");
   const [error, setError] = useState("");
   const {
     register,
@@ -34,9 +43,9 @@ export default function BookingForm({ rooms }: { rooms: Room[] }) {
       guestEmail: "",
       guestPhone: "",
       roomId: rooms[0]?.id || "",
-      checkIn: "",
-      checkOut: "",
-      guests: 2,
+      checkIn: searchParams.get("checkIn") || "",
+      checkOut: searchParams.get("checkOut") || "",
+      guests: guestsFromParam(searchParams.get("guests")),
     },
   });
 
@@ -68,6 +77,7 @@ export default function BookingForm({ rooms }: { rooms: Room[] }) {
     }
 
     setMessage(`Booking confirmed for ${data.booking.roomName}. Estimated total: ₹${data.booking.totalAmount.toLocaleString("en-IN")}.`);
+    setBookingRef(data.booking.id);
   });
 
   const inputClass = "mt-2 w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 font-sans text-sm text-charcoal outline-none transition focus:border-gold";
@@ -121,7 +131,16 @@ export default function BookingForm({ rooms }: { rooms: Room[] }) {
       </div>
 
       {error ? <p className="md:col-span-2 font-sans text-sm text-red-600">{error}</p> : null}
-      {message ? <p className="md:col-span-2 font-sans text-sm text-green-700">{message}</p> : null}
+      {message ? (
+        <div className="md:col-span-2 rounded-[28px] bg-green-50 border border-green-200 p-5">
+          <p className="font-sans text-sm text-green-700">{message}</p>
+          {bookingRef && (
+            <p className="mt-2 font-sans text-xs text-green-600">
+              Booking Reference: <span className="font-semibold tracking-wider uppercase">{bookingRef}</span>
+            </p>
+          )}
+        </div>
+      ) : null}
 
       <div className="md:col-span-2 flex justify-end">
         <button type="submit" disabled={isSubmitting} className="rounded-full bg-gold px-6 py-3 font-sans text-xs uppercase tracking-[0.2em] text-white transition hover:bg-gold-dark disabled:opacity-60">

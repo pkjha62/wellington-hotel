@@ -26,6 +26,10 @@ export async function POST(request: Request) {
     return error("Selected room is not available.", 409);
   }
 
+  if (new Date(parsed.data.checkOut) <= new Date(parsed.data.checkIn)) {
+    return error("Check-out date must be after check-in date.");
+  }
+
   const nights = nightsBetween(parsed.data.checkIn, parsed.data.checkOut);
   const booking = addBooking({
     ...parsed.data,

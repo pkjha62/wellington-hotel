@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import type { SiteSettings } from "@/types";
@@ -26,8 +27,51 @@ function AnimatedHeadline({ text }: { text: string }) {
   );
 }
 
+function BookingBar({ variant, today, onBook }: { variant: "hero" | "sticky"; today: string; onBook: (ci: string, co: string, guests: string) => void }) {
+  const [checkIn, setCheckIn] = useState("");
+  const [checkOut, setCheckOut] = useState("");
+  const [guests, setGuests] = useState("2 Adults");
+
+  const isHero = variant === "hero";
+  const bg = isHero ? "backdrop-blur-xl bg-white/10 border border-white/25 shadow-[0_8px_32px_rgba(0,0,0,0.35)]" : "backdrop-blur-xl bg-charcoal/90 border border-gold/20 shadow-[0_-4px_40px_rgba(0,0,0,0.5)]";
+  const labelColor = isHero ? "text-white/60" : "text-white/50";
+  const inputColor = isHero ? "text-white" : "text-white/90";
+  const borderColor = isHero ? "border-white/15" : "border-white/10";
+
+  return (
+    <div className={`max-w-5xl mx-auto ${bg}`}>
+      <div className="flex flex-col md:flex-row items-stretch">
+        <div className={`flex-1 px-4 sm:px-6 py-3 sm:py-4 border-b md:border-b-0 md:border-r ${borderColor}`}>
+          <label className={`block font-sans text-[10px] tracking-[0.2em] uppercase ${labelColor} mb-1`}>Check-in</label>
+          <input type="date" min={today} value={checkIn} onChange={(e) => setCheckIn(e.target.value)} className={`w-full font-sans text-sm ${inputColor} bg-transparent outline-none cursor-pointer`} />
+        </div>
+        <div className={`flex-1 px-4 sm:px-6 py-3 sm:py-4 border-b md:border-b-0 md:border-r ${borderColor}`}>
+          <label className={`block font-sans text-[10px] tracking-[0.2em] uppercase ${labelColor} mb-1`}>Check-out</label>
+          <input type="date" min={checkIn || today} value={checkOut} onChange={(e) => setCheckOut(e.target.value)} className={`w-full font-sans text-sm ${inputColor} bg-transparent outline-none cursor-pointer`} />
+        </div>
+        <div className={`flex-1 px-4 sm:px-6 py-3 sm:py-4 border-b md:border-b-0 md:border-r ${borderColor}`}>
+          <label className={`block font-sans text-[10px] tracking-[0.2em] uppercase ${labelColor} mb-1`}>Guests</label>
+          <select value={guests} onChange={(e) => setGuests(e.target.value)} className={`w-full font-sans text-sm ${inputColor} bg-transparent outline-none cursor-pointer`}>
+            <option className="text-charcoal bg-white">1 Adult</option>
+            <option className="text-charcoal bg-white">2 Adults</option>
+            <option className="text-charcoal bg-white">2 Adults, 1 Child</option>
+            <option className="text-charcoal bg-white">2 Adults, 2 Children</option>
+          </select>
+        </div>
+        <button
+          onClick={() => onBook(checkIn, checkOut, guests)}
+          className="flex items-center justify-center bg-gold hover:bg-gold-dark text-white font-sans text-[10px] sm:text-xs tracking-[0.2em] px-6 sm:px-10 py-3.5 md:py-0 transition-colors duration-300 whitespace-nowrap cursor-pointer"
+        >
+          BOOK NOW
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export default function Hero({ settings }: { settings: SiteSettings }) {
   const ref = useRef<HTMLElement>(null);
+  const router = useRouter();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
@@ -42,6 +86,14 @@ export default function Hero({ settings }: { settings: SiteSettings }) {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleBook = (checkIn: string, checkOut: string, guests: string) => {
+    const params = new URLSearchParams();
+    if (checkIn) params.set("checkIn", checkIn);
+    if (checkOut) params.set("checkOut", checkOut);
+    if (guests) params.set("guests", guests);
+    router.push(`/booking?${params.toString()}`);
+  };
 
   return (
     <>
@@ -97,30 +149,7 @@ export default function Hero({ settings }: { settings: SiteSettings }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.0 }}
         >
-          <div className="max-w-5xl mx-auto backdrop-blur-xl bg-white/10 border border-white/25 shadow-[0_8px_32px_rgba(0,0,0,0.35)]">
-            <div className="flex flex-col md:flex-row items-stretch">
-              <div className="flex-1 px-4 sm:px-6 py-3 sm:py-4 border-b md:border-b-0 md:border-r border-white/15">
-                <label className="block font-sans text-[10px] tracking-[0.2em] uppercase text-white/60 mb-1">Check-in</label>
-                <input type="date" min={today} className="w-full font-sans text-sm text-white bg-transparent outline-none cursor-pointer" />
-              </div>
-              <div className="flex-1 px-4 sm:px-6 py-3 sm:py-4 border-b md:border-b-0 md:border-r border-white/15">
-                <label className="block font-sans text-[10px] tracking-[0.2em] uppercase text-white/60 mb-1">Check-out</label>
-                <input type="date" min={today} className="w-full font-sans text-sm text-white bg-transparent outline-none cursor-pointer" />
-              </div>
-              <div className="flex-1 px-4 sm:px-6 py-3 sm:py-4 border-b md:border-b-0 md:border-r border-white/15">
-                <label className="block font-sans text-[10px] tracking-[0.2em] uppercase text-white/60 mb-1">Guests</label>
-                <select className="w-full font-sans text-sm text-white bg-transparent outline-none cursor-pointer">
-                  <option className="text-charcoal bg-white">1 Adult</option>
-                  <option className="text-charcoal bg-white">2 Adults</option>
-                  <option className="text-charcoal bg-white">2 Adults, 1 Child</option>
-                  <option className="text-charcoal bg-white">2 Adults, 2 Children</option>
-                </select>
-              </div>
-              <a href="/booking" className="flex items-center justify-center bg-gold hover:bg-gold-dark text-white font-sans text-[10px] sm:text-xs tracking-[0.2em] px-6 sm:px-10 py-3.5 md:py-0 transition-colors duration-300 whitespace-nowrap">
-                BOOK NOW
-              </a>
-            </div>
-          </div>
+          <BookingBar variant="hero" today={today} onBook={handleBook} />
         </motion.div>
       </section>
 
@@ -134,30 +163,7 @@ export default function Hero({ settings }: { settings: SiteSettings }) {
             exit={{ y: "100%" }}
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div className="max-w-5xl mx-auto backdrop-blur-xl bg-charcoal/90 border border-gold/20 shadow-[0_-4px_40px_rgba(0,0,0,0.5)]">
-              <div className="flex flex-col md:flex-row items-stretch">
-                <div className="flex-1 px-4 sm:px-6 py-3 sm:py-4 border-b md:border-b-0 md:border-r border-white/10">
-                  <label className="block font-sans text-[10px] tracking-[0.2em] uppercase text-white/50 mb-1">Check-in</label>
-                  <input type="date" min={today} className="w-full font-sans text-sm text-white/90 bg-transparent outline-none cursor-pointer" />
-                </div>
-                <div className="flex-1 px-4 sm:px-6 py-3 sm:py-4 border-b md:border-b-0 md:border-r border-white/10">
-                  <label className="block font-sans text-[10px] tracking-[0.2em] uppercase text-white/50 mb-1">Check-out</label>
-                  <input type="date" min={today} className="w-full font-sans text-sm text-white/90 bg-transparent outline-none cursor-pointer" />
-                </div>
-                <div className="flex-1 px-4 sm:px-6 py-3 sm:py-4 border-b md:border-b-0 md:border-r border-white/10">
-                  <label className="block font-sans text-[10px] tracking-[0.2em] uppercase text-white/50 mb-1">Guests</label>
-                  <select className="w-full font-sans text-sm text-white/90 bg-transparent outline-none cursor-pointer">
-                    <option className="text-charcoal bg-white">1 Adult</option>
-                    <option className="text-charcoal bg-white">2 Adults</option>
-                    <option className="text-charcoal bg-white">2 Adults, 1 Child</option>
-                    <option className="text-charcoal bg-white">2 Adults, 2 Children</option>
-                  </select>
-                </div>
-                <a href="/booking" className="flex items-center justify-center bg-gold hover:bg-gold-dark text-white font-sans text-[10px] sm:text-xs tracking-[0.2em] px-6 sm:px-10 py-3.5 md:py-0 transition-colors duration-300 whitespace-nowrap">
-                  BOOK NOW
-                </a>
-              </div>
-            </div>
+            <BookingBar variant="sticky" today={today} onBook={handleBook} />
           </motion.div>
         )}
       </AnimatePresence>
