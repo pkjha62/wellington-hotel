@@ -27,7 +27,7 @@ export default function AdminOffersPage() {
         { key: "title", label: "Title", render: (item) => item.title },
         { key: "price", label: "Price", render: (item) => `₹${item.price.toLocaleString("en-IN")}` },
         { key: "validity", label: "Validity", render: (item) => `${item.validFrom} → ${item.validTo}` },
-        { key: "visible", label: "Visible", render: (item) => item.visible ? "Yes" : "No" },
+        { key: "visible", label: "Visible", render: (item) => <span className={`inline-block rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider ${item.visible ? "bg-green-100 text-green-700" : "bg-stone-100 text-stone-500"}`}>{item.visible ? "Active" : "Hidden"}</span> },
       ]}
     />
   );
