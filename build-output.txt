@@ -1,0 +1,98 @@
+
+> wellington-hotel@0.1.0 build
+> next build
+
+Ôû¦ Next.js 16.2.1 (Turbopack)
+
+  Creating an optimized production build ...
+Ô£ô Compiled successfully in 42s
+  Running TypeScript ...
+  Finished TypeScript in 29.6s ...
+  Collecting page data using 3 workers ...
+  Generating static pages using 3 workers (0/51) ...
+  Generating static pages using 3 workers (12/51) 
+  Generating static pages using 3 workers (25/51) 
+  Generating static pages using 3 workers (38/51) 
+Ô£ô Generating static pages using 3 workers (51/51) in 4.4s
+  Finalizing page optimization ...
+
+Route (app)
+Ôöî ãÆ /
+Ôö£ Ôùï /_not-found
+Ôö£ Ôùï /admin
+Ôö£ Ôùï /admin/announcements
+Ôö£ Ôùï /admin/bookings
+Ôö£ Ôùï /admin/change-password
+Ôö£ Ôùï /admin/dining
+Ôö£ Ôùï /admin/enquiries
+Ôö£ Ôùï /admin/events
+Ôö£ Ôùï /admin/experiences
+Ôö£ Ôùï /admin/faqs
+Ôö£ Ôùï /admin/gallery
+Ôö£ Ôùï /admin/login
+Ôö£ Ôùï /admin/offerings
+Ôö£ Ôùï /admin/offers
+Ôö£ Ôùï /admin/rooms
+Ôö£ Ôùï /admin/settings
+Ôö£ Ôùï /admin/spa
+Ôö£ Ôùï /admin/stat-facts
+Ôö£ Ôùï /admin/subscribers
+Ôö£ Ôùï /admin/testimonials
+Ôö£ ãÆ /api/admin/announcements
+Ôö£ ãÆ /api/admin/announcements/[id]
+Ôö£ ãÆ /api/admin/bookings
+Ôö£ ãÆ /api/admin/bookings/[id]
+Ôö£ ãÆ /api/admin/change-password
+Ôö£ ãÆ /api/admin/dining
+Ôö£ ãÆ /api/admin/dining/[id]
+Ôö£ ãÆ /api/admin/enquiries
+Ôö£ ãÆ /api/admin/enquiries/[id]
+Ôö£ ãÆ /api/admin/events
+Ôö£ ãÆ /api/admin/events/[id]
+Ôö£ ãÆ /api/admin/experiences
+Ôö£ ãÆ /api/admin/experiences/[id]
+Ôö£ ãÆ /api/admin/faqs
+Ôö£ ãÆ /api/admin/faqs/[id]
+Ôö£ ãÆ /api/admin/gallery
+Ôö£ ãÆ /api/admin/gallery/[id]
+Ôö£ ãÆ /api/admin/offerings
+Ôö£ ãÆ /api/admin/offerings/[id]
+Ôö£ ãÆ /api/admin/offers
+Ôö£ ãÆ /api/admin/offers/[id]
+Ôö£ ãÆ /api/admin/rooms
+Ôö£ ãÆ /api/admin/rooms/[id]
+Ôö£ ãÆ /api/admin/settings
+Ôö£ ãÆ /api/admin/spa
+Ôö£ ãÆ /api/admin/spa/[id]
+Ôö£ ãÆ /api/admin/stat-facts
+Ôö£ ãÆ /api/admin/stat-facts/[id]
+Ôö£ ãÆ /api/admin/stats
+Ôö£ ãÆ /api/admin/subscribers
+Ôö£ ãÆ /api/admin/subscribers/[id]
+Ôö£ ãÆ /api/admin/testimonials
+Ôö£ ãÆ /api/admin/testimonials/[id]
+Ôö£ ãÆ /api/admin/upload
+Ôö£ ãÆ /api/auth/login
+Ôö£ ãÆ /api/auth/logout
+Ôö£ ãÆ /api/bookings
+Ôö£ ãÆ /api/contact
+Ôö£ ãÆ /api/newsletter
+Ôö£ ãÆ /api/public/home
+Ôö£ ãÆ /api/uploads/[filename]
+Ôö£ ãÆ /booking
+Ôö£ Ôùï /contact
+Ôö£ Ôùï /cookies
+Ôö£ ãÆ /dining
+Ôö£ ãÆ /events
+Ôö£ Ôùï /privacy
+Ôö£ ãÆ /rooms
+Ôö£ ãÆ /spa
+Ôöö Ôùï /terms
+
+
+ãÆ Proxy (Middleware)
+
+Ôùï  (Static)   prerendered as static content
+ãÆ  (Dynamic)  server-rendered on demand
+
+
