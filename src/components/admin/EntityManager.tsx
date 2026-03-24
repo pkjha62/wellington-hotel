@@ -135,7 +135,7 @@ export default function EntityManager<T extends { id: string }>({
     const method = editingItem ? "PATCH" : "POST";
 
     try {
-      const response = await fetch(url, { method, headers: { "Content-Type": "application/json" }, body: JSON.stringify(parsed.data) });
+      const response = await fetch(url, { method, headers: { "Content-Type": "application/json" }, body: JSON.stringify(parsed.data), credentials: "include" });
       const data = await response.json();
       if (!response.ok) { setError(data.error || "Unable to save changes."); return; }
 
@@ -156,7 +156,7 @@ export default function EntityManager<T extends { id: string }>({
 
   const confirmDelete = async () => {
     if (!deleteTarget) return;
-    const response = await fetch(`${endpoint}/${deleteTarget.id}`, { method: "DELETE" });
+    const response = await fetch(`${endpoint}/${deleteTarget.id}`, { method: "DELETE", credentials: "include" });
     if (response.ok) {
       setItems((current) => current.filter((item) => item.id !== deleteTarget.id));
       setToast("Record deleted");

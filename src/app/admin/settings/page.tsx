@@ -13,7 +13,7 @@ export default function AdminSettingsPage() {
   const load = () => {
     setLoading(true);
     setError("");
-    fetch("/api/admin/settings", { cache: "no-store" })
+    fetch("/api/admin/settings", { cache: "no-store", credentials: "include" })
       .then((r) => {
         if (!r.ok) throw new Error("Failed to load settings");
         return r.json();

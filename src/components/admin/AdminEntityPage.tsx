@@ -56,7 +56,7 @@ export default function AdminEntityPage<T extends { id: string }>({
     setLoading(true);
     setError("");
     try {
-      const response = await fetch(endpoint, { cache: "no-store" });
+      const response = await fetch(endpoint, { cache: "no-store", credentials: "include" });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || "Unable to load data.");
       setItems(Array.isArray(data) ? data : []);
