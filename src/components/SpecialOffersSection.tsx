@@ -38,7 +38,7 @@ export default function SpecialOffersSection({ offers }: { offers: SpecialOffer[
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: i * 0.12 }}
             >
-              <div className="relative h-56 overflow-hidden">
+              <div className="relative h-56 md:h-64 lg:h-72 overflow-hidden">
                 <Image
                   src={offer.image}
                   alt={offer.title}

@@ -55,10 +55,10 @@ function OfferingBlock({ id, title, subtitle, description, image, imageAlt, reve
 
 export default function KeyOfferings({ offerings }: { offerings: Offering[] }) {
   const hrefMap: Record<string, string> = {
-    "rooms-suites": "/rooms",
-    "cuisine": "/dining",
-    "spa-wellness": "/spa",
-    "events": "/events",
+    o1: "/rooms",
+    o2: "/dining",
+    o3: "/events",
+    o4: "/spa",
   };
 
   return (
