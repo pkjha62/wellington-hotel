@@ -132,3 +132,46 @@ export const changePasswordSchema = z.object({
   currentPassword: z.string().min(6),
   newPassword: z.string().min(6),
 });
+
+export const diningVenueSchema = z.object({
+  name: z.string().min(3),
+  cuisine: z.string().min(2),
+  description: z.string().min(20),
+  image: z.string().url(),
+  hours: z.string().min(3),
+  order: z.coerce.number().int().nonnegative(),
+  visible: z.boolean(),
+});
+
+export const spaServiceSchema = z.object({
+  name: z.string().min(3),
+  category: z.string().min(2),
+  description: z.string().min(20),
+  duration: z.string().min(2),
+  price: z.coerce.number().nonnegative(),
+  image: z.string().url(),
+  order: z.coerce.number().int().nonnegative(),
+  visible: z.boolean(),
+});
+
+export const eventVenueSchema = z.object({
+  name: z.string().min(3),
+  capacity: z.string().min(2),
+  description: z.string().min(20),
+  image: z.string().url(),
+  features: z.array(z.string().min(1)).min(1),
+  order: z.coerce.number().int().nonnegative(),
+  visible: z.boolean(),
+});
+
+export const contactEnquirySchema = z.object({
+  name: z.string().min(2),
+  email: z.string().email(),
+  phone: z.string().min(7),
+  subject: z.string().min(3),
+  message: z.string().min(10),
+});
+
+export const contactEnquiryAdminSchema = contactEnquirySchema.extend({
+  status: z.enum(["new", "read", "replied"]),
+});

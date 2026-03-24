@@ -1,10 +1,10 @@
 import { SignJWT, jwtVerify } from "jose";
 
 const secret = new TextEncoder().encode(
-  process.env.AUTH_SECRET || "deoghar-grand-hotel-secret-change-in-production"
+  process.env.AUTH_SECRET || "deoghar-grand-hotel-jwt-secret-k8x2m"
 );
 
-let runtimePassword = process.env.ADMIN_PASSWORD || "deoghar123";
+let runtimePassword = process.env.ADMIN_PASSWORD || "admin@123";
 
 export function getAdminPassword() { return runtimePassword; }
 export function setAdminPassword(pw: string) { runtimePassword = pw; }

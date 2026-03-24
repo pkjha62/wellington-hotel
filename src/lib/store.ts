@@ -7,6 +7,7 @@ import type {
   Room, Booking, GalleryImage, Testimonial,
   Offering, Experience, Subscriber, SiteSettings,
   Announcement, FAQ, SpecialOffer, StatFact,
+  DiningVenue, SpaService, EventVenue, ContactEnquiry,
 } from "@/types";
 
 function genId() {
@@ -402,8 +403,124 @@ export function deleteStatFact(id: string): boolean {
 // ─── Admin Password ──────────────────────────────────────────────────────────
 
 export function getAdminPassword(): string {
-  return process.env.ADMIN_PASSWORD || "deoghar123";
+  return process.env.ADMIN_PASSWORD || "admin@123";
 }
 export function getAdminUsername(): string {
   return process.env.ADMIN_USERNAME || "admin";
+}
+
+// ─── Dining Venues ───────────────────────────────────────────────────────────
+
+let diningVenues: DiningVenue[] = [
+  { id: "dv1", name: "Annapurna — Multi-Cuisine Restaurant", cuisine: "Multi-Cuisine", description: "Our flagship restaurant serves an extensive breakfast, lunch, and dinner buffet featuring North Indian, Jharkhandi, and continental cuisine. Enjoy the finest vegetarian and non-vegetarian dishes prepared by our master chefs.", image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80", hours: "7:00 AM – 10:30 PM", order: 1, visible: true },
+  { id: "dv2", name: "Prasad — Pure Vegetarian Kitchen", cuisine: "Vegetarian", description: "A dedicated pure vegetarian restaurant offering traditional thalis, sattvic meals, and regional specialities. Ideal for devotees observing dietary customs during their pilgrimage.", image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80", hours: "6:30 AM – 9:30 PM", order: 2, visible: true },
+  { id: "dv3", name: "Courtyard Lounge & Café", cuisine: "Café & Lounge", description: "An open-air lounge perfect for chai, fresh juices, pastries, and light bites. Live devotional music on Saturday evenings transforms this space into a tranquil cultural gathering.", image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&q=80", hours: "10:00 AM – 11:00 PM", order: 3, visible: true },
+  { id: "dv4", name: "Private Dining & Banquets", cuisine: "Custom Menu", description: "Host intimate dinners, celebrations, or corporate meals in our private dining rooms. Customised menus, dedicated service, and elegant ambience for up to 40 guests.", image: "https://images.unsplash.com/photo-1550966871-3ed3cdb51f3a?w=800&q=80", hours: "By reservation", order: 4, visible: true },
+];
+
+export function getDiningVenues(onlyVisible = false): DiningVenue[] {
+  const list = onlyVisible ? diningVenues.filter((d) => d.visible) : [...diningVenues];
+  return list.sort((a, b) => a.order - b.order);
+}
+export function addDiningVenue(data: Omit<DiningVenue, "id">): DiningVenue {
+  const d: DiningVenue = { ...data, id: genId() };
+  diningVenues.push(d);
+  return d;
+}
+export function updateDiningVenue(id: string, data: Partial<DiningVenue>): DiningVenue | null {
+  const idx = diningVenues.findIndex((d) => d.id === id);
+  if (idx === -1) return null;
+  diningVenues[idx] = { ...diningVenues[idx], ...data };
+  return diningVenues[idx];
+}
+export function deleteDiningVenue(id: string): boolean {
+  const len = diningVenues.length;
+  diningVenues = diningVenues.filter((d) => d.id !== id);
+  return diningVenues.length < len;
+}
+
+// ─── Spa Services ────────────────────────────────────────────────────────────
+
+let spaServices: SpaService[] = [
+  { id: "sp1", name: "Ayurvedic Treatments", category: "Traditional", description: "Traditional Ayurvedic therapies including Abhyanga, Shirodhara, and Panchakarma administered by certified practitioners. Restore your doshas and achieve holistic balance.", duration: "60 – 120 min", price: 3500, image: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&q=80", order: 1, visible: true },
+  { id: "sp2", name: "Deep Tissue & Swedish Massage", category: "Massage", description: "Expert therapeutic massage to relieve tension, improve circulation, and promote deep relaxation after your pilgrimage or travel.", duration: "45 – 90 min", price: 2500, image: "https://images.unsplash.com/photo-1600334129128-685c5582fd35?w=800&q=80", order: 2, visible: true },
+  { id: "sp3", name: "Yoga & Meditation", category: "Wellness", description: "Daily guided yoga sessions at dawn in our rooftop studio. Meditation workshops available for individuals and groups.", duration: "60 min sessions", price: 800, image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&q=80", order: 3, visible: true },
+  { id: "sp4", name: "Fitness Centre", category: "Fitness", description: "Fully equipped modern gym with cardio machines, free weights, and personal training on request. Open 6 AM to 10 PM.", duration: "Open daily", price: 0, image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80", order: 4, visible: true },
+  { id: "sp5", name: "Herbal Steam & Sauna", category: "Detox", description: "Detoxify and unwind with our herb-infused steam room and dry sauna. Complimentary for spa package guests.", duration: "30 min", price: 1200, image: "https://images.unsplash.com/photo-1540555700478-4be289fbec6b?w=800&q=80", order: 5, visible: true },
+  { id: "sp6", name: "Beauty & Grooming", category: "Salon", description: "Full-service salon offering facials, manicures, pedicures, and bridal packages with premium organic products.", duration: "30 – 180 min", price: 1500, image: "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=800&q=80", order: 6, visible: true },
+];
+
+export function getSpaServices(onlyVisible = false): SpaService[] {
+  const list = onlyVisible ? spaServices.filter((s) => s.visible) : [...spaServices];
+  return list.sort((a, b) => a.order - b.order);
+}
+export function addSpaService(data: Omit<SpaService, "id">): SpaService {
+  const s: SpaService = { ...data, id: genId() };
+  spaServices.push(s);
+  return s;
+}
+export function updateSpaService(id: string, data: Partial<SpaService>): SpaService | null {
+  const idx = spaServices.findIndex((s) => s.id === id);
+  if (idx === -1) return null;
+  spaServices[idx] = { ...spaServices[idx], ...data };
+  return spaServices[idx];
+}
+export function deleteSpaService(id: string): boolean {
+  const len = spaServices.length;
+  spaServices = spaServices.filter((s) => s.id !== id);
+  return spaServices.length < len;
+}
+
+// ─── Event Venues ────────────────────────────────────────────────────────────
+
+let eventVenues: EventVenue[] = [
+  { id: "ev1", name: "Grand Ballroom", capacity: "Up to 500 guests", description: "Our largest venue features crystal chandeliers, a built-in stage, state-of-the-art AV equipment, and a dedicated pre-function area. Perfect for grand weddings, receptions, and gala events.", image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800&q=80", features: ["Crystal Chandeliers", "Built-in Stage", "AV Equipment", "Pre-function Area"], order: 1, visible: true },
+  { id: "ev2", name: "Divya Banquet Hall", capacity: "Up to 200 guests", description: "An elegant mid-size banquet hall ideal for engagement ceremonies, birthday celebrations, anniversary parties, and corporate events. Full catering and decor services available.", image: "https://images.unsplash.com/photo-1540575467063-178a50c8e9a9?w=800&q=80", features: ["Full Catering", "Decor Services", "Sound System", "Staging"], order: 2, visible: true },
+  { id: "ev3", name: "Conference Centre", capacity: "Up to 100 guests", description: "Equipped with projector, podium, high-speed Wi-Fi, and theatre/classroom seating layouts. Ideal for seminars, workshops, corporate offsites, and board meetings.", image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80", features: ["Projector", "Podium", "High-speed Wi-Fi", "Flexible Seating"], order: 3, visible: true },
+  { id: "ev4", name: "Courtyard Garden", capacity: "Up to 150 guests", description: "An open-air venue surrounded by manicured gardens and soft lighting. Ideal for evening receptions, sangeet ceremonies, and al fresco dinners under the stars.", image: "https://images.unsplash.com/photo-1510076857177-7470076d4098?w=800&q=80", features: ["Garden Setting", "Soft Lighting", "Open Air", "Power & PA"], order: 4, visible: true },
+];
+
+export function getEventVenues(onlyVisible = false): EventVenue[] {
+  const list = onlyVisible ? eventVenues.filter((e) => e.visible) : [...eventVenues];
+  return list.sort((a, b) => a.order - b.order);
+}
+export function addEventVenue(data: Omit<EventVenue, "id">): EventVenue {
+  const e: EventVenue = { ...data, id: genId() };
+  eventVenues.push(e);
+  return e;
+}
+export function updateEventVenue(id: string, data: Partial<EventVenue>): EventVenue | null {
+  const idx = eventVenues.findIndex((e) => e.id === id);
+  if (idx === -1) return null;
+  eventVenues[idx] = { ...eventVenues[idx], ...data };
+  return eventVenues[idx];
+}
+export function deleteEventVenue(id: string): boolean {
+  const len = eventVenues.length;
+  eventVenues = eventVenues.filter((e) => e.id !== id);
+  return eventVenues.length < len;
+}
+
+// ─── Contact Enquiries ───────────────────────────────────────────────────────
+
+let contactEnquiries: ContactEnquiry[] = [];
+
+export function getContactEnquiries(): ContactEnquiry[] {
+  return [...contactEnquiries].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+}
+export function addContactEnquiry(data: Omit<ContactEnquiry, "id" | "status" | "createdAt">): ContactEnquiry {
+  const c: ContactEnquiry = { ...data, id: genId(), status: "new", createdAt: new Date().toISOString().split("T")[0] };
+  contactEnquiries.push(c);
+  return c;
+}
+export function updateContactEnquiry(id: string, data: Partial<ContactEnquiry>): ContactEnquiry | null {
+  const idx = contactEnquiries.findIndex((c) => c.id === id);
+  if (idx === -1) return null;
+  contactEnquiries[idx] = { ...contactEnquiries[idx], ...data };
+  return contactEnquiries[idx];
+}
+export function deleteContactEnquiry(id: string): boolean {
+  const len = contactEnquiries.length;
+  contactEnquiries = contactEnquiries.filter((c) => c.id !== id);
+  return contactEnquiries.length < len;
 }

@@ -3,7 +3,7 @@ import Footer from "@/components/Footer";
 import PageHero from "@/components/PageHero";
 import PageTransition from "@/components/PageTransition";
 import { StaggerGrid, StaggerItem } from "@/components/StaggerGrid";
-import { getSettings } from "@/lib/store";
+import { getSettings, getDiningVenues } from "@/lib/store";
 import Image from "next/image";
 import type { Metadata } from "next";
 
@@ -12,35 +12,9 @@ export const metadata: Metadata = {
   description: "Savour exquisite North Indian and Jharkhandi cuisine at The Deoghar Grand — pure vegetarian thalis, multi-cuisine buffets, and more.",
 };
 
-const diningExperiences = [
-  {
-    title: "Annapurna — Multi-Cuisine Restaurant",
-    description: "Our flagship restaurant serves an extensive breakfast, lunch, and dinner buffet featuring North Indian, Jharkhandi, and continental cuisine. Enjoy the finest vegetarian and non-vegetarian dishes prepared by our master chefs.",
-    image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80",
-    hours: "7:00 AM – 10:30 PM",
-  },
-  {
-    title: "Prasad — Pure Vegetarian Kitchen",
-    description: "A dedicated pure vegetarian restaurant offering traditional thalis, sattvic meals, and regional specialities. Ideal for devotees observing dietary customs during their pilgrimage.",
-    image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80",
-    hours: "6:30 AM – 9:30 PM",
-  },
-  {
-    title: "Courtyard Lounge & Café",
-    description: "An open-air lounge perfect for chai, fresh juices, pastries, and light bites. Live devotional music on Saturday evenings transforms this space into a tranquil cultural gathering.",
-    image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&q=80",
-    hours: "10:00 AM – 11:00 PM",
-  },
-  {
-    title: "Private Dining & Banquets",
-    description: "Host intimate dinners, celebrations, or corporate meals in our private dining rooms. Customised menus, dedicated service, and elegant ambience for up to 40 guests.",
-    image: "https://images.unsplash.com/photo-1550966871-3ed3cdb51f3a?w=800&q=80",
-    hours: "By reservation",
-  },
-];
-
 export default function DiningPage() {
   const settings = getSettings();
+  const venues = getDiningVenues(true);
 
   return (
     <>
@@ -57,18 +31,17 @@ export default function DiningPage() {
         <PageTransition>
         <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
           <StaggerGrid className="space-y-20">
-            {diningExperiences.map((item, i) => (
-              <StaggerItem
-                key={item.title}
-              >
+            {venues.map((item, i) => (
+              <StaggerItem key={item.id}>
               <article
                 className={`flex flex-col gap-10 lg:items-center ${i % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"}`}
               >
                 <div className="relative h-80 w-full overflow-hidden rounded-[28px] lg:w-1/2">
-                  <Image src={item.image} alt={item.title} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
+                  <Image src={item.image} alt={item.name} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
                 </div>
                 <div className="lg:w-1/2">
-                  <h2 className="font-serif text-2xl uppercase tracking-[0.1em] text-charcoal">{item.title}</h2>
+                  <p className="font-sans text-[11px] uppercase tracking-[0.18em] text-gold">{item.cuisine}</p>
+                  <h2 className="mt-2 font-serif text-2xl uppercase tracking-[0.1em] text-charcoal">{item.name}</h2>
                   <p className="mt-4 font-sans text-sm leading-7 text-text-secondary">{item.description}</p>
                   <p className="mt-4 font-sans text-xs uppercase tracking-[0.18em] text-gold">Hours: {item.hours}</p>
                 </div>

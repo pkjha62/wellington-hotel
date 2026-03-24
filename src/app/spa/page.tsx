@@ -3,7 +3,7 @@ import Footer from "@/components/Footer";
 import PageHero from "@/components/PageHero";
 import PageTransition from "@/components/PageTransition";
 import { StaggerGrid, StaggerItem } from "@/components/StaggerGrid";
-import { getSettings } from "@/lib/store";
+import { getSettings, getSpaServices } from "@/lib/store";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -11,41 +11,9 @@ export const metadata: Metadata = {
   description: "Rejuvenate body and soul at Shanti Wellness Centre — Ayurvedic treatments, modern spa therapies, yoga, and fitness.",
 };
 
-const services = [
-  {
-    title: "Ayurvedic Treatments",
-    description: "Traditional Ayurvedic therapies including Abhyanga, Shirodhara, and Panchakarma administered by certified practitioners. Restore your doshas and achieve holistic balance.",
-    duration: "60 – 120 min",
-  },
-  {
-    title: "Deep Tissue & Swedish Massage",
-    description: "Expert therapeutic massage to relieve tension, improve circulation, and promote deep relaxation after your pilgrimage or travel.",
-    duration: "45 – 90 min",
-  },
-  {
-    title: "Yoga & Meditation",
-    description: "Daily guided yoga sessions at dawn in our rooftop studio. Meditation workshops available for individuals and groups.",
-    duration: "60 min sessions",
-  },
-  {
-    title: "Fitness Centre",
-    description: "Fully equipped modern gym with cardio machines, free weights, and personal training on request. Open 6 AM to 10 PM.",
-    duration: "Open daily",
-  },
-  {
-    title: "Herbal Steam & Sauna",
-    description: "Detoxify and unwind with our herb-infused steam room and dry sauna. Complimentary for spa package guests.",
-    duration: "30 min",
-  },
-  {
-    title: "Beauty & Grooming",
-    description: "Full-service salon offering facials, manicures, pedicures, and bridal packages with premium organic products.",
-    duration: "30 – 180 min",
-  },
-];
-
 export default function SpaPage() {
   const settings = getSettings();
+  const services = getSpaServices(true);
 
   return (
     <>
@@ -63,11 +31,17 @@ export default function SpaPage() {
         <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
           <StaggerGrid className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {services.map((svc) => (
-              <StaggerItem key={svc.title}>
+              <StaggerItem key={svc.id}>
               <article className="rounded-[28px] border border-stone-200 bg-white p-8 transition hover:border-gold hover:shadow-lg">
-                <h3 className="font-serif text-xl uppercase tracking-[0.1em] text-charcoal">{svc.title}</h3>
+                <p className="font-sans text-[11px] uppercase tracking-[0.18em] text-gold">{svc.category}</p>
+                <h3 className="mt-2 font-serif text-xl uppercase tracking-[0.1em] text-charcoal">{svc.name}</h3>
                 <p className="mt-4 font-sans text-sm leading-7 text-text-secondary">{svc.description}</p>
-                <p className="mt-4 font-sans text-xs uppercase tracking-[0.18em] text-gold">{svc.duration}</p>
+                <div className="mt-4 flex items-center justify-between">
+                  <p className="font-sans text-xs uppercase tracking-[0.18em] text-gold">{svc.duration}</p>
+                  {svc.price > 0 && (
+                    <p className="font-sans text-sm font-semibold text-charcoal">₹{svc.price.toLocaleString("en-IN")}</p>
+                  )}
+                </div>
               </article>
               </StaggerItem>
             ))}

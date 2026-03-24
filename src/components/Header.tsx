@@ -12,7 +12,7 @@ const navLinks = [
   { label: "Events", href: "/events" },
   { label: "Experiences", href: "/#experiences" },
   { label: "Gallery", href: "/#gallery" },
-  { label: "Contact", href: "/#contact" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export default function Header({ settings, announcements = [] }: { settings: SiteSettings; announcements?: Announcement[] }) {

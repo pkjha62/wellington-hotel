@@ -133,3 +133,48 @@ export interface StatFact {
   order: number;
   visible: boolean;
 }
+
+export interface DiningVenue {
+  id: string;
+  name: string;
+  cuisine: string;
+  description: string;
+  image: string;
+  hours: string;
+  order: number;
+  visible: boolean;
+}
+
+export interface SpaService {
+  id: string;
+  name: string;
+  category: string;
+  description: string;
+  duration: string;
+  price: number;
+  image: string;
+  order: number;
+  visible: boolean;
+}
+
+export interface EventVenue {
+  id: string;
+  name: string;
+  capacity: string;
+  description: string;
+  image: string;
+  features: string[];
+  order: number;
+  visible: boolean;
+}
+
+export interface ContactEnquiry {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  subject: string;
+  message: string;
+  status: "new" | "read" | "replied";
+  createdAt: string;
+}

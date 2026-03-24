@@ -3,7 +3,7 @@ import Footer from "@/components/Footer";
 import PageHero from "@/components/PageHero";
 import PageTransition from "@/components/PageTransition";
 import { StaggerGrid, StaggerItem } from "@/components/StaggerGrid";
-import { getSettings } from "@/lib/store";
+import { getSettings, getEventVenues } from "@/lib/store";
 import Image from "next/image";
 import type { Metadata } from "next";
 
@@ -12,35 +12,9 @@ export const metadata: Metadata = {
   description: "Grand weddings, corporate conferences, private banquets — our ballroom and event halls provide the perfect setting.",
 };
 
-const venues = [
-  {
-    title: "Grand Ballroom",
-    capacity: "Up to 500 guests",
-    description: "Our largest venue features crystal chandeliers, a built-in stage, state-of-the-art AV equipment, and a dedicated pre-function area. Perfect for grand weddings, receptions, and gala events.",
-    image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800&q=80",
-  },
-  {
-    title: "Divya Banquet Hall",
-    capacity: "Up to 200 guests",
-    description: "An elegant mid-size banquet hall ideal for engagement ceremonies, birthday celebrations, anniversary parties, and corporate events. Full catering and decor services available.",
-    image: "https://images.unsplash.com/photo-1540575467063-178a50c8e9a9?w=800&q=80",
-  },
-  {
-    title: "Conference Centre",
-    capacity: "Up to 100 guests",
-    description: "Equipped with projector, podium, high-speed Wi-Fi, and theatre/classroom seating layouts. Ideal for seminars, workshops, corporate offsites, and board meetings.",
-    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80",
-  },
-  {
-    title: "Courtyard Garden",
-    capacity: "Up to 150 guests",
-    description: "An open-air venue surrounded by manicured gardens and soft lighting. Ideal for evening receptions, sangeet ceremonies, and al fresco dinners under the stars.",
-    image: "https://images.unsplash.com/photo-1510076857177-7470076d4098?w=800&q=80",
-  },
-];
-
 export default function EventsPage() {
   const settings = getSettings();
+  const venues = getEventVenues(true);
 
   return (
     <>
@@ -58,17 +32,24 @@ export default function EventsPage() {
         <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
           <StaggerGrid className="space-y-20">
             {venues.map((venue, i) => (
-              <StaggerItem key={venue.title}>
+              <StaggerItem key={venue.id}>
               <article
                 className={`flex flex-col gap-10 lg:items-center ${i % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"}`}
               >
                 <div className="relative h-80 w-full overflow-hidden rounded-[28px] lg:w-1/2">
-                  <Image src={venue.image} alt={venue.title} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
+                  <Image src={venue.image} alt={venue.name} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
                 </div>
                 <div className="lg:w-1/2">
-                  <p className="font-sans text-[11px] uppercase tracking-[0.18em] text-gold">{venue.capacity}</p>
-                  <h2 className="mt-2 font-serif text-2xl uppercase tracking-[0.1em] text-charcoal">{venue.title}</h2>
+                  <p className="font-sans text-[11px] uppercase tracking-[0.18em] text-gold">Up to {venue.capacity} guests</p>
+                  <h2 className="mt-2 font-serif text-2xl uppercase tracking-[0.1em] text-charcoal">{venue.name}</h2>
                   <p className="mt-4 font-sans text-sm leading-7 text-text-secondary">{venue.description}</p>
+                  {venue.features.length > 0 && (
+                    <ul className="mt-4 flex flex-wrap gap-2">
+                      {venue.features.map((f) => (
+                        <li key={f} className="rounded-full bg-gold/10 px-3 py-1 font-sans text-[11px] uppercase tracking-[0.14em] text-gold">{f}</li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
               </article>
               </StaggerItem>
