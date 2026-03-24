@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useState, useCallback, useRef } from "react";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { motion, AnimatePresence } from "framer-motion";
 import ConfirmDialog from "@/components/admin/ConfirmDialog";
@@ -93,8 +92,7 @@ export default function EntityManager<T extends { id: string }>({
 
   const defaultValues = useMemo(() => normalizeForForm(editingItem, fields), [editingItem, fields]);
 
-  const { register, handleSubmit, reset, formState: { errors } } = useForm<FormShape>({
-    resolver: zodResolver(schema),
+  const { register, handleSubmit, reset, formState: { errors }, setError: setFieldError, clearErrors } = useForm<FormShape>({
     values: defaultValues,
   });
 
@@ -120,13 +118,24 @@ export default function EntityManager<T extends { id: string }>({
   const onSubmit = handleSubmit(async (values) => {
     setSubmitting(true);
     setError("");
+    clearErrors();
 
     const payload = normalizeForSubmit(values, fields);
+    const parsed = schema.safeParse(payload);
+    if (!parsed.success) {
+      for (const issue of parsed.error.issues) {
+        const path = issue.path.join(".");
+        setFieldError(path, { type: "validation", message: issue.message });
+      }
+      setSubmitting(false);
+      return;
+    }
+
     const url = editingItem ? `${endpoint}/${editingItem.id}` : endpoint;
     const method = editingItem ? "PATCH" : "POST";
 
     try {
-      const response = await fetch(url, { method, headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+      const response = await fetch(url, { method, headers: { "Content-Type": "application/json" }, body: JSON.stringify(parsed.data) });
       const data = await response.json();
       if (!response.ok) { setError(data.error || "Unable to save changes."); return; }
 
