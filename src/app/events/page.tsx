@@ -23,19 +23,19 @@ const venues = [
     title: "Divya Banquet Hall",
     capacity: "Up to 200 guests",
     description: "An elegant mid-size banquet hall ideal for engagement ceremonies, birthday celebrations, anniversary parties, and corporate events. Full catering and decor services available.",
-    image: "https://images.unsplash.com/photo-1478146059778-26028b07395a?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1540575467063-178a50c8e9a9?w=800&q=80",
   },
   {
     title: "Conference Centre",
     capacity: "Up to 100 guests",
     description: "Equipped with projector, podium, high-speed Wi-Fi, and theatre/classroom seating layouts. Ideal for seminars, workshops, corporate offsites, and board meetings.",
-    image: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80",
   },
   {
     title: "Courtyard Garden",
     capacity: "Up to 150 guests",
     description: "An open-air venue surrounded by manicured gardens and soft lighting. Ideal for evening receptions, sangeet ceremonies, and al fresco dinners under the stars.",
-    image: "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1510076857177-7470076d4098?w=800&q=80",
   },
 ];
 

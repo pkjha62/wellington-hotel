@@ -89,6 +89,7 @@ export interface SiteSettings {
   city: string;
   pincode: string;
   heroImage: string;
+  heroVideo: string;
   heroHeadline: string;
   heroSubheadline: string;
   introTitle: string;

@@ -22,8 +22,8 @@ export default function RoomsPage() {
       <Header settings={settings} />
       <main>
         <PageHero
-          image="https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=1920&q=80"
-          imageAlt="Luxury hotel room"
+          image="https://images.unsplash.com/photo-1590490360182-c33d955c3a16?w=1920&q=80"
+          imageAlt="Elegant luxury hotel room"
           kicker="Accommodation"
           title="Rooms &amp; Suites"
           subtitle="Each room blends traditional Jharkhandi aesthetics with modern luxury — an experience crafted for comfort and culture."

@@ -52,8 +52,8 @@ export default function SpaPage() {
       <Header settings={settings} />
       <main>
         <PageHero
-          image="https://images.unsplash.com/photo-1540555700478-4be289fbec6d?w=1920&q=80"
-          imageAlt="Spa and wellness"
+          image="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=1920&q=80"
+          imageAlt="Luxurious spa and wellness retreat"
           kicker="Wellness"
           title="Spa &amp; Wellness"
           subtitle="Shanti Wellness Centre — rejuvenate body and soul with Ayurvedic treatments, modern spa therapies, yoga, and more."

@@ -23,7 +23,8 @@ let settings: SiteSettings = {
   address: "Temple Road, Near Baba Baidyanath Dham",
   city: "Deoghar, Jharkhand",
   pincode: "814112",
-  heroImage: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920&q=80",
+  heroImage: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1920&q=80",
+  heroVideo: "https://videos.pexels.com/video-files/3773486/3773486-hd_1920_1080_30fps.mp4",
   heroHeadline: "Where Divine Tranquility Meets Timeless Luxury",
   heroSubheadline: "in the Sacred City of Deoghar",
   introTitle: "Elegance and Serenity in the Heart of Jharkhand's Holiest City",
@@ -36,16 +37,16 @@ let settings: SiteSettings = {
   whatsappNumber: "+916432234567",
   metaTitle: "The Deoghar Grand Hotel & Spa | Luxury Stay in Deoghar",
   metaDescription: "Experience luxury hospitality near Baba Baidyanath Dham in Deoghar. Explore rooms, wellness, dining, events, and curated spiritual stays.",
-  ogImage: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&q=80",
+  ogImage: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1200&q=80",
 };
 
 let rooms: Room[] = [
-  { id: "r1", name: "Classic Comfort Room", type: "standard", price: 3500, description: "A cosy, well-appointed room with modern amenities and traditional décor, perfect for solo travellers and pilgrims.", amenities: ["Free Wi-Fi","AC","TV","Attached Bathroom","Room Service"], images: ["https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80"], maxGuests: 2, isAvailable: true, createdAt: "2026-01-01" },
-  { id: "r2", name: "Deluxe Heritage Room", type: "deluxe", price: 5500, description: "Spacious room with heritage-inspired interiors, a king-size bed, and views of the temple precinct.", amenities: ["Free Wi-Fi","AC","TV","Mini Bar","Room Service","Temple View","King Bed"], images: ["https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=800&q=80"], maxGuests: 3, isAvailable: true, createdAt: "2026-01-01" },
-  { id: "r3", name: "Premium Suite", type: "suite", price: 8500, description: "An elegant suite featuring a separate living area, premium furnishings, and panoramic city views.", amenities: ["Free Wi-Fi","AC","TV","Mini Bar","Living Area","Room Service","City View","Bathrobe"], images: ["https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&q=80"], maxGuests: 4, isAvailable: true, createdAt: "2026-01-01" },
-  { id: "r4", name: "Royal Presidential Suite", type: "premium", price: 15000, description: "Our most luxurious offering — a grand suite with private terrace, jacuzzi, and bespoke butler service.", amenities: ["Free Wi-Fi","AC","TV","Mini Bar","Jacuzzi","Private Terrace","Butler Service","Living & Dining Area","King Bed"], images: ["https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=800&q=80"], maxGuests: 4, isAvailable: true, createdAt: "2026-01-01" },
-  { id: "r5", name: "Family Room", type: "deluxe", price: 6500, description: "Extra-spacious room designed for families, with twin beds, a seating area, and child-safe amenities.", amenities: ["Free Wi-Fi","AC","TV","Extra Beds","Room Service","Child Safe","Seating Area"], images: ["https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=800&q=80"], maxGuests: 5, isAvailable: true, createdAt: "2026-01-01" },
-  { id: "r6", name: "Pilgrim Standard Room", type: "standard", price: 2500, description: "Clean and comfortable room ideal for devotees visiting Baba Baidyanath Dham, with essential amenities.", amenities: ["Free Wi-Fi","AC","TV","Attached Bathroom","Room Service"], images: ["https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80"], maxGuests: 2, isAvailable: true, createdAt: "2026-01-01" },
+  { id: "r1", name: "Classic Comfort Room", type: "standard", price: 3500, description: "A cosy, well-appointed room with modern amenities and traditional décor, perfect for solo travellers and pilgrims.", amenities: ["Free Wi-Fi","AC","TV","Attached Bathroom","Room Service"], images: ["https://images.unsplash.com/photo-1590490360182-c33d955c3a16?w=800&q=80"], maxGuests: 2, isAvailable: true, createdAt: "2026-01-01" },
+  { id: "r2", name: "Deluxe Heritage Room", type: "deluxe", price: 5500, description: "Spacious room with heritage-inspired interiors, a king-size bed, and views of the temple precinct.", amenities: ["Free Wi-Fi","AC","TV","Mini Bar","Room Service","Temple View","King Bed"], images: ["https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&q=80"], maxGuests: 3, isAvailable: true, createdAt: "2026-01-01" },
+  { id: "r3", name: "Premium Suite", type: "suite", price: 8500, description: "An elegant suite featuring a separate living area, premium furnishings, and panoramic city views.", amenities: ["Free Wi-Fi","AC","TV","Mini Bar","Living Area","Room Service","City View","Bathrobe"], images: ["https://images.unsplash.com/photo-1587985064135-0366536eab42?w=800&q=80"], maxGuests: 4, isAvailable: true, createdAt: "2026-01-01" },
+  { id: "r4", name: "Royal Presidential Suite", type: "premium", price: 15000, description: "Our most luxurious offering — a grand suite with private terrace, jacuzzi, and bespoke butler service.", amenities: ["Free Wi-Fi","AC","TV","Mini Bar","Jacuzzi","Private Terrace","Butler Service","Living & Dining Area","King Bed"], images: ["https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=80"], maxGuests: 4, isAvailable: true, createdAt: "2026-01-01" },
+  { id: "r5", name: "Family Room", type: "deluxe", price: 6500, description: "Extra-spacious room designed for families, with twin beds, a seating area, and child-safe amenities.", amenities: ["Free Wi-Fi","AC","TV","Extra Beds","Room Service","Child Safe","Seating Area"], images: ["https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800&q=80"], maxGuests: 5, isAvailable: true, createdAt: "2026-01-01" },
+  { id: "r6", name: "Pilgrim Standard Room", type: "standard", price: 2500, description: "Clean and comfortable room ideal for devotees visiting Baba Baidyanath Dham, with essential amenities.", amenities: ["Free Wi-Fi","AC","TV","Attached Bathroom","Room Service"], images: ["https://images.unsplash.com/photo-1595576508898-0ad5c879a061?w=800&q=80"], maxGuests: 2, isAvailable: true, createdAt: "2026-01-01" },
 ];
 
 let bookings: Booking[] = [
@@ -55,12 +56,12 @@ let bookings: Booking[] = [
 ];
 
 let gallery: GalleryImage[] = [
-  { id: "g1", src: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&q=80", alt: "Luxury hotel suite", category: "rooms", order: 1 },
-  { id: "g2", src: "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600&q=80", alt: "Hotel pool and courtyard", category: "exterior", order: 2 },
-  { id: "g3", src: "https://images.unsplash.com/photo-1544148103-0773bf10d330?w=600&q=80", alt: "Fine dining restaurant", category: "dining", order: 3 },
-  { id: "g4", src: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600&q=80", alt: "Hotel exterior at dusk", category: "exterior", order: 4 },
-  { id: "g5", src: "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=600&q=80", alt: "Spa wellness area", category: "spa", order: 5 },
-  { id: "g6", src: "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=600&q=80", alt: "Grand lobby with chandelier", category: "exterior", order: 6 },
+  { id: "g1", src: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=600&q=80", alt: "Luxury hotel suite", category: "rooms", order: 1 },
+  { id: "g2", src: "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=600&q=80", alt: "Hotel pool and courtyard", category: "exterior", order: 2 },
+  { id: "g3", src: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=80", alt: "Fine dining restaurant", category: "dining", order: 3 },
+  { id: "g4", src: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=600&q=80", alt: "Hotel exterior at dusk", category: "exterior", order: 4 },
+  { id: "g5", src: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600&q=80", alt: "Spa wellness area", category: "spa", order: 5 },
+  { id: "g6", src: "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600&q=80", alt: "Grand lobby with chandelier", category: "exterior", order: 6 },
 ];
 
 let testimonials: Testimonial[] = [
@@ -71,16 +72,16 @@ let testimonials: Testimonial[] = [
 ];
 
 let offerings: Offering[] = [
-  { id: "o1", title: "Rooms and Suites", subtitle: "Dreamlike rest", description: "Choose from our collection of elegantly appointed rooms and suites, each thoughtfully designed with a blend of traditional Jharkhandi aesthetics and modern luxury. From cosy pilgrim rooms to grand presidential suites, every stay is an experience.", image: "https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=1200&q=80", imageAlt: "Luxury hotel room with elegant furnishings", order: 1, visible: true },
-  { id: "o2", title: "Cuisine", subtitle: "Authentic flavours, crafted with love", description: "Savour exquisite North Indian and Jharkhandi cuisine prepared by our master chefs. From pure vegetarian thalis for devotees to a lavish multi-cuisine buffet, every meal at The Deoghar Grand is a celebration of regional flavours.", image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1200&q=80", imageAlt: "Fine dining with Indian cuisine", order: 2, visible: true },
+  { id: "o1", title: "Rooms and Suites", subtitle: "Dreamlike rest", description: "Choose from our collection of elegantly appointed rooms and suites, each thoughtfully designed with a blend of traditional Jharkhandi aesthetics and modern luxury. From cosy pilgrim rooms to grand presidential suites, every stay is an experience.", image: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1200&q=80", imageAlt: "Luxury hotel room with elegant furnishings", order: 1, visible: true },
+  { id: "o2", title: "Cuisine", subtitle: "Authentic flavours, crafted with love", description: "Savour exquisite North Indian and Jharkhandi cuisine prepared by our master chefs. From pure vegetarian thalis for devotees to a lavish multi-cuisine buffet, every meal at The Deoghar Grand is a celebration of regional flavours.", image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1200&q=80", imageAlt: "Fine dining with Indian cuisine", order: 2, visible: true },
   { id: "o3", title: "Events and Celebrations", subtitle: "Grand occasions, flawless execution", description: "From sacred ceremonies and grand weddings to corporate conferences and private banquets, our Grand Ballroom and banquet halls provide the perfect setting. Our dedicated events team ensures every detail is impeccable.", image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1200&q=80", imageAlt: "Elegant event hall with luxurious decoration", order: 3, visible: true },
-  { id: "o4", title: "Spa & Wellness", subtitle: "Rejuvenate body and soul", description: "Unwind at Shanti Wellness Centre, our tranquil urban retreat. Enjoy Ayurvedic treatments, modern spa therapies, a fully equipped fitness centre, and yoga sessions — all designed to restore your inner balance.", image: "https://images.unsplash.com/photo-1540555700478-4be289fbec6d?w=1200&q=80", imageAlt: "Spa and wellness area", order: 4, visible: true },
+  { id: "o4", title: "Spa & Wellness", subtitle: "Rejuvenate body and soul", description: "Unwind at Shanti Wellness Centre, our tranquil urban retreat. Enjoy Ayurvedic treatments, modern spa therapies, a fully equipped fitness centre, and yoga sessions — all designed to restore your inner balance.", image: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=1200&q=80", imageAlt: "Spa and wellness area", order: 4, visible: true },
 ];
 
 let experiences: Experience[] = [
-  { id: "e1", title: "Pilgrimage Experience", description: "Guided visits to Baba Baidyanath Dham, Basukinath, and nearby sacred sites. Includes VIP darshan assistance, prasad arrangements, and spiritual counselling.", image: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&q=80", price: 2500, visible: true },
-  { id: "e2", title: "Cultural Heritage Tour", description: "Explore Trikut Hill, Nandan Pahar, Tapovan, and Satsang Ashram. Discover the rich cultural heritage of Deoghar with our expert local guides.", image: "https://images.unsplash.com/photo-1506461883276-594a12b11cf3?w=800&q=80", price: 3000, visible: true },
-  { id: "e3", title: "Family Spiritual Retreat", description: "A holistic family package combining temple visits, nature excursions, yoga sessions, and kid-friendly activities. Create lasting memories in the lap of spirituality.", image: "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=800&q=80", price: 5000, visible: true },
+  { id: "e1", title: "Pilgrimage Experience", description: "Guided visits to Baba Baidyanath Dham, Basukinath, and nearby sacred sites. Includes VIP darshan assistance, prasad arrangements, and spiritual counselling.", image: "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=800&q=80", price: 2500, visible: true },
+  { id: "e2", title: "Cultural Heritage Tour", description: "Explore Trikut Hill, Nandan Pahar, Tapovan, and Satsang Ashram. Discover the rich cultural heritage of Deoghar with our expert local guides.", image: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&q=80", price: 3000, visible: true },
+  { id: "e3", title: "Family Spiritual Retreat", description: "A holistic family package combining temple visits, nature excursions, yoga sessions, and kid-friendly activities. Create lasting memories in the lap of spirituality.", image: "https://images.unsplash.com/photo-1506461883276-594a12b11cf3?w=800&q=80", price: 5000, visible: true },
 ];
 
 let subscribers: Subscriber[] = [
@@ -102,8 +103,8 @@ let faqs: FAQ[] = [
 ];
 
 let specialOffers: SpecialOffer[] = [
-  { id: "so1", title: "Shravan Special Package", description: "3 nights stay with VIP darshan assistance, guided temple tour, and complimentary breakfast. Perfect for devotees visiting during the holy month.", price: 12000, image: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&q=80", validFrom: "2026-07-01", validTo: "2026-08-31", visible: true },
-  { id: "so2", title: "Weekend Wellness Retreat", description: "2 nights with full spa access, Ayurvedic consultation, yoga sessions, and gourmet dining experience.", price: 18000, image: "https://images.unsplash.com/photo-1540555700478-4be289fbec6d?w=800&q=80", validFrom: "2026-01-01", validTo: "2026-12-31", visible: true },
+  { id: "so1", title: "Shravan Special Package", description: "3 nights stay with VIP darshan assistance, guided temple tour, and complimentary breakfast. Perfect for devotees visiting during the holy month.", price: 12000, image: "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=800&q=80", validFrom: "2026-07-01", validTo: "2026-08-31", visible: true },
+  { id: "so2", title: "Weekend Wellness Retreat", description: "2 nights with full spa access, Ayurvedic consultation, yoga sessions, and gourmet dining experience.", price: 18000, image: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&q=80", validFrom: "2026-01-01", validTo: "2026-12-31", visible: true },
 ];
 
 let statFacts: StatFact[] = [

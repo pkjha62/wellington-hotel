@@ -16,25 +16,25 @@ const diningExperiences = [
   {
     title: "Annapurna — Multi-Cuisine Restaurant",
     description: "Our flagship restaurant serves an extensive breakfast, lunch, and dinner buffet featuring North Indian, Jharkhandi, and continental cuisine. Enjoy the finest vegetarian and non-vegetarian dishes prepared by our master chefs.",
-    image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80",
     hours: "7:00 AM – 10:30 PM",
   },
   {
     title: "Prasad — Pure Vegetarian Kitchen",
     description: "A dedicated pure vegetarian restaurant offering traditional thalis, sattvic meals, and regional specialities. Ideal for devotees observing dietary customs during their pilgrimage.",
-    image: "https://images.unsplash.com/photo-1544148103-0773bf10d330?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80",
     hours: "6:30 AM – 9:30 PM",
   },
   {
     title: "Courtyard Lounge & Café",
     description: "An open-air lounge perfect for chai, fresh juices, pastries, and light bites. Live devotional music on Saturday evenings transforms this space into a tranquil cultural gathering.",
-    image: "https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&q=80",
     hours: "10:00 AM – 11:00 PM",
   },
   {
     title: "Private Dining & Banquets",
     description: "Host intimate dinners, celebrations, or corporate meals in our private dining rooms. Customised menus, dedicated service, and elegant ambience for up to 40 guests.",
-    image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1550966871-3ed3cdb51f3a?w=800&q=80",
     hours: "By reservation",
   },
 ];
@@ -47,8 +47,8 @@ export default function DiningPage() {
       <Header settings={settings} />
       <main>
         <PageHero
-          image="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=80"
-          imageAlt="Fine dining"
+          image="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1920&q=80"
+          imageAlt="Elegant fine dining restaurant"
           kicker="Culinary"
           title="Dining"
           subtitle="Authentic flavours crafted with love — from pure vegetarian thalis to lavish multi-cuisine buffets."
