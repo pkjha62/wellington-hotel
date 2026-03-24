@@ -1,4 +1,3 @@
-import AnnouncementBar from "@/components/AnnouncementBar";
 import BackToTop from "@/components/BackToTop";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
@@ -45,8 +44,7 @@ export default function Home() {
   return (
     <>
       <ScrollProgress />
-      <AnnouncementBar announcements={announcements} />
-      <Header settings={settings} />
+      <Header settings={settings} announcements={announcements} />
       <main id="main-content">
         <Hero settings={settings} />
         <Introduction settings={settings} />

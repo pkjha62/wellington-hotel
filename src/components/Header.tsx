@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import type { SiteSettings } from "@/types";
+import type { SiteSettings, Announcement } from "@/types";
 
 const navLinks = [
   { label: "Rooms & Suites", href: "/rooms" },
@@ -15,7 +15,7 @@ const navLinks = [
   { label: "Contact", href: "/#contact" },
 ];
 
-export default function Header({ settings }: { settings: SiteSettings }) {
+export default function Header({ settings, announcements = [] }: { settings: SiteSettings; announcements?: Announcement[] }) {
   const pathname = usePathname();
   const isHome = pathname === "/";
   const [scrolled, setScrolled] = useState(false);
@@ -32,8 +32,24 @@ export default function Header({ settings }: { settings: SiteSettings }) {
     return () => { document.body.style.overflow = ""; };
   }, [menuOpen]);
 
+  const activeAnnouncements = announcements.filter((a) => a.active);
+
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${scrolled ? "header-glass shadow-md" : "bg-transparent backdrop-blur-0"}`}>
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${scrolled ? "header-glass shadow-md" : "bg-transparent"}`}>
+      {/* Announcement Bar — collapses on scroll */}
+      {activeAnnouncements.length > 0 && (
+        <div className={`overflow-hidden bg-charcoal transition-all duration-500 ${scrolled ? "max-h-0 py-0" : "max-h-12 py-2"}`}>
+          <div className="announcement-track whitespace-nowrap">
+            {[...activeAnnouncements, ...activeAnnouncements].map((a, i) => (
+              <span key={`${a.id}-${i}`} className="mx-8 inline-flex items-center gap-3 font-sans text-[11px] uppercase tracking-[0.22em] text-white/85">
+                <span className="inline-block h-1.5 w-1.5 rounded-full bg-gold" />
+                {a.text}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Top Bar */}
       <div className={`hidden md:flex items-center justify-between px-8 py-2 text-xs tracking-widest transition-colors duration-500 ${scrolled ? "text-charcoal" : "text-white"}`}>
         <a href={`tel:${settings.phone.replace(/\s+/g, "")}`} className="font-sans font-light hover:text-gold transition-colors">{settings.phone}</a>
