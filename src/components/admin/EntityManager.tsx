@@ -5,8 +5,10 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { motion, AnimatePresence } from "framer-motion";
 import ConfirmDialog from "@/components/admin/ConfirmDialog";
+import ImageUpload from "@/components/admin/ImageUpload";
+import MultiImageUpload from "@/components/admin/MultiImageUpload";
 
-type FieldType = "text" | "textarea" | "number" | "checkbox" | "select" | "array" | "date" | "email" | "url";
+type FieldType = "text" | "textarea" | "number" | "checkbox" | "select" | "array" | "date" | "email" | "url" | "image" | "images";
 
 type EntityField = {
   name: string;
@@ -41,7 +43,7 @@ type FormShape = Record<string, string | number | boolean>;
 function normalizeForForm<T extends { id: string }>(item: T | null, fields: EntityField[]): FormShape {
   return fields.reduce<FormShape>((acc, field) => {
     const value = item ? (item as Record<string, unknown>)[field.name] : undefined;
-    if (field.type === "array") {
+    if (field.type === "array" || field.type === "images") {
       acc[field.name] = Array.isArray(value) ? value.join(", ") : "";
       return acc;
     }
@@ -57,7 +59,7 @@ function normalizeForForm<T extends { id: string }>(item: T | null, fields: Enti
 function normalizeForSubmit(values: FormShape, fields: EntityField[]) {
   return fields.reduce<Record<string, unknown>>((acc, field) => {
     const value = values[field.name];
-    if (field.type === "array") {
+    if (field.type === "array" || field.type === "images") {
       acc[field.name] = String(value).split(/,|\n/).map((entry) => entry.trim()).filter(Boolean);
       return acc;
     }
@@ -92,7 +94,7 @@ export default function EntityManager<T extends { id: string }>({
 
   const defaultValues = useMemo(() => normalizeForForm(editingItem, fields), [editingItem, fields]);
 
-  const { register, handleSubmit, reset, formState: { errors }, setError: setFieldError, clearErrors } = useForm<FormShape>({
+  const { register, handleSubmit, reset, formState: { errors }, setError: setFieldError, clearErrors, setValue, watch } = useForm<FormShape>({
     values: defaultValues,
   });
 
@@ -278,7 +280,7 @@ export default function EntityManager<T extends { id: string }>({
                 {fields.map((field) => {
                   const fieldError = errors[field.name]?.message;
                   return (
-                    <label key={field.name} className={field.type === "textarea" || field.type === "array" ? "md:col-span-2" : "block"}>
+                    <label key={field.name} className={field.type === "textarea" || field.type === "array" || field.type === "image" || field.type === "images" ? "md:col-span-2" : "block"}>
                       <span className="font-sans text-xs font-semibold uppercase tracking-[0.14em] text-stone-500">{field.label}</span>
                       {field.type === "textarea" || field.type === "array" ? (
                         <textarea {...register(field.name)} rows={field.type === "array" ? 3 : 5} placeholder={field.placeholder} className={inputClass} />
@@ -290,6 +292,10 @@ export default function EntityManager<T extends { id: string }>({
                             <option key={option.value} value={option.value}>{option.label}</option>
                           ))}
                         </select>
+                      ) : field.type === "image" ? (
+                        <ImageUpload value={String(watch(field.name) || "")} onChange={(url) => setValue(field.name, url)} />
+                      ) : field.type === "images" ? (
+                        <MultiImageUpload value={String(watch(field.name) || "")} onChange={(val) => setValue(field.name, val)} />
                       ) : (
                         <input {...register(field.name)} type={field.type} step={field.type === "number" ? "0.01" : undefined} placeholder={field.placeholder} className={inputClass} />
                       )}

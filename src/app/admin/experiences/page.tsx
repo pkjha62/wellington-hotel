@@ -17,7 +17,7 @@ export default function AdminExperiencesPage() {
       fields={[
         { name: "title", label: "Title", type: "text" },
         { name: "description", label: "Description", type: "textarea" },
-        { name: "image", label: "Image URL", type: "url" },
+        { name: "image", label: "Image", type: "image" },
         { name: "price", label: "Price", type: "number" },
         { name: "visible", label: "Visible", type: "checkbox" },
       ]}

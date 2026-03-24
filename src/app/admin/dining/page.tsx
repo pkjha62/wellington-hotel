@@ -18,7 +18,7 @@ export default function AdminDiningPage() {
         { name: "name", label: "Venue name", type: "text" },
         { name: "cuisine", label: "Cuisine type", type: "text", placeholder: "Multi-Cuisine, Vegetarian, Café..." },
         { name: "hours", label: "Operating hours", type: "text", placeholder: "7:00 AM – 10:30 PM" },
-        { name: "image", label: "Image URL", type: "url" },
+        { name: "image", label: "Image", type: "image" },
         { name: "order", label: "Display order", type: "number" },
         { name: "description", label: "Description", type: "textarea" },
         { name: "visible", label: "Visible", type: "checkbox" },

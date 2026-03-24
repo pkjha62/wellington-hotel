@@ -15,7 +15,7 @@ export default function AdminGalleryPage() {
       schema={galleryImageSchema}
       createLabel="Add Image"
       fields={[
-        { name: "src", label: "Image URL", type: "url" },
+        { name: "src", label: "Image", type: "image" },
         { name: "alt", label: "Alt text", type: "text" },
         { name: "category", label: "Category", type: "select", options: [
           { label: "Rooms", value: "rooms" },

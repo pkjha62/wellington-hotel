@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { settingsSchema } from "@/lib/schemas";
 import { motion } from "framer-motion";
+import ImageUpload from "@/components/admin/ImageUpload";
 import type { SiteSettings } from "@/types";
 
 const sections = [
@@ -13,8 +14,8 @@ const sections = [
     fields: [
       ["hotelName", "Hotel name"],
       ["subtitle", "Subtitle"],
-      ["heroImage", "Hero image URL"],
-      ["heroVideo", "Hero video URL"],
+      ["heroImage", "Hero Image"],
+      ["heroVideo", "Hero Video"],
       ["heroHeadline", "Hero headline"],
       ["heroSubheadline", "Hero subheadline"],
     ],
@@ -50,7 +51,7 @@ const sections = [
     title: "SEO & Meta",
     fields: [
       ["metaTitle", "Meta title"],
-      ["ogImage", "OG Image URL"],
+      ["ogImage", "OG Image"],
     ],
   },
 ];
@@ -62,6 +63,8 @@ export default function SettingsForm({ settings }: { settings: SiteSettings }) {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    setValue,
+    watch,
   } = useForm<SiteSettings>({
     resolver: zodResolver(settingsSchema),
     defaultValues: settings,
@@ -101,13 +104,20 @@ export default function SettingsForm({ settings }: { settings: SiteSettings }) {
         >
           <legend className="font-serif text-lg uppercase tracking-[0.1em] text-charcoal">{section.title}</legend>
           <div className="mt-4 grid gap-5 md:grid-cols-2">
-            {section.fields.map(([name, label]) => (
-              <label key={name} className="block">
+            {section.fields.map(([name, label]) => {
+              const isImageField = ["heroImage", "heroVideo", "ogImage"].includes(name);
+              return (
+              <label key={name} className={isImageField ? "md:col-span-2 block" : "block"}>
                 <span className="font-sans text-xs font-semibold uppercase tracking-[0.14em] text-stone-500">{label}</span>
-                <input {...register(name as keyof SiteSettings)} className={inputClass} />
+                {isImageField ? (
+                  <ImageUpload value={String(watch(name as keyof SiteSettings) || "")} onChange={(url) => setValue(name as keyof SiteSettings, url)} />
+                ) : (
+                  <input {...register(name as keyof SiteSettings)} className={inputClass} />
+                )}
                 {errors[name as keyof SiteSettings] && <span className="mt-1.5 block font-sans text-xs text-red-600">{String(errors[name as keyof SiteSettings]?.message)}</span>}
               </label>
-            ))}
+              );
+            })}
           </div>
         </motion.fieldset>
       ))}

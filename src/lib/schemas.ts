@@ -11,7 +11,7 @@ export const roomSchema = z.object({
   price: z.coerce.number().positive(),
   description: z.string().min(20),
   amenities: z.array(z.string().min(1)).min(1),
-  images: z.array(z.string().url()).min(1),
+  images: z.array(z.string().min(1)).min(1),
   maxGuests: z.coerce.number().int().positive(),
   isAvailable: z.boolean(),
 });
@@ -32,7 +32,7 @@ export const bookingSchema = z.object({
 export const publicBookingSchema = bookingSchema.omit({ status: true, totalAmount: true, roomName: true });
 
 export const galleryImageSchema = z.object({
-  src: z.string().url(),
+  src: z.string().min(1),
   alt: z.string().min(3),
   category: z.enum(["rooms", "dining", "exterior", "events", "spa", "temple"]),
   order: z.coerce.number().int().nonnegative(),
@@ -50,7 +50,7 @@ export const offeringSchema = z.object({
   title: z.string().min(3),
   subtitle: z.string().min(3),
   description: z.string().min(20),
-  image: z.string().url(),
+  image: z.string().min(1),
   imageAlt: z.string().min(3),
   order: z.coerce.number().int().nonnegative(),
   visible: z.boolean(),
@@ -59,7 +59,7 @@ export const offeringSchema = z.object({
 export const experienceSchema = z.object({
   title: z.string().min(3),
   description: z.string().min(20),
-  image: z.string().url(),
+  image: z.string().min(1),
   price: z.coerce.number().nonnegative(),
   visible: z.boolean(),
 });
@@ -77,8 +77,8 @@ export const settingsSchema = z.object({
   address: z.string().min(5),
   city: z.string().min(2),
   pincode: z.string().min(4),
-  heroImage: z.string().url(),
-  heroVideo: z.string().url().or(z.literal("")),
+  heroImage: z.string().min(1),
+  heroVideo: z.string().min(1).or(z.literal("")),
   heroHeadline: z.string().min(10),
   heroSubheadline: z.string().min(3),
   introTitle: z.string().min(10),
@@ -91,7 +91,7 @@ export const settingsSchema = z.object({
   whatsappNumber: z.string().min(7),
   metaTitle: z.string().min(5),
   metaDescription: z.string().min(10),
-  ogImage: z.string().url(),
+  ogImage: z.string().min(1),
 });
 
 export const announcementSchema = z.object({
@@ -114,7 +114,7 @@ export const specialOfferSchema = z.object({
   title: z.string().min(3),
   description: z.string().min(10),
   price: z.coerce.number().positive(),
-  image: z.string().url(),
+  image: z.string().min(1),
   validFrom: z.string().min(1),
   validTo: z.string().min(1),
   visible: z.boolean(),
@@ -137,7 +137,7 @@ export const diningVenueSchema = z.object({
   name: z.string().min(3),
   cuisine: z.string().min(2),
   description: z.string().min(20),
-  image: z.string().url(),
+  image: z.string().min(1),
   hours: z.string().min(3),
   order: z.coerce.number().int().nonnegative(),
   visible: z.boolean(),
@@ -149,7 +149,7 @@ export const spaServiceSchema = z.object({
   description: z.string().min(20),
   duration: z.string().min(2),
   price: z.coerce.number().nonnegative(),
-  image: z.string().url(),
+  image: z.string().min(1),
   order: z.coerce.number().int().nonnegative(),
   visible: z.boolean(),
 });
@@ -158,7 +158,7 @@ export const eventVenueSchema = z.object({
   name: z.string().min(3),
   capacity: z.string().min(2),
   description: z.string().min(20),
-  image: z.string().url(),
+  image: z.string().min(1),
   features: z.array(z.string().min(1)).min(1),
   order: z.coerce.number().int().nonnegative(),
   visible: z.boolean(),

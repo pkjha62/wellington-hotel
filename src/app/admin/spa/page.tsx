@@ -19,7 +19,7 @@ export default function AdminSpaPage() {
         { name: "category", label: "Category", type: "text", placeholder: "Traditional, Massage, Wellness..." },
         { name: "duration", label: "Duration", type: "text", placeholder: "60 – 120 min" },
         { name: "price", label: "Price (₹)", type: "number" },
-        { name: "image", label: "Image URL", type: "url" },
+        { name: "image", label: "Image", type: "image" },
         { name: "order", label: "Display order", type: "number" },
         { name: "description", label: "Description", type: "textarea" },
         { name: "visible", label: "Visible", type: "checkbox" },

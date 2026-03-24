@@ -5,7 +5,7 @@ import { z } from "zod";
 import AdminShell from "@/components/admin/AdminShell";
 import EntityManager from "@/components/admin/EntityManager";
 
-type FieldType = "text" | "textarea" | "number" | "checkbox" | "select" | "array" | "date" | "email" | "url";
+type FieldType = "text" | "textarea" | "number" | "checkbox" | "select" | "array" | "date" | "email" | "url" | "image" | "images";
 
 type EntityField = {
   name: string;

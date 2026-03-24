@@ -18,7 +18,7 @@ export default function AdminOffersPage() {
         { name: "title", label: "Title", type: "text" },
         { name: "description", label: "Description", type: "textarea" },
         { name: "price", label: "Starting price (₹)", type: "number" },
-        { name: "image", label: "Image URL", type: "url" },
+        { name: "image", label: "Image", type: "image" },
         { name: "validFrom", label: "Valid from", type: "date" },
         { name: "validTo", label: "Valid to", type: "date" },
         { name: "visible", label: "Visible", type: "checkbox" },

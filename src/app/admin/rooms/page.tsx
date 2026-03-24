@@ -26,7 +26,7 @@ export default function AdminRoomsPage() {
         { name: "maxGuests", label: "Max guests", type: "number" },
         { name: "description", label: "Description", type: "textarea" },
         { name: "amenities", label: "Amenities", type: "array", placeholder: "Wi-Fi, AC, Temple View" },
-        { name: "images", label: "Image URLs", type: "array", placeholder: "https://..." },
+        { name: "images", label: "Room Images", type: "images" },
         { name: "isAvailable", label: "Available", type: "checkbox" },
       ]}
       columns={[

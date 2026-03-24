@@ -17,7 +17,7 @@ export default function AdminEventsPage() {
       fields={[
         { name: "name", label: "Venue name", type: "text" },
         { name: "capacity", label: "Capacity", type: "text", placeholder: "Up to 500 guests" },
-        { name: "image", label: "Image URL", type: "url" },
+        { name: "image", label: "Image", type: "image" },
         { name: "order", label: "Display order", type: "number" },
         { name: "description", label: "Description", type: "textarea" },
         { name: "features", label: "Features", type: "array", placeholder: "Chandeliers, Stage, AV Equipment" },
