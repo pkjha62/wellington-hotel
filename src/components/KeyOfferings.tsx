@@ -17,22 +17,24 @@ interface OfferingProps {
 function OfferingBlock({ id, title, subtitle, description, image, imageAlt, reverse = false }: OfferingProps) {
   return (
     <div id={id} className={`flex flex-col ${reverse ? "lg:flex-row-reverse" : "lg:flex-row"} min-h-[400px] sm:min-h-[500px] lg:min-h-[600px]`}>
+      {/* Image slides in from the outer edge, after text */}
       <motion.div
         className="relative w-full lg:w-1/2 min-h-[250px] sm:min-h-[350px] lg:min-h-full overflow-hidden group"
-        initial={{ opacity: 0, clipPath: "inset(0 100% 0 0)" }}
-        whileInView={{ opacity: 1, clipPath: "inset(0 0% 0 0)" }}
+        initial={{ opacity: 0, clipPath: reverse ? "inset(0 0% 0 100%)" : "inset(0 100% 0 0%)" }}
+        whileInView={{ opacity: 1, clipPath: "inset(0 0% 0 0%)" }}
         viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 1, ease: "easeOut" }}
+        transition={{ duration: 1.1, delay: 0.3, ease: "easeOut" }}
       >
         <Image src={image} alt={imageAlt} fill className="object-cover transition-transform duration-700 group-hover:scale-105" sizes="(max-width: 1024px) 100vw, 50vw" />
       </motion.div>
+      {/* Text fades and slides up first */}
       <div className="w-full lg:w-1/2 flex items-center">
         <motion.div
           className="px-6 sm:px-8 md:px-16 lg:px-20 py-12 sm:py-16 lg:py-20"
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: 0.8 }}
         >
           <div className="w-10 h-px bg-gold mb-6 sm:mb-8" />
           <h3 className="font-serif text-xl sm:text-2xl md:text-3xl lg:text-4xl text-charcoal tracking-wide uppercase leading-snug">{title}</h3>
