@@ -1,5 +1,8 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import PageHero from "@/components/PageHero";
+import PageTransition from "@/components/PageTransition";
+import { StaggerGrid, StaggerItem } from "@/components/StaggerGrid";
 import { getSettings } from "@/lib/store";
 import Image from "next/image";
 import type { Metadata } from "next";
@@ -43,32 +46,26 @@ export default function DiningPage() {
     <>
       <Header settings={settings} />
       <main>
-        <section className="relative flex min-h-[50vh] items-center justify-center bg-charcoal">
-          <Image
-            src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=80"
-            alt="Fine dining"
-            fill
-            className="object-cover opacity-40"
-            priority
-          />
-          <div className="relative z-10 text-center px-4">
-            <p className="font-sans text-[11px] uppercase tracking-[0.22em] text-gold">Culinary</p>
-            <h1 className="mt-4 font-serif text-5xl uppercase tracking-[0.12em] text-white sm:text-6xl">Dining</h1>
-            <p className="mt-4 max-w-xl mx-auto font-sans text-sm leading-7 text-white/70">
-              Authentic flavours crafted with love — from pure vegetarian thalis to lavish multi-cuisine buffets.
-            </p>
-          </div>
-        </section>
+        <PageHero
+          image="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=80"
+          imageAlt="Fine dining"
+          kicker="Culinary"
+          title="Dining"
+          subtitle="Authentic flavours crafted with love — from pure vegetarian thalis to lavish multi-cuisine buffets."
+        />
 
+        <PageTransition>
         <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
-          <div className="space-y-20">
+          <StaggerGrid className="space-y-20">
             {diningExperiences.map((item, i) => (
-              <article
+              <StaggerItem
                 key={item.title}
+              >
+              <article
                 className={`flex flex-col gap-10 lg:items-center ${i % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"}`}
               >
                 <div className="relative h-80 w-full overflow-hidden rounded-[28px] lg:w-1/2">
-                  <Image src={item.image} alt={item.title} fill className="object-cover" />
+                  <Image src={item.image} alt={item.title} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
                 </div>
                 <div className="lg:w-1/2">
                   <h2 className="font-serif text-2xl uppercase tracking-[0.1em] text-charcoal">{item.title}</h2>
@@ -76,9 +73,11 @@ export default function DiningPage() {
                   <p className="mt-4 font-sans text-xs uppercase tracking-[0.18em] text-gold">Hours: {item.hours}</p>
                 </div>
               </article>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerGrid>
         </section>
+        </PageTransition>
       </main>
       <Footer settings={settings} />
     </>

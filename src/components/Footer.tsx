@@ -42,9 +42,16 @@ export default function Footer({ settings }: { settings: SiteSettings }) {
           <motion.div variants={columnItem}>
             <h4 className="font-sans text-xs tracking-[0.2em] uppercase text-gold mb-4 sm:mb-6">Quick Links</h4>
             <ul className="space-y-2 sm:space-y-3">
-              {["Rooms & Suites", "Cuisine", "Events", "Spa & Wellness", "Gallery", "Experiences"].map((link) => (
-                <li key={link}>
-                  <a href={`#${link.toLowerCase().replace(/[&\s]+/g, "-")}`} className="font-sans text-xs sm:text-sm text-white/60 hover:text-gold transition-colors duration-300">{link}</a>
+              {[
+                { label: "Rooms & Suites", href: "/rooms" },
+                { label: "Cuisine", href: "/dining" },
+                { label: "Events", href: "/events" },
+                { label: "Spa & Wellness", href: "/spa" },
+                { label: "Gallery", href: "/#gallery" },
+                { label: "Experiences", href: "/#experiences" },
+              ].map((link) => (
+                <li key={link.label}>
+                  <a href={link.href} className="font-sans text-xs sm:text-sm text-white/60 hover:text-gold transition-colors duration-300">{link.label}</a>
                 </li>
               ))}
             </ul>

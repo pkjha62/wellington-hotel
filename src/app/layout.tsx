@@ -15,14 +15,12 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "The Deoghar Grand Hotel & Spa | Luxury Stay in Deoghar",
+  title: {
+    default: "The Deoghar Grand Hotel & Spa | Luxury Stay in Deoghar",
+    template: "%s | The Deoghar Grand Hotel & Spa",
+  },
   description:
     "Experience luxury hospitality near Baba Baidyanath Dham in Deoghar. Explore rooms, wellness, dining, events, and curated spiritual stays.",
-  openGraph: {
-    title: "The Deoghar Grand Hotel & Spa",
-    description: "Luxury stay in Deoghar with premium rooms, wellness, events, and pilgrimage-friendly hospitality.",
-    images: ["https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&q=80"],
-  },
 };
 
 export default function RootLayout({
@@ -35,7 +33,12 @@ export default function RootLayout({
       lang="en"
       className={`${playfair.variable} ${montserrat.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col overflow-x-hidden">{children}</body>
+      <body className="min-h-full flex flex-col overflow-x-hidden">
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:rounded-full focus:bg-gold focus:px-6 focus:py-3 focus:font-sans focus:text-xs focus:uppercase focus:tracking-[0.18em] focus:text-white">
+          Skip to content
+        </a>
+        {children}
+      </body>
     </html>
   );
 }

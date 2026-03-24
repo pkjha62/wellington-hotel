@@ -7,17 +7,20 @@ import type { Testimonial } from "@/types";
 export default function Testimonials({ items }: { items: Testimonial[] }) {
   const [testimonials, setTestimonials] = useState<Testimonial[]>(items);
   const [current, setCurrent] = useState(0);
+  const [paused, setPaused] = useState(false);
 
   useEffect(() => {
     setTestimonials(items);
   }, [items]);
 
   const next = useCallback(() => setCurrent((c) => (c + 1) % testimonials.length), [testimonials.length]);
+  const prev = useCallback(() => setCurrent((c) => (c - 1 + testimonials.length) % testimonials.length), [testimonials.length]);
 
   useEffect(() => {
+    if (paused) return;
     const timer = setInterval(next, 6000);
     return () => clearInterval(timer);
-  }, [next]);
+  }, [next, paused]);
 
   const t = testimonials[current];
 
@@ -60,7 +63,14 @@ export default function Testimonials({ items }: { items: Testimonial[] }) {
           </AnimatePresence>
         </div>
 
-        <div className="flex justify-center gap-2 mt-8">
+        <div className="flex justify-center items-center gap-3 mt-8">
+          <button
+            onClick={prev}
+            className="w-8 h-8 flex items-center justify-center border border-gold/30 text-gold hover:bg-gold hover:text-white transition-colors rounded-full"
+            aria-label="Previous testimonial"
+          >
+            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+          </button>
           {testimonials.map((_, i) => (
             <button
               key={i}
@@ -69,6 +79,24 @@ export default function Testimonials({ items }: { items: Testimonial[] }) {
               aria-label={`Testimonial ${i + 1}`}
             />
           ))}
+          <button
+            onClick={next}
+            className="w-8 h-8 flex items-center justify-center border border-gold/30 text-gold hover:bg-gold hover:text-white transition-colors rounded-full"
+            aria-label="Next testimonial"
+          >
+            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+          </button>
+          <button
+            onClick={() => setPaused((p) => !p)}
+            className="ml-2 w-8 h-8 flex items-center justify-center border border-gold/30 text-gold hover:bg-gold hover:text-white transition-colors rounded-full"
+            aria-label={paused ? "Play carousel" : "Pause carousel"}
+          >
+            {paused ? (
+              <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+            ) : (
+              <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M6 4h4v16H6zM14 4h4v16h-4z" /></svg>
+            )}
+          </button>
         </div>
       </div>
     </section>

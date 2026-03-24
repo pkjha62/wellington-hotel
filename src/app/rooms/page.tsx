@@ -1,5 +1,8 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import PageHero from "@/components/PageHero";
+import PageTransition from "@/components/PageTransition";
+import { StaggerGrid, StaggerItem } from "@/components/StaggerGrid";
 import { getRooms, getSettings } from "@/lib/store";
 import Image from "next/image";
 import Link from "next/link";
@@ -18,35 +21,28 @@ export default function RoomsPage() {
     <>
       <Header settings={settings} />
       <main>
-        {/* Hero Banner */}
-        <section className="relative flex min-h-[50vh] items-center justify-center bg-charcoal">
-          <Image
-            src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=1920&q=80"
-            alt="Luxury hotel room"
-            fill
-            className="object-cover opacity-40"
-            priority
-          />
-          <div className="relative z-10 text-center px-4">
-            <p className="font-sans text-[11px] uppercase tracking-[0.22em] text-gold">Accommodation</p>
-            <h1 className="mt-4 font-serif text-5xl uppercase tracking-[0.12em] text-white sm:text-6xl">Rooms &amp; Suites</h1>
-            <p className="mt-4 max-w-xl mx-auto font-sans text-sm leading-7 text-white/70">
-              Each room blends traditional Jharkhandi aesthetics with modern luxury — an experience crafted for comfort and culture.
-            </p>
-          </div>
-        </section>
+        <PageHero
+          image="https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=1920&q=80"
+          imageAlt="Luxury hotel room"
+          kicker="Accommodation"
+          title="Rooms &amp; Suites"
+          subtitle="Each room blends traditional Jharkhandi aesthetics with modern luxury — an experience crafted for comfort and culture."
+        />
 
+        <PageTransition>
         {/* Room Grid */}
         <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
-          <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+          <StaggerGrid className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
             {rooms.map((room) => (
-              <article key={room.id} className="group overflow-hidden rounded-[28px] border border-stone-200 bg-white transition hover:shadow-lg">
+              <StaggerItem key={room.id}>
+              <article className="group overflow-hidden rounded-[28px] border border-stone-200 bg-white transition hover:shadow-lg">
                 <div className="relative h-64 overflow-hidden">
                   <Image
                     src={room.images[0]}
                     alt={room.name}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
                   <div className="absolute bottom-4 left-4 rounded-full bg-gold px-4 py-1.5 font-sans text-xs uppercase tracking-[0.18em] text-white">
                     {room.type}
@@ -78,9 +74,11 @@ export default function RoomsPage() {
                   </Link>
                 </div>
               </article>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerGrid>
         </section>
+        </PageTransition>
       </main>
       <Footer settings={settings} />
     </>

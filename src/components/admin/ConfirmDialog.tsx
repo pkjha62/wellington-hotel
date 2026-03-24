@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useCallback } from "react";
+
 export default function ConfirmDialog({
   open,
   title,
@@ -13,6 +15,16 @@ export default function ConfirmDialog({
   onConfirm: () => void;
   onCancel: () => void;
 }) {
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (e.key === "Escape") onCancel();
+  }, [onCancel]);
+
+  useEffect(() => {
+    if (!open) return;
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [open, handleKeyDown]);
+
   if (!open) {
     return null;
   }

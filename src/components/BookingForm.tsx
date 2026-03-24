@@ -126,7 +126,7 @@ export default function BookingForm({ rooms }: { rooms: Room[] }) {
 
       <div className="md:col-span-2 rounded-[28px] bg-beige p-5">
         <p className="font-sans text-[11px] uppercase tracking-[0.18em] text-text-light">Estimated stay total</p>
-        <p className="mt-3 font-serif text-3xl text-charcoal">₹{estimatedAmount.toLocaleString("en-IN")}</p>
+        <p className="mt-3 font-serif text-3xl text-charcoal">{estimatedAmount > 0 ? `₹${estimatedAmount.toLocaleString("en-IN")}` : "Select dates to estimate"}</p>
         <p className="mt-3 font-sans text-sm text-text-secondary">Room pricing is calculated from the selected room and travel dates. Final confirmation appears after submission.</p>
       </div>
 

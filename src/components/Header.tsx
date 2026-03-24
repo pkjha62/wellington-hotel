@@ -1,19 +1,23 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import type { SiteSettings } from "@/types";
 
 const navLinks = [
-  { label: "Rooms & Suites", href: "#rooms-suites" },
-  { label: "Cuisine", href: "#cuisine" },
-  { label: "Spa & Wellness", href: "#spa-wellness" },
-  { label: "Events", href: "#events" },
-  { label: "Experiences", href: "#experiences" },
-  { label: "Gallery", href: "#gallery" },
-  { label: "Contact", href: "#contact" },
+  { label: "Rooms & Suites", href: "/rooms" },
+  { label: "Cuisine", href: "/dining" },
+  { label: "Spa & Wellness", href: "/spa" },
+  { label: "Events", href: "/events" },
+  { label: "Experiences", href: "/#experiences" },
+  { label: "Gallery", href: "/#gallery" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 export default function Header({ settings }: { settings: SiteSettings }) {
+  const pathname = usePathname();
+  const isHome = pathname === "/";
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -62,14 +66,17 @@ export default function Header({ settings }: { settings: SiteSettings }) {
       <nav className="hidden lg:block">
         <div className={`mx-8 h-px transition-colors duration-500 ${scrolled ? "bg-gold/20" : "bg-white/20"}`} />
         <ul className="flex items-center justify-center gap-8 py-3 px-8">
-          {navLinks.map((link) => (
-            <li key={link.label}>
-              <a href={link.href} className={`relative font-sans text-[11px] tracking-[0.15em] uppercase transition-colors duration-300 hover:text-gold group ${scrolled ? "text-charcoal" : "text-white"}`}>
-                {link.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-px bg-gold transition-all duration-300 group-hover:w-full" />
-              </a>
-            </li>
-          ))}
+          {navLinks.map((link) => {
+            const isActive = link.href === pathname || (link.href.startsWith("/#") && isHome);
+            return (
+              <li key={link.label}>
+                <Link href={link.href} className={`relative font-sans text-[11px] tracking-[0.15em] uppercase transition-colors duration-300 hover:text-gold group ${isActive ? "text-gold" : scrolled ? "text-charcoal" : "text-white"}`}>
+                  {link.label}
+                  <span className={`absolute -bottom-1 left-0 h-px bg-gold transition-all duration-300 ${isActive ? "w-full" : "w-0 group-hover:w-full"}`} />
+                </Link>
+              </li>
+            );
+          })}
         </ul>
       </nav>
 
@@ -92,10 +99,10 @@ export default function Header({ settings }: { settings: SiteSettings }) {
           <ul className="py-4 overflow-y-auto max-h-[calc(100vh-180px)]">
             {navLinks.map((link) => (
               <li key={link.label}>
-                <a href={link.href} onClick={() => setMenuOpen(false)} className="block px-6 py-3.5 font-sans text-xs tracking-[0.15em] uppercase text-charcoal hover:text-gold hover:bg-beige/50 transition-colors">{link.label}</a>
+                <Link href={link.href} onClick={() => setMenuOpen(false)} className="block px-6 py-3.5 font-sans text-xs tracking-[0.15em] uppercase text-charcoal hover:text-gold hover:bg-beige/50 transition-colors">{link.label}</Link>
               </li>
             ))}
-            <li><a href="/booking" onClick={() => setMenuOpen(false)} className="block px-6 py-3.5 font-sans text-xs tracking-[0.15em] uppercase text-gold font-semibold">BOOK NOW</a></li>
+            <li><Link href="/booking" onClick={() => setMenuOpen(false)} className="block px-6 py-3.5 font-sans text-xs tracking-[0.15em] uppercase text-gold font-semibold">BOOK NOW</Link></li>
           </ul>
         </div>
       </div>

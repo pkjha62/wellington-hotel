@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import PageTransition from "@/components/PageTransition";
 import { getSettings } from "@/lib/store";
 import type { Metadata } from "next";
 
@@ -14,7 +15,8 @@ export default function TermsPage() {
   return (
     <>
       <Header settings={settings} />
-      <main className="mx-auto max-w-4xl px-4 py-20 sm:px-6">
+      <main className="mx-auto max-w-4xl px-4 pt-32 pb-20 sm:px-6">
+        <PageTransition>
         <p className="font-sans text-[11px] uppercase tracking-[0.22em] text-gold">Legal</p>
         <h1 className="mt-4 font-serif text-4xl uppercase tracking-[0.12em] text-charcoal sm:text-5xl">Terms &amp; Conditions</h1>
         <p className="mt-4 font-sans text-sm text-text-secondary">Effective Date: 1 January 2026</p>
@@ -50,6 +52,7 @@ export default function TermsPage() {
             <p className="mt-3">We reserve the right to update these terms at any time. Continued use of our services constitutes acceptance of the revised terms.</p>
           </section>
         </div>
+        </PageTransition>
       </main>
       <Footer settings={settings} />
     </>

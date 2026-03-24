@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useRef } from "react";
 import { motion } from "framer-motion";
 import type { Experience } from "@/types";
@@ -51,13 +52,13 @@ export default function Experiences({ experiences }: { experiences: Experience[]
                   <h3 className="font-serif text-lg sm:text-xl md:text-2xl text-white tracking-wide uppercase">{exp.title}</h3>
                   <p className="font-sans text-xs md:text-sm text-white/80 leading-relaxed mt-2 sm:mt-3 max-w-sm">{exp.description}</p>
                   <p className="mt-3 font-sans text-[11px] uppercase tracking-[0.2em] text-gold-light">Starting at ₹{exp.price.toLocaleString("en-IN")}</p>
-                  <span className="inline-flex flex-col items-start mt-3 sm:mt-4 font-sans text-[10px] tracking-[0.2em] uppercase text-gold group-hover:text-gold-light transition-colors">
+                  <Link href="/booking" className="inline-flex flex-col items-start mt-3 sm:mt-4 font-sans text-[10px] tracking-[0.2em] uppercase text-gold group-hover:text-gold-light transition-colors">
                     <span className="inline-flex items-center gap-2">
                       Discover
                       <svg className="w-3 h-3 transition-transform duration-300 group-hover:translate-x-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                     </span>
                     <span className="block h-px w-0 bg-gold group-hover:w-full transition-all duration-300 ease-out mt-1" />
-                  </span>
+                  </Link>
                 </div>
               </div>
             </motion.div>

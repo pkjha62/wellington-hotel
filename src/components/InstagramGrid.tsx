@@ -1,11 +1,23 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { GalleryImage } from "@/types";
 
 function Lightbox({ image, onClose }: { image: GalleryImage; onClose: () => void }) {
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (e.key === "Escape") onClose();
+  }, [onClose]);
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [handleKeyDown]);
   return (
     <motion.div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 px-4 cursor-pointer"

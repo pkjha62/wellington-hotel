@@ -38,7 +38,7 @@ export default function Introduction({ settings }: { settings: SiteSettings }) {
         <motion.p className="font-sans text-sm md:text-base text-text-secondary leading-relaxed mt-6 sm:mt-8 max-w-2xl mx-auto" variants={fadeUp}>
           {settings.introBody}
         </motion.p>
-        <motion.a href="#rooms-suites" className="inline-flex items-center gap-2 mt-8 sm:mt-10 font-sans text-xs tracking-[0.2em] uppercase text-gold hover:text-gold-dark transition-colors duration-300 group" variants={fadeUp}>
+        <motion.a href="/rooms" className="inline-flex items-center gap-2 mt-8 sm:mt-10 font-sans text-xs tracking-[0.2em] uppercase text-gold hover:text-gold-dark transition-colors duration-300 group" variants={fadeUp}>
           Learn more about the hotel
           <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />

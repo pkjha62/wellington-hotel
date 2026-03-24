@@ -85,7 +85,17 @@ export default function AdminEntityPage<T extends { id: string }>({
 
   return (
     <AdminShell title={shellTitle} description={shellDescription}>
-      {loading ? <div className="rounded-[28px] border border-stone-200 bg-white p-6 font-sans text-sm text-text-secondary">Loading data...</div> : null}
+      {loading ? (
+        <div className="space-y-4">
+          {[...Array(3)].map((_, i) => (
+            <div key={i} className="animate-pulse rounded-[28px] border border-stone-200 bg-white p-6">
+              <div className="h-4 w-1/3 rounded bg-stone-200" />
+              <div className="mt-3 h-3 w-2/3 rounded bg-stone-100" />
+              <div className="mt-2 h-3 w-1/2 rounded bg-stone-100" />
+            </div>
+          ))}
+        </div>
+      ) : null}
       {error ? <div className="rounded-[28px] border border-red-200 bg-red-50 p-6 font-sans text-sm text-red-700">{error}</div> : null}
       {!loading && !error ? (
         <EntityManager

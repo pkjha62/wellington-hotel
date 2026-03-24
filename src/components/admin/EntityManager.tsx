@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -123,11 +123,20 @@ export default function EntityManager<T extends { id: string }>({
     reset(normalizeForForm(item, fields));
   };
 
-  const closeForm = () => {
+  const closeForm = useCallback(() => {
     setFormOpen(false);
     setEditingItem(null);
     setError("");
-  };
+  }, []);
+
+  useEffect(() => {
+    if (!formOpen) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeForm();
+    };
+    document.addEventListener("keydown", handleKey);
+    return () => document.removeEventListener("keydown", handleKey);
+  }, [formOpen, closeForm]);
 
   const onSubmit = handleSubmit(async (values) => {
     setSubmitting(true);

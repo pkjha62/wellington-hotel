@@ -13,7 +13,23 @@ import ScrollProgress from "@/components/ScrollProgress";
 import StatsStrip from "@/components/StatsStrip";
 import Testimonials from "@/components/Testimonials";
 import WhatsAppButton from "@/components/WhatsAppButton";
-import { getAnnouncements, getExperiences, getGallery, getOfferings, getSettings, getStats, getTestimonials } from "@/lib/store";
+import FAQSection from "@/components/FAQSection";
+import SpecialOffersSection from "@/components/SpecialOffersSection";
+import { getAnnouncements, getExperiences, getGallery, getOfferings, getSettings, getStatFacts, getTestimonials, getFAQs, getSpecialOffers } from "@/lib/store";
+import type { Metadata } from "next";
+
+export function generateMetadata(): Metadata {
+  const settings = getSettings();
+  return {
+    title: settings.metaTitle,
+    description: settings.metaDescription,
+    openGraph: {
+      title: settings.metaTitle,
+      description: settings.metaDescription,
+      images: [settings.ogImage],
+    },
+  };
+}
 
 export default function Home() {
   const settings = getSettings();
@@ -22,23 +38,27 @@ export default function Home() {
   const experiences = getExperiences(true);
   const gallery = getGallery();
   const testimonials = getTestimonials(true);
-  const stats = getStats();
+  const statFacts = getStatFacts(true);
+  const faqs = getFAQs(true);
+  const specialOffers = getSpecialOffers(true);
 
   return (
     <>
       <ScrollProgress />
       <AnnouncementBar announcements={announcements} />
       <Header settings={settings} />
-      <main>
+      <main id="main-content">
         <Hero settings={settings} />
         <Introduction settings={settings} />
-        <StatsStrip stats={stats} />
+        <StatsStrip statFacts={statFacts} />
         <KeyOfferings offerings={offerings} />
         <Experiences experiences={experiences} />
+        <SpecialOffersSection offers={specialOffers} />
         <Testimonials items={testimonials} />
         <Location settings={settings} />
         <InstagramGrid images={gallery} instagramHandle={settings.instagramHandle} />
         <Newsletter />
+        <FAQSection faqs={faqs} />
       </main>
       <Footer settings={settings} />
       <BackToTop />
