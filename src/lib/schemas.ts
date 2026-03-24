@@ -78,6 +78,7 @@ export const settingsSchema = z.object({
   city: z.string().min(2),
   pincode: z.string().min(4),
   heroImage: z.string().url(),
+  heroVideo: z.string().url().or(z.literal("")),
   heroHeadline: z.string().min(10),
   heroSubheadline: z.string().min(3),
   introTitle: z.string().min(10),

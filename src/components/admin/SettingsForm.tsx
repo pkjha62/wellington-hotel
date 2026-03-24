@@ -14,6 +14,7 @@ const sections = [
       ["hotelName", "Hotel name"],
       ["subtitle", "Subtitle"],
       ["heroImage", "Hero image URL"],
+      ["heroVideo", "Hero video URL"],
       ["heroHeadline", "Hero headline"],
       ["heroSubheadline", "Hero subheadline"],
     ],
