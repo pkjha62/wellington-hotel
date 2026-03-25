@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import { normalizeImageUrl } from "@/lib/image-url";
 
 export default function PageHero({
   image,
@@ -17,6 +18,7 @@ export default function PageHero({
   title: string;
   subtitle: string;
 }) {
+  const imageSrc = normalizeImageUrl(image);
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
@@ -26,7 +28,7 @@ export default function PageHero({
     <section ref={ref} className="relative flex min-h-[60vh] items-center justify-center bg-charcoal pt-28 overflow-hidden">
       <motion.div className="absolute inset-0" style={{ y }}>
         <Image
-          src={image}
+          src={imageSrc}
           alt={imageAlt}
           fill
           className="object-cover opacity-40"

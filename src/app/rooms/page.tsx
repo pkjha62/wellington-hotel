@@ -10,6 +10,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import BreadcrumbSchema from "@/components/BreadcrumbSchema";
+import { normalizeImageUrl } from "@/lib/image-url";
 
 export const metadata: Metadata = {
   title: "Rooms & Suites | The Deoghar Grand Hotel & Spa",
@@ -45,7 +46,7 @@ export default function RoomsPage() {
               <article className="group overflow-hidden rounded-[28px] border border-stone-200 bg-white transition hover:shadow-lg">
                 <Link href={`/rooms/${room.id}`} className="block relative h-64 overflow-hidden">
                   <Image
-                    src={room.images[0]}
+                    src={normalizeImageUrl(room.images[0])}
                     alt={room.name}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-105"

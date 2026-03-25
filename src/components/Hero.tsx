@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import type { SiteSettings } from "@/types";
+import { normalizeImageUrl } from "@/lib/image-url";
 
 // Word-by-word headline reveal
 function AnimatedHeadline({ text }: { text: string }) {
@@ -28,6 +29,7 @@ function AnimatedHeadline({ text }: { text: string }) {
 }
 
 export default function Hero({ settings }: { settings: SiteSettings }) {
+  const heroImage = normalizeImageUrl(settings.heroImage);
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
@@ -43,14 +45,14 @@ export default function Hero({ settings }: { settings: SiteSettings }) {
             loop
             muted
             playsInline
-            poster={settings.heroImage}
+            poster={heroImage}
             className="absolute inset-0 h-full w-full object-cover"
           >
             <source src={settings.heroVideo} type="video/mp4" />
           </video>
         ) : (
           <Image
-            src={settings.heroImage}
+            src={heroImage}
             alt={`${settings.hotelName} hero image`}
             fill
             className="object-cover"

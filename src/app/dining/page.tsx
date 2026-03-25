@@ -9,6 +9,7 @@ import { getSettings, getDiningVenues } from "@/lib/store";
 import Image from "next/image";
 import type { Metadata } from "next";
 import BreadcrumbSchema from "@/components/BreadcrumbSchema";
+import { normalizeImageUrl } from "@/lib/image-url";
 
 export const metadata: Metadata = {
   title: "Dining | The Deoghar Grand Hotel & Spa",
@@ -44,7 +45,7 @@ export default function DiningPage() {
                 className={`flex flex-col gap-10 lg:items-center ${i % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"}`}
               >
                 <div className="relative h-80 w-full overflow-hidden rounded-[28px] lg:w-1/2">
-                  <Image src={item.image} alt={item.name} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
+                  <Image src={normalizeImageUrl(item.image)} alt={item.name} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
                 </div>
                 <div className="lg:w-1/2">
                   <p className="font-sans text-[11px] uppercase tracking-[0.18em] text-gold">{item.cuisine}</p>

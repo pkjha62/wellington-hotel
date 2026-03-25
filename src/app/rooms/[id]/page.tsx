@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import { getRooms, getRoom, getSettings } from "@/lib/store";
 import type { Metadata } from "next";
+import { normalizeImageList, normalizeImageUrl } from "@/lib/image-url";
 
 type Props = { params: Promise<{ id: string }> };
 
@@ -21,6 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const room = getRoom(id);
   if (!room) return { title: "Room Not Found" };
+  const safeImages = normalizeImageList(room.images);
 
   const settings = getSettings();
   return {
@@ -29,7 +31,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: `${room.name} | ${settings.hotelName}`,
       description: room.description.slice(0, 160),
-      images: room.images,
+      images: safeImages,
     },
   };
 }
@@ -78,6 +80,7 @@ export default async function RoomDetailPage({ params }: Props) {
   const { id } = await params;
   const room = getRoom(id);
   if (!room || !room.isAvailable) notFound();
+  const safeImages = normalizeImageList(room.images);
 
   const settings = getSettings();
 
@@ -90,7 +93,7 @@ export default async function RoomDetailPage({ params }: Props) {
         {/* Hero image */}
         <div className="relative h-[50vh] min-h-[400px]">
           <Image
-            src={room.images[0]}
+            src={safeImages[0]}
             alt={room.name}
             fill
             priority
@@ -145,13 +148,13 @@ export default async function RoomDetailPage({ params }: Props) {
                 </div>
 
                 {/* Image gallery */}
-                {room.images.length > 1 && (
+                {safeImages.length > 1 && (
                   <div>
                     <h2 className="font-serif text-xl uppercase tracking-[0.1em] text-charcoal">Gallery</h2>
                     <div className="mt-4 grid grid-cols-2 gap-4">
-                      {room.images.slice(1).map((img, i) => (
+                      {safeImages.slice(1).map((img, i) => (
                         <div key={i} className="relative aspect-[4/3] overflow-hidden rounded-2xl">
-                          <Image src={img} alt={`${room.name} - view ${i + 2}`} fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" />
+                          <Image src={normalizeImageUrl(img)} alt={`${room.name} - view ${i + 2}`} fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" />
                         </div>
                       ))}
                     </div>

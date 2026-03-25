@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import { normalizeImageUrl } from "@/lib/image-url";
 
 interface MultiImageUploadProps {
   value: string; // comma-separated URLs
@@ -67,21 +68,26 @@ export default function MultiImageUpload({ value, onChange }: MultiImageUploadPr
     <div className="mt-2 space-y-3">
       {urls.length > 0 && (
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4">
-          {urls.map((url, i) => (
-            <div key={`${url}-${i}`} className="group relative overflow-hidden rounded-xl border border-stone-200 bg-stone-50">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={url} alt={`Image ${i + 1}`} className="h-24 w-full object-cover" />
-              <button
-                type="button"
-                onClick={() => removeAt(i)}
-                className="absolute right-1 top-1 flex h-6 w-6 items-center justify-center rounded-full bg-black/60 text-white opacity-0 transition group-hover:opacity-100 hover:bg-black/80"
-              >
-                <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-          ))}
+          {urls.map((url, i) => {
+            const safeUrl = normalizeImageUrl(url, "");
+            if (!safeUrl) return null;
+
+            return (
+              <div key={`${url}-${i}`} className="group relative overflow-hidden rounded-xl border border-stone-200 bg-stone-50">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={safeUrl} alt={`Image ${i + 1}`} className="h-24 w-full object-cover" />
+                <button
+                  type="button"
+                  onClick={() => removeAt(i)}
+                  className="absolute right-1 top-1 flex h-6 w-6 items-center justify-center rounded-full bg-black/60 text-white opacity-0 transition group-hover:opacity-100 hover:bg-black/80"
+                >
+                  <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            );
+          })}
         </div>
       )}
 

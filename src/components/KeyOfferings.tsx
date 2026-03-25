@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import type { Offering } from "@/types";
+import { normalizeImageUrl } from "@/lib/image-url";
 
 interface OfferingProps {
   id: string;
@@ -26,7 +27,7 @@ function OfferingBlock({ id, title, subtitle, description, image, imageAlt, reve
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 1.1, delay: 0.3, ease: "easeOut" }}
       >
-        <Image src={image} alt={imageAlt} fill className="object-cover transition-transform duration-700 group-hover:scale-105" sizes="(max-width: 1024px) 100vw, 50vw" />
+        <Image src={normalizeImageUrl(image)} alt={imageAlt} fill className="object-cover transition-transform duration-700 group-hover:scale-105" sizes="(max-width: 1024px) 100vw, 50vw" />
       </motion.div>
       {/* Text fades and slides up first */}
       <div className="w-full lg:w-1/2 flex items-center">

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRef } from "react";
 import { motion } from "framer-motion";
 import type { Experience } from "@/types";
+import { normalizeImageUrl } from "@/lib/image-url";
 
 export default function Experiences({ experiences, title }: { experiences: Experience[]; title?: string }) {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -46,7 +47,7 @@ export default function Experiences({ experiences, title }: { experiences: Exper
               whileHover={{ y: -8, transition: { type: "spring", stiffness: 350, damping: 22 } }}
             >
               <div className="relative h-[300px] sm:h-[350px] md:h-[420px] overflow-hidden">
-                <Image src={exp.image} alt={exp.title} fill className="object-cover transition-transform duration-700 group-hover:scale-110" sizes="(max-width: 1024px) 85vw, 33vw" />
+                <Image src={normalizeImageUrl(exp.image)} alt={exp.title} fill className="object-cover transition-transform duration-700 group-hover:scale-110" sizes="(max-width: 1024px) 85vw, 33vw" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6 md:p-8">
                   <h3 className="font-serif text-lg sm:text-xl md:text-2xl text-white tracking-wide uppercase">{exp.title}</h3>

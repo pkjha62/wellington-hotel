@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
+import { normalizeImageUrl } from "@/lib/image-url";
 
 interface ImageUploadProps {
   value: string;
@@ -12,6 +13,7 @@ export default function ImageUpload({ value, onChange }: ImageUploadProps) {
   const [preview, setPreview] = useState(value);
   const [error, setError] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
+  const previewSrc = normalizeImageUrl(preview, "");
 
   const handleFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -68,11 +70,11 @@ export default function ImageUpload({ value, onChange }: ImageUploadProps) {
 
   return (
     <div className="mt-2 space-y-2">
-      {preview && (
+      {previewSrc && (
         <div className="relative overflow-hidden rounded-xl border border-stone-200 bg-stone-50">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={preview}
+            src={previewSrc}
             alt="Preview"
             className="h-40 w-full object-cover"
           />

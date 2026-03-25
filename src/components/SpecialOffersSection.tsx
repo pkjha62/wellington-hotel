@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import type { SpecialOffer } from "@/types";
+import { normalizeImageUrl } from "@/lib/image-url";
 
 export default function SpecialOffersSection({ offers, title }: { offers: SpecialOffer[]; title?: string }) {
   if (offers.length === 0) return null;
@@ -40,7 +41,7 @@ export default function SpecialOffersSection({ offers, title }: { offers: Specia
             >
               <div className="relative h-56 md:h-64 lg:h-72 overflow-hidden">
                 <Image
-                  src={offer.image}
+                  src={normalizeImageUrl(offer.image)}
                   alt={offer.title}
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-105"

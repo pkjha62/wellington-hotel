@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { GalleryImage } from "@/types";
+import { normalizeImageUrl } from "@/lib/image-url";
 
 function Lightbox({ image, onClose }: { image: GalleryImage; onClose: () => void }) {
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
@@ -34,7 +35,7 @@ function Lightbox({ image, onClose }: { image: GalleryImage; onClose: () => void
         transition={{ type: "spring", stiffness: 300, damping: 25 }}
         onClick={(e) => e.stopPropagation()}
       >
-        <Image src={image.src} alt={image.alt} fill className="object-contain" sizes="(max-width: 1024px) 95vw, 60vw" />
+        <Image src={normalizeImageUrl(image.src)} alt={image.alt} fill className="object-contain" sizes="(max-width: 1024px) 95vw, 60vw" />
         <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
           <p className="font-sans text-sm text-white tracking-wide">{image.alt}</p>
           <p className="font-sans text-[10px] uppercase tracking-[0.2em] text-gold/80 mt-1">{image.category}</p>
@@ -72,7 +73,7 @@ export default function InstagramGrid({ images, instagramHandle, title }: { imag
                 transition={{ duration: 0.5, delay: i * 0.08 }}
                 onClick={() => setLightboxImage(img)}
               >
-                <Image src={img.src} alt={img.alt} fill className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:[filter:blur(2px)]" sizes="(max-width: 768px) 50vw, 33vw" />
+                <Image src={normalizeImageUrl(img.src)} alt={img.alt} fill className="object-cover transition-all duration-700 group-hover:scale-110 group-hover:[filter:blur(2px)]" sizes="(max-width: 768px) 50vw, 33vw" />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-all duration-500 flex items-end justify-start">
                   <div className="opacity-0 group-hover:opacity-100 max-sm:opacity-100 transition-all duration-500 translate-y-3 group-hover:translate-y-0 max-sm:translate-y-0 p-3 sm:p-5 w-full max-sm:bg-gradient-to-t max-sm:from-black/70 max-sm:to-transparent">
                     <div className="w-6 h-px bg-gold mb-2 hidden sm:block" />
