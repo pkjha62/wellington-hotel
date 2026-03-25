@@ -1,10 +1,10 @@
 import { SignJWT, jwtVerify } from "jose";
 
-if (!process.env.AUTH_SECRET) {
-  throw new Error("AUTH_SECRET environment variable is required");
+function getSecret() {
+  const key = process.env.AUTH_SECRET;
+  if (!key) throw new Error("AUTH_SECRET environment variable is required");
+  return new TextEncoder().encode(key);
 }
-
-const secret = new TextEncoder().encode(process.env.AUTH_SECRET);
 
 let runtimePassword = process.env.ADMIN_PASSWORD ?? "admin@123";
 
@@ -16,12 +16,12 @@ export async function createToken(payload: Record<string, unknown>) {
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
     .setExpirationTime("8h")
-    .sign(secret);
+    .sign(getSecret());
 }
 
 export async function verifyToken(token: string) {
   try {
-    const { payload } = await jwtVerify(token, secret);
+    const { payload } = await jwtVerify(token, getSecret());
     return payload;
   } catch {
     return null;
