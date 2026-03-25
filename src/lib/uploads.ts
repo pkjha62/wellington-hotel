@@ -6,7 +6,6 @@ import fs from "fs";
 import path from "path";
 
 const UPLOAD_DIR = path.join(process.cwd(), "data", "uploads");
-const useBlob = !!process.env.BLOB_READ_WRITE_TOKEN;
 
 function ensureDir() {
   if (!fs.existsSync(UPLOAD_DIR)) {
@@ -19,10 +18,12 @@ export async function saveUploadedFile(
   buffer: Buffer,
   contentType: string
 ): Promise<string> {
-  if (useBlob) {
+  // Check at runtime so env vars loaded after module init are picked up
+  if (process.env.BLOB_READ_WRITE_TOKEN) {
     const blob = await put(name, buffer, {
       access: "public",
       contentType,
+      token: process.env.BLOB_READ_WRITE_TOKEN,
     });
     return blob.url;
   }
