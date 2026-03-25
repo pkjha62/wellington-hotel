@@ -29,6 +29,7 @@ export default function AdminOfferingsPage() {
         { key: "order", label: "Order", render: (item) => item.order },
         { key: "visible", label: "Visible", render: (item) => item.visible ? "Yes" : "No" },
       ]}
+      searchableKeys={["title", "subtitle", "description"]}
     />
   );
 }

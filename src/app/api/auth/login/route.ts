@@ -1,11 +1,17 @@
 import { cookies } from "next/headers";
 import { error, issueAdminToken, json, parseJson } from "@/lib/api";
 import { loginSchema } from "@/lib/schemas";
-import { getAdminPassword } from "@/lib/auth";
+import { verifyAdminPassword } from "@/lib/auth";
+import { rateLimit, getClientIp } from "@/lib/rate-limit";
 
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME || "admin";
 
 export async function POST(request: Request) {
+  const ip = getClientIp(request);
+  if (!rateLimit(`login:${ip}`, 5)) {
+    return error("Too many login attempts. Please try again later.", 429);
+  }
+
   const body = await parseJson(request);
   const parsed = loginSchema.safeParse(body);
 
@@ -13,10 +19,9 @@ export async function POST(request: Request) {
     return error("Invalid credentials.", 401);
   }
 
-  if (
-    parsed.data.username !== ADMIN_USERNAME ||
-    parsed.data.password !== getAdminPassword()
-  ) {
+  const passwordValid = await verifyAdminPassword(parsed.data.password);
+
+  if (parsed.data.username !== ADMIN_USERNAME || !passwordValid) {
     return error("Invalid credentials.", 401);
   }
 

@@ -1,4 +1,4 @@
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -9,6 +9,7 @@ import { getRooms, getSettings } from "@/lib/store";
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
+import BreadcrumbSchema from "@/components/BreadcrumbSchema";
 
 export const metadata: Metadata = {
   title: "Rooms & Suites | The Deoghar Grand Hotel & Spa",
@@ -21,6 +22,7 @@ export default function RoomsPage() {
 
   return (
     <>
+      <BreadcrumbSchema items={[{ name: "Home", href: "/" }, { name: "Rooms & Suites" }]} />
       <Header settings={settings} />
       <main>
         <PageHero
@@ -41,7 +43,7 @@ export default function RoomsPage() {
             {rooms.map((room) => (
               <StaggerItem key={room.id}>
               <article className="group overflow-hidden rounded-[28px] border border-stone-200 bg-white transition hover:shadow-lg">
-                <div className="relative h-64 overflow-hidden">
+                <Link href={`/rooms/${room.id}`} className="block relative h-64 overflow-hidden">
                   <Image
                     src={room.images[0]}
                     alt={room.name}
@@ -52,9 +54,11 @@ export default function RoomsPage() {
                   <div className="absolute bottom-4 left-4 rounded-full bg-gold px-4 py-1.5 font-sans text-xs uppercase tracking-[0.18em] text-white">
                     {room.type}
                   </div>
-                </div>
+                </Link>
                 <div className="p-6">
-                  <h3 className="font-serif text-xl uppercase tracking-[0.1em] text-charcoal">{room.name}</h3>
+                  <Link href={`/rooms/${room.id}`}>
+                    <h3 className="font-serif text-xl uppercase tracking-[0.1em] text-charcoal hover:text-gold transition-colors">{room.name}</h3>
+                  </Link>
                   <p className="mt-3 font-sans text-sm leading-6 text-text-secondary line-clamp-3">{room.description}</p>
                   <div className="mt-4 flex flex-wrap gap-2">
                     {room.amenities.slice(0, 4).map((a) => (

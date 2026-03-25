@@ -29,6 +29,7 @@ export default function AdminEventsPage() {
         { key: "features", label: "Features", render: (item) => item.features.slice(0, 3).join(", ") },
         { key: "visible", label: "Status", render: (item) => item.visible ? "Visible" : "Hidden" },
       ]}
+      searchableKeys={["name", "description", "capacity"]}
     />
   );
 }

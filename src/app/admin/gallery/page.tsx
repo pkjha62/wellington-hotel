@@ -33,6 +33,7 @@ export default function AdminGalleryPage() {
         { key: "category", label: "Category", render: (item) => item.category },
         { key: "order", label: "Order", render: (item) => item.order },
       ]}
+      searchableKeys={["alt", "category"]}
     />
   );
 }

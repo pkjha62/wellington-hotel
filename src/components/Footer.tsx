@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import type { SiteSettings } from "@/types";
 
@@ -51,7 +52,7 @@ export default function Footer({ settings }: { settings: SiteSettings }) {
                 { label: "Experiences", href: "/#experiences" },
               ].map((link) => (
                 <li key={link.label}>
-                  <a href={link.href} className="font-sans text-xs sm:text-sm text-white/60 hover:text-gold transition-colors duration-300">{link.label}</a>
+                  <Link href={link.href} className="font-sans text-xs sm:text-sm text-white/60 hover:text-gold transition-colors duration-300">{link.label}</Link>
                 </li>
               ))}
             </ul>
@@ -94,9 +95,9 @@ export default function Footer({ settings }: { settings: SiteSettings }) {
             &copy; {currentYear} {settings.hotelName} {settings.subtitle}. All rights reserved.
           </p>
           <div className="flex gap-4 sm:gap-6">
-            <a href="/privacy" className="font-sans text-[10px] sm:text-xs text-white/40 hover:text-gold transition-colors">Privacy Policy</a>
-            <a href="/terms" className="font-sans text-[10px] sm:text-xs text-white/40 hover:text-gold transition-colors">Terms</a>
-            <a href="/cookies" className="font-sans text-[10px] sm:text-xs text-white/40 hover:text-gold transition-colors">Cookies</a>
+            <Link href="/privacy" className="font-sans text-[10px] sm:text-xs text-white/40 hover:text-gold transition-colors">Privacy Policy</Link>
+            <Link href="/terms" className="font-sans text-[10px] sm:text-xs text-white/40 hover:text-gold transition-colors">Terms</Link>
+            <Link href="/cookies" className="font-sans text-[10px] sm:text-xs text-white/40 hover:text-gold transition-colors">Cookies</Link>
           </div>
         </div>
       </div>

@@ -492,15 +492,6 @@ export function deleteStatFact(id: string): boolean {
   return statFacts.length < len;
 }
 
-// ─── Admin Password ──────────────────────────────────────────────────────────
-
-export function getAdminPassword(): string {
-  return process.env.ADMIN_PASSWORD || "admin@123";
-}
-export function getAdminUsername(): string {
-  return process.env.ADMIN_USERNAME || "admin";
-}
-
 // ─── Dining Venues ───────────────────────────────────────────────────────────
 
 let diningVenues: DiningVenue[] = [

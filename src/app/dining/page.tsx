@@ -1,4 +1,4 @@
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -8,6 +8,7 @@ import { StaggerGrid, StaggerItem } from "@/components/StaggerGrid";
 import { getSettings, getDiningVenues } from "@/lib/store";
 import Image from "next/image";
 import type { Metadata } from "next";
+import BreadcrumbSchema from "@/components/BreadcrumbSchema";
 
 export const metadata: Metadata = {
   title: "Dining | The Deoghar Grand Hotel & Spa",
@@ -20,6 +21,7 @@ export default function DiningPage() {
 
   return (
     <>
+      <BreadcrumbSchema items={[{ name: "Home", href: "/" }, { name: "Dining" }]} />
       <Header settings={settings} />
       <main>
         <PageHero

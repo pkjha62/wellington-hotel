@@ -26,6 +26,7 @@ export default function AdminExperiencesPage() {
         { key: "price", label: "Price", render: (item) => `₹${item.price.toLocaleString("en-IN")}` },
         { key: "visible", label: "Visible", render: (item) => <span className={`inline-block rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider ${item.visible ? "bg-green-100 text-green-700" : "bg-stone-100 text-stone-500"}`}>{item.visible ? "Active" : "Hidden"}</span> },
       ]}
+      searchableKeys={["title", "description"]}
     />
   );
 }

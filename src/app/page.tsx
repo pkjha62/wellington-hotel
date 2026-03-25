@@ -1,4 +1,4 @@
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 import BackToTop from "@/components/BackToTop";
 import Footer from "@/components/Footer";

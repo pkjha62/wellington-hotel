@@ -34,6 +34,7 @@ export default function AdminEntityPage<T extends { id: string }>({
   canCreate,
   canEdit,
   canDelete,
+  searchableKeys,
 }: {
   shellTitle: string;
   shellDescription: string;
@@ -47,6 +48,7 @@ export default function AdminEntityPage<T extends { id: string }>({
   canCreate?: boolean;
   canEdit?: boolean;
   canDelete?: boolean;
+  searchableKeys?: string[];
 }) {
   const [items, setItems] = useState<T[]>([]);
   const [loading, setLoading] = useState(true);
@@ -123,6 +125,7 @@ export default function AdminEntityPage<T extends { id: string }>({
           canCreate={canCreate}
           canEdit={canEdit}
           canDelete={canDelete}
+          searchableKeys={searchableKeys}
         />
       ) : null}
     </AdminShell>

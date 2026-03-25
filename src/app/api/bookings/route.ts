@@ -2,6 +2,8 @@ import { error, json, parseJson } from "@/lib/api";
 import { addBooking, getRoom } from "@/lib/store";
 import { publicBookingSchema } from "@/lib/schemas";
 import { sendBookingConfirmation } from "@/lib/email";
+import { rateLimit, getClientIp } from "@/lib/rate-limit";
+import { csrfCheck } from "@/lib/csrf";
 
 function nightsBetween(checkIn: string, checkOut: string) {
   const start = new Date(checkIn);
@@ -10,6 +12,14 @@ function nightsBetween(checkIn: string, checkOut: string) {
 }
 
 export async function POST(request: Request) {
+  const csrfError = csrfCheck(request);
+  if (csrfError) return csrfError;
+
+  const ip = getClientIp(request);
+  if (!rateLimit(`booking:${ip}`, 10)) {
+    return error("Too many booking requests. Please try again later.", 429);
+  }
+
   const body = await parseJson(request);
   const parsed = publicBookingSchema.safeParse(body);
 

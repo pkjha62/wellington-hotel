@@ -38,6 +38,7 @@ export default function AdminBookingsPage() {
         { key: "status", label: "Status", render: (item) => { const c = item.status === "confirmed" ? "bg-green-100 text-green-700" : item.status === "cancelled" ? "bg-red-100 text-red-700" : item.status === "checked-in" ? "bg-blue-100 text-blue-700" : "bg-stone-100 text-stone-600"; return <span className={`inline-block rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider ${c}`}>{item.status}</span>; } },
         { key: "amount", label: "Amount", render: (item) => `₹${item.totalAmount.toLocaleString("en-IN")}` },
       ]}
+      searchableKeys={["guestName", "guestEmail", "guestPhone", "roomName"]}
     />
   );
 }

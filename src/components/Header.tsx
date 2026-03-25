@@ -53,7 +53,7 @@ export default function Header({ settings, announcements = [] }: { settings: Sit
       {/* Top Bar */}
       <div className={`hidden md:flex items-center justify-between px-8 py-2 text-xs tracking-widest transition-colors duration-500 ${scrolled ? "text-charcoal" : "text-white"}`}>
         <a href={`tel:${settings.phone.replace(/\s+/g, "")}`} className="font-sans font-light hover:text-gold transition-colors">{settings.phone}</a>
-        <a href="/booking" className="font-sans hover:text-gold transition-colors tracking-[0.2em]">MY BOOKING</a>
+        <Link href="/booking" className="font-sans hover:text-gold transition-colors tracking-[0.2em]">MY BOOKING</Link>
       </div>
 
       <div className={`hidden md:block mx-8 h-px transition-colors duration-500 ${scrolled ? "bg-gold/20" : "bg-white/20"}`} />
@@ -67,15 +67,15 @@ export default function Header({ settings, announcements = [] }: { settings: Sit
         </button>
 
         <div className="flex-1 text-center">
-          <a href="/" className="inline-block">
-            <h1 className={`font-serif text-base sm:text-lg md:text-xl lg:text-2xl tracking-[0.15em] uppercase transition-colors duration-500 ${scrolled ? "text-charcoal" : "text-white"}`}>
+          <Link href="/" className="inline-block">
+            <p className={`font-serif text-base sm:text-lg md:text-xl lg:text-2xl tracking-[0.15em] uppercase transition-colors duration-500 ${scrolled ? "text-charcoal" : "text-white"}`}>
               {settings.hotelName}
               <span className="block text-[9px] sm:text-[10px] md:text-xs tracking-[0.3em] font-sans font-light mt-0.5">{settings.subtitle}</span>
-            </h1>
-          </a>
+            </p>
+          </Link>
         </div>
 
-        <a href="/booking" className="bg-gold hover:bg-gold-dark text-white font-sans text-xs tracking-[0.2em] px-5 sm:px-6 py-2.5 transition-colors duration-300">BOOK</a>
+        <Link href="/booking" className="bg-gold hover:bg-gold-dark text-white font-sans text-xs tracking-[0.2em] px-5 sm:px-6 py-2.5 transition-colors duration-300">BOOK</Link>
       </div>
 
       {/* Desktop Nav */}

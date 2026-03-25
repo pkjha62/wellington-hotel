@@ -27,7 +27,7 @@ export async function POST(request: Request) {
   const ext = file.name.split(".").pop()?.toLowerCase() || "jpg";
   const safeName = `${randomUUID()}.${ext}`;
   const buffer = Buffer.from(await file.arrayBuffer());
-  const url = saveUploadedFile(safeName, buffer, file.type);
+  const url = await saveUploadedFile(safeName, buffer, file.type);
 
   return json({ url, name: file.name });
 }

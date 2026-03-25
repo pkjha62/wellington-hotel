@@ -27,6 +27,7 @@ export default function AdminTestimonialsPage() {
         { key: "rating", label: "Rating", render: (item) => `${item.rating}/5` },
         { key: "approved", label: "Approved", render: (item) => <span className={`inline-block rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider ${item.approved ? "bg-green-100 text-green-700" : "bg-amber-100 text-amber-700"}`}>{item.approved ? "Approved" : "Pending"}</span> },
       ]}
+      searchableKeys={["guestName", "location", "comment"]}
     />
   );
 }

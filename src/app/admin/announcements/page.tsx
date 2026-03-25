@@ -31,6 +31,7 @@ export default function AdminAnnouncementsPage() {
         { key: "window", label: "Window", render: (item) => `${item.startDate} to ${item.endDate}` },
         { key: "active", label: "Active", render: (item) => <span className={`inline-block rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider ${item.active ? "bg-green-100 text-green-700" : "bg-stone-100 text-stone-500"}`}>{item.active ? "Active" : "Inactive"}</span> },
       ]}
+      searchableKeys={["text", "type"]}
     />
   );
 }

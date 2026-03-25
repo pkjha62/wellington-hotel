@@ -36,7 +36,10 @@ type EntityManagerProps<T extends { id: string }> = {
   canCreate?: boolean;
   canEdit?: boolean;
   canDelete?: boolean;
+  searchableKeys?: string[];
 };
+
+const ITEMS_PER_PAGE = 10;
 
 type FormShape = Record<string, string | number | boolean>;
 
@@ -82,6 +85,7 @@ export default function EntityManager<T extends { id: string }>({
   canCreate = true,
   canEdit = true,
   canDelete = true,
+  searchableKeys = [],
 }: EntityManagerProps<T>) {
   const [items, setItems] = useState(initialItems);
   const [editingItem, setEditingItem] = useState<T | null>(null);
@@ -90,7 +94,50 @@ export default function EntityManager<T extends { id: string }>({
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [toast, setToast] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
   const modalRef = useRef<HTMLDivElement>(null);
+
+  // Filter items based on search query
+  const filteredItems = useMemo(() => {
+    if (!searchQuery.trim() || searchableKeys.length === 0) return items;
+    const q = searchQuery.toLowerCase();
+    return items.filter((item) =>
+      searchableKeys.some((key) => {
+        const value = (item as Record<string, unknown>)[key];
+        return typeof value === "string" && value.toLowerCase().includes(q);
+      })
+    );
+  }, [items, searchQuery, searchableKeys]);
+
+  // Pagination
+  const totalPages = Math.max(1, Math.ceil(filteredItems.length / ITEMS_PER_PAGE));
+  const paginatedItems = useMemo(() => {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    return filteredItems.slice(start, start + ITEMS_PER_PAGE);
+  }, [filteredItems, currentPage]);
+
+  // Reset to page 1 when search changes
+  useEffect(() => { setCurrentPage(1); }, [searchQuery]);
+
+  // CSV export
+  const exportCSV = useCallback(() => {
+    const headers = columns.map((c) => c.label);
+    const rows = filteredItems.map((item) =>
+      columns.map((c) => {
+        const node = c.render(item);
+        return typeof node === "string" || typeof node === "number" ? String(node) : "";
+      })
+    );
+    const csv = [headers, ...rows].map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(",")).join("\n");
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${title.toLowerCase().replace(/\s+/g, "-")}-export.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }, [filteredItems, columns, title]);
 
   const defaultValues = useMemo(() => normalizeForForm(editingItem, fields), [editingItem, fields]);
 
@@ -171,16 +218,36 @@ export default function EntityManager<T extends { id: string }>({
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col gap-4 rounded-2xl border border-stone-200/80 bg-white p-5 shadow-sm sm:flex-row sm:items-end sm:justify-between sm:p-6">
-        <div>
-          <h2 className="font-serif text-xl sm:text-2xl uppercase tracking-[0.1em] text-charcoal">{title}</h2>
-          <p className="mt-1.5 font-sans text-sm leading-relaxed text-stone-500">{description}</p>
+      <div className="flex flex-col gap-4 rounded-2xl border border-stone-200/80 bg-white p-5 shadow-sm sm:p-6">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <h2 className="font-serif text-xl sm:text-2xl uppercase tracking-[0.1em] text-charcoal">{title}</h2>
+            <p className="mt-1.5 font-sans text-sm leading-relaxed text-stone-500">{description}</p>
+          </div>
+          <div className="flex items-center gap-2">
+            <button type="button" onClick={exportCSV} className="inline-flex items-center gap-2 rounded-xl border border-stone-200 px-4 py-2.5 font-sans text-xs font-medium uppercase tracking-[0.14em] text-stone-600 transition-all hover:border-gold hover:text-gold" title="Export CSV">
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
+              Export
+            </button>
+            {canCreate && (
+              <button type="button" onClick={openCreate} className="inline-flex items-center gap-2 rounded-xl bg-gold px-5 py-2.5 font-sans text-xs font-medium uppercase tracking-[0.14em] text-white shadow-sm transition-all hover:bg-gold-dark hover:shadow-md active:scale-[0.97]">
+                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                {createLabel}
+              </button>
+            )}
+          </div>
         </div>
-        {canCreate && (
-          <button type="button" onClick={openCreate} className="inline-flex items-center gap-2 rounded-xl bg-gold px-5 py-2.5 font-sans text-xs font-medium uppercase tracking-[0.14em] text-white shadow-sm transition-all hover:bg-gold-dark hover:shadow-md active:scale-[0.97]">
-            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
-            {createLabel}
-          </button>
+        {searchableKeys.length > 0 && (
+          <div className="relative">
+            <svg className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-stone-400" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" /></svg>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder={`Search ${title.toLowerCase()}...`}
+              className="w-full rounded-xl border border-stone-200 bg-stone-50/80 py-2.5 pl-10 pr-4 font-sans text-sm text-charcoal outline-none transition-all focus:border-gold focus:bg-white focus:ring-2 focus:ring-gold/20 sm:max-w-sm"
+            />
+          </div>
         )}
       </div>
 
@@ -199,18 +266,18 @@ export default function EntityManager<T extends { id: string }>({
               </tr>
             </thead>
             <tbody>
-              {items.length === 0 ? (
+              {paginatedItems.length === 0 ? (
                 <tr>
                   <td colSpan={columns.length + (canEdit || canDelete ? 1 : 0)} className="px-4 py-16 text-center">
                     <div className="flex flex-col items-center gap-3">
                       <svg className="h-12 w-12 text-stone-300" fill="none" viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" /></svg>
-                      <p className="font-sans text-sm font-medium text-stone-400">No records yet</p>
-                      <p className="font-sans text-xs text-stone-400">Items you create will appear here.</p>
+                      <p className="font-sans text-sm font-medium text-stone-400">{searchQuery ? "No matching records" : "No records yet"}</p>
+                      <p className="font-sans text-xs text-stone-400">{searchQuery ? "Try a different search term." : "Items you create will appear here."}</p>
                     </div>
                   </td>
                 </tr>
               ) : (
-                items.map((item, idx) => (
+                paginatedItems.map((item, idx) => (
                   <motion.tr
                     key={item.id}
                     initial={{ opacity: 0 }}
@@ -245,6 +312,34 @@ export default function EntityManager<T extends { id: string }>({
             </tbody>
           </table>
         </div>
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="flex items-center justify-between border-t border-stone-100 px-4 py-3">
+            <p className="font-sans text-xs text-stone-500">
+              Showing {((currentPage - 1) * ITEMS_PER_PAGE) + 1}–{Math.min(currentPage * ITEMS_PER_PAGE, filteredItems.length)} of {filteredItems.length}
+            </p>
+            <div className="flex items-center gap-1.5">
+              <button
+                type="button"
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage((p) => p - 1)}
+                className="rounded-lg border border-stone-200 px-3 py-1.5 font-sans text-xs font-medium text-stone-600 transition-all hover:border-gold hover:text-gold disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-stone-200 disabled:hover:text-stone-600"
+              >
+                Previous
+              </button>
+              <span className="px-2 font-sans text-xs text-stone-500">{currentPage} / {totalPages}</span>
+              <button
+                type="button"
+                disabled={currentPage === totalPages}
+                onClick={() => setCurrentPage((p) => p + 1)}
+                className="rounded-lg border border-stone-200 px-3 py-1.5 font-sans text-xs font-medium text-stone-600 transition-all hover:border-gold hover:text-gold disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-stone-200 disabled:hover:text-stone-600"
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Form modal */}

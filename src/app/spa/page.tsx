@@ -1,4 +1,4 @@
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -7,6 +7,7 @@ import PageTransition from "@/components/PageTransition";
 import { StaggerGrid, StaggerItem } from "@/components/StaggerGrid";
 import { getSettings, getSpaServices } from "@/lib/store";
 import type { Metadata } from "next";
+import BreadcrumbSchema from "@/components/BreadcrumbSchema";
 
 export const metadata: Metadata = {
   title: "Spa & Wellness | The Deoghar Grand Hotel & Spa",
@@ -19,6 +20,7 @@ export default function SpaPage() {
 
   return (
     <>
+      <BreadcrumbSchema items={[{ name: "Home", href: "/" }, { name: "Spa & Wellness" }]} />
       <Header settings={settings} />
       <main>
         <PageHero

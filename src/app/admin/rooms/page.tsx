@@ -36,6 +36,7 @@ export default function AdminRoomsPage() {
         { key: "guests", label: "Guests", render: (item) => item.maxGuests },
         { key: "available", label: "Availability", render: (item) => item.isAvailable ? "Available" : "Hidden" },
       ]}
+      searchableKeys={["name", "type", "description"]}
     />
   );
 }

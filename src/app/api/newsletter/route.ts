@@ -1,8 +1,18 @@
 import { error, json, parseJson } from "@/lib/api";
 import { addSubscriber } from "@/lib/store";
 import { subscriberSchema } from "@/lib/schemas";
+import { rateLimit, getClientIp } from "@/lib/rate-limit";
+import { csrfCheck } from "@/lib/csrf";
 
 export async function POST(request: Request) {
+  const csrfError = csrfCheck(request);
+  if (csrfError) return csrfError;
+
+  const ip = getClientIp(request);
+  if (!rateLimit(`newsletter:${ip}`, 5)) {
+    return error("Too many requests. Please try again later.", 429);
+  }
+
   const body = await parseJson(request);
   const parsed = subscriberSchema.safeParse(body);
 

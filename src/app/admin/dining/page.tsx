@@ -29,6 +29,7 @@ export default function AdminDiningPage() {
         { key: "hours", label: "Hours", render: (item) => item.hours },
         { key: "visible", label: "Status", render: (item) => item.visible ? "Visible" : "Hidden" },
       ]}
+      searchableKeys={["name", "cuisine", "description"]}
     />
   );
 }

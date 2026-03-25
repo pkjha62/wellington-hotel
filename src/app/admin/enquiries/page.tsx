@@ -34,6 +34,7 @@ export default function AdminEnquiriesPage() {
         { key: "status", label: "Status", render: (item) => item.status === "new" ? "New" : item.status === "read" ? "Read" : "Replied" },
         { key: "date", label: "Date", render: (item) => item.createdAt },
       ]}
+      searchableKeys={["name", "email", "subject", "message"]}
     />
   );
 }

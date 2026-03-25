@@ -30,6 +30,7 @@ export default function AdminSpaPage() {
         { key: "price", label: "Price", render: (item) => item.price > 0 ? `₹${item.price.toLocaleString("en-IN")}` : "Complimentary" },
         { key: "visible", label: "Status", render: (item) => item.visible ? "Visible" : "Hidden" },
       ]}
+      searchableKeys={["name", "category", "description"]}
     />
   );
 }

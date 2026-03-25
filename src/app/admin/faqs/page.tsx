@@ -34,6 +34,7 @@ export default function AdminFAQsPage() {
         { key: "order", label: "Order", render: (item) => item.order },
         { key: "visible", label: "Visible", render: (item) => <span className={`inline-block rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider ${item.visible ? "bg-green-100 text-green-700" : "bg-stone-100 text-stone-500"}`}>{item.visible ? "Active" : "Hidden"}</span> },
       ]}
+      searchableKeys={["question", "answer", "category"]}
     />
   );
 }

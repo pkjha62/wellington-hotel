@@ -1,8 +1,12 @@
-// Disk-backed file storage — uploaded files persist across server restarts
+/**
+ * File storage — uses Vercel Blob in production, disk in development.
+ */
+import { put } from "@vercel/blob";
 import fs from "fs";
 import path from "path";
 
 const UPLOAD_DIR = path.join(process.cwd(), "data", "uploads");
+const useBlob = !!process.env.BLOB_READ_WRITE_TOKEN;
 
 function ensureDir() {
   if (!fs.existsSync(UPLOAD_DIR)) {
@@ -10,7 +14,20 @@ function ensureDir() {
   }
 }
 
-export function saveUploadedFile(name: string, buffer: Buffer, contentType: string): string {
+export async function saveUploadedFile(
+  name: string,
+  buffer: Buffer,
+  contentType: string
+): Promise<string> {
+  if (useBlob) {
+    const blob = await put(name, buffer, {
+      access: "public",
+      contentType,
+    });
+    return blob.url;
+  }
+
+  // Local development: disk storage
   ensureDir();
   fs.writeFileSync(path.join(UPLOAD_DIR, name), buffer);
   fs.writeFileSync(path.join(UPLOAD_DIR, `${name}.type`), contentType);

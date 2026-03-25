@@ -1,6 +1,6 @@
 import { error, json, parseJson, requireAdmin } from "@/lib/api";
 import { changePasswordSchema } from "@/lib/schemas";
-import { getAdminPassword, setAdminPassword } from "@/lib/auth";
+import { verifyAdminPassword, setAdminPassword } from "@/lib/auth";
 
 export async function POST(request: Request) {
   const admin = await requireAdmin();
@@ -14,10 +14,11 @@ export async function POST(request: Request) {
     return error(parsed.error.issues[0]?.message || "Invalid data");
   }
 
-  if (parsed.data.currentPassword !== getAdminPassword()) {
+  const currentValid = await verifyAdminPassword(parsed.data.currentPassword);
+  if (!currentValid) {
     return error("Current password is incorrect.", 403);
   }
 
-  setAdminPassword(parsed.data.newPassword);
+  await setAdminPassword(parsed.data.newPassword);
   return json({ success: true });
 }

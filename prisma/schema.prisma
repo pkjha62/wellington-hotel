@@ -1,0 +1,285 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Site Settings (singleton) ────────────────────────────────────────────────
+
+model SiteSettings {
+  id                    Int      @id @default(1)
+  hotelName             String   @default("The Deoghar Grand")
+  subtitle              String   @default("Hotel & Spa")
+  phone                 String   @default("+91 6432 234 567")
+  email                 String   @default("reservations@deogharhotel.com")
+  address               String   @default("Temple Road, Near Baba Baidyanath Dham")
+  city                  String   @default("Deoghar, Jharkhand")
+  pincode               String   @default("814112")
+  heroImage             String   @default("")
+  heroVideo             String   @default("")
+  heroHeadline          String   @default("Where Divine Tranquility Meets Timeless Luxury")
+  heroSubheadline       String   @default("in the Sacred City of Deoghar")
+  introTitle            String   @default("")
+  introSubtitle         String   @default("")
+  introBody             String   @default("")
+  instagramHandle       String   @default("")
+  facebookUrl           String   @default("#")
+  instagramUrl          String   @default("#")
+  twitterUrl            String   @default("#")
+  whatsappNumber        String   @default("")
+  metaTitle             String   @default("")
+  metaDescription       String   @default("")
+  ogImage               String   @default("")
+  roomsHeroImage        String   @default("")
+  diningHeroImage       String   @default("")
+  spaHeroImage          String   @default("")
+  eventsHeroImage       String   @default("")
+  contactHeroImage      String   @default("")
+  galleryTitle          String   @default("Gallery")
+  testimonialsTitle     String   @default("What Our Guests Say")
+  experiencesTitle      String   @default("Curated Experiences")
+  offersTitle           String   @default("Special Offers")
+  newsletterTitle       String   @default("Stay Inspired")
+  newsletterDescription String   @default("")
+  mapLatitude           String   @default("24.4921")
+  mapLongitude          String   @default("86.6954")
+  locationDescription   String   @default("")
+  updatedAt             DateTime @updatedAt
+}
+
+// ─── Rooms ────────────────────────────────────────────────────────────────────
+
+model Room {
+  id          String    @id @default(cuid())
+  name        String
+  type        RoomType
+  price       Float
+  description String
+  amenities   String[]
+  images      String[]
+  maxGuests   Int
+  isAvailable Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  bookings    Booking[]
+}
+
+enum RoomType {
+  standard
+  deluxe
+  suite
+  premium
+}
+
+// ─── Bookings ─────────────────────────────────────────────────────────────────
+
+model Booking {
+  id          String        @id @default(cuid())
+  guestName   String
+  guestEmail  String
+  guestPhone  String
+  roomId      String
+  room        Room          @relation(fields: [roomId], references: [id])
+  roomName    String
+  checkIn     DateTime
+  checkOut    DateTime
+  guests      Int
+  status      BookingStatus @default(confirmed)
+  totalAmount Float
+  createdAt   DateTime      @default(now())
+}
+
+enum BookingStatus {
+  confirmed
+  checked_in  @map("checked-in")
+  checked_out @map("checked-out")
+  cancelled
+}
+
+// ─── Gallery ──────────────────────────────────────────────────────────────────
+
+model GalleryImage {
+  id       String          @id @default(cuid())
+  src      String
+  alt      String
+  category GalleryCategory
+  order    Int             @default(0)
+}
+
+enum GalleryCategory {
+  rooms
+  dining
+  exterior
+  events
+  spa
+  temple
+}
+
+// ─── Testimonials ─────────────────────────────────────────────────────────────
+
+model Testimonial {
+  id        String   @id @default(cuid())
+  guestName String
+  location  String
+  rating    Int
+  comment   String
+  approved  Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+// ─── Offerings ────────────────────────────────────────────────────────────────
+
+model Offering {
+  id          String  @id @default(cuid())
+  title       String
+  subtitle    String
+  description String
+  image       String
+  imageAlt    String
+  order       Int     @default(0)
+  visible     Boolean @default(true)
+}
+
+// ─── Experiences ──────────────────────────────────────────────────────────────
+
+model Experience {
+  id          String  @id @default(cuid())
+  title       String
+  description String
+  image       String
+  price       Float
+  visible     Boolean @default(true)
+}
+
+// ─── Subscribers ──────────────────────────────────────────────────────────────
+
+model Subscriber {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  subscribedAt DateTime @default(now())
+}
+
+// ─── Announcements ────────────────────────────────────────────────────────────
+
+model Announcement {
+  id        String           @id @default(cuid())
+  text      String
+  type      AnnouncementType
+  active    Boolean          @default(true)
+  startDate DateTime
+  endDate   DateTime
+}
+
+enum AnnouncementType {
+  info
+  offer
+  event
+}
+
+// ─── FAQs ─────────────────────────────────────────────────────────────────────
+
+model FAQ {
+  id       String      @id @default(cuid())
+  question String
+  answer   String
+  category FAQCategory
+  order    Int         @default(0)
+  visible  Boolean     @default(true)
+}
+
+enum FAQCategory {
+  general
+  bookings
+  rooms
+  dining
+  spa
+  events
+  temple
+  transport
+}
+
+// ─── Special Offers ───────────────────────────────────────────────────────────
+
+model SpecialOffer {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  price       Float
+  image       String
+  validFrom   DateTime
+  validTo     DateTime
+  visible     Boolean  @default(true)
+}
+
+// ─── Stat Facts ───────────────────────────────────────────────────────────────
+
+model StatFact {
+  id      String  @id @default(cuid())
+  label   String
+  value   Float
+  suffix  String  @default("")
+  order   Int     @default(0)
+  visible Boolean @default(true)
+}
+
+// ─── Dining Venues ────────────────────────────────────────────────────────────
+
+model DiningVenue {
+  id          String  @id @default(cuid())
+  name        String
+  cuisine     String
+  description String
+  image       String
+  hours       String
+  order       Int     @default(0)
+  visible     Boolean @default(true)
+}
+
+// ─── Spa Services ─────────────────────────────────────────────────────────────
+
+model SpaService {
+  id          String  @id @default(cuid())
+  name        String
+  category    String
+  description String
+  duration    String
+  price       Float
+  image       String
+  order       Int     @default(0)
+  visible     Boolean @default(true)
+}
+
+// ─── Event Venues ─────────────────────────────────────────────────────────────
+
+model EventVenue {
+  id          String   @id @default(cuid())
+  name        String
+  capacity    String
+  description String
+  image       String
+  features    String[]
+  order       Int      @default(0)
+  visible     Boolean  @default(true)
+}
+
+// ─── Contact Enquiries ────────────────────────────────────────────────────────
+
+model ContactEnquiry {
+  id        String       @id @default(cuid())
+  name      String
+  email     String
+  phone     String
+  subject   String
+  message   String
+  status    EnquiryStatus @default(new_enquiry)
+  createdAt DateTime      @default(now())
+}
+
+enum EnquiryStatus {
+  new_enquiry @map("new")
+  read
+  replied
+}

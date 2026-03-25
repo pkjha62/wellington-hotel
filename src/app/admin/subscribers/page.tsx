@@ -24,6 +24,7 @@ export default function AdminSubscribersPage() {
         { key: "email", label: "Email", render: (item) => item.email },
         { key: "subscribedAt", label: "Subscribed", render: (item) => item.subscribedAt },
       ]}
+      searchableKeys={["name", "email"]}
     />
   );
 }

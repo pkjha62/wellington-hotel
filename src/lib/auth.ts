@@ -1,4 +1,5 @@
 import { SignJWT, jwtVerify } from "jose";
+import bcrypt from "bcryptjs";
 
 function getSecret() {
   const key = process.env.AUTH_SECRET;
@@ -6,10 +7,19 @@ function getSecret() {
   return new TextEncoder().encode(key);
 }
 
-let runtimePassword = process.env.ADMIN_PASSWORD ?? "admin@123";
+// Store a bcrypt hash of the admin password at startup
+let runtimePasswordHash = bcrypt.hashSync(
+  process.env.ADMIN_PASSWORD ?? "admin@123",
+  10
+);
 
-export function getAdminPassword() { return runtimePassword; }
-export function setAdminPassword(pw: string) { runtimePassword = pw; }
+export async function verifyAdminPassword(plain: string): Promise<boolean> {
+  return bcrypt.compare(plain, runtimePasswordHash);
+}
+
+export async function setAdminPassword(plain: string): Promise<void> {
+  runtimePasswordHash = await bcrypt.hash(plain, 10);
+}
 
 export async function createToken(payload: Record<string, unknown>) {
   return new SignJWT(payload)

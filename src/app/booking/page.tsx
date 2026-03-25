@@ -1,4 +1,4 @@
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 import { Suspense } from "react";
 import BookingForm from "@/components/BookingForm";
@@ -6,6 +6,19 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import { getRooms, getSettings } from "@/lib/store";
+import type { Metadata } from "next";
+
+export function generateMetadata(): Metadata {
+  const settings = getSettings();
+  return {
+    title: `Book Your Stay | ${settings.hotelName}`,
+    description: `Reserve a room at ${settings.hotelName}. Choose from luxury suites, deluxe rooms, and more near Baba Baidyanath Dham, Deoghar.`,
+    openGraph: {
+      title: `Book Your Stay | ${settings.hotelName}`,
+      description: `Reserve a room at ${settings.hotelName}. Luxury accommodation near Baba Baidyanath Dham.`,
+    },
+  };
+}
 
 export default function BookingPage() {
   const rooms = getRooms().filter((room) => room.isAvailable);
