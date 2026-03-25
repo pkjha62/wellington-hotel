@@ -23,7 +23,7 @@ export default function EventsPage() {
       <Header settings={settings} />
       <main>
         <PageHero
-          image="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1920&q=80"
+          image={settings.eventsHeroImage || "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1920&q=80"}
           imageAlt="Grand event venue"
           kicker="Venues"
           title="Events &amp; Celebrations"
@@ -32,6 +32,9 @@ export default function EventsPage() {
 
         <PageTransition>
         <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+          {venues.length === 0 ? (
+            <p className="py-20 text-center font-sans text-sm text-text-secondary">No event venues available at the moment. Please check back soon.</p>
+          ) : (
           <StaggerGrid className="space-y-20">
             {venues.map((venue, i) => (
               <StaggerItem key={venue.id}>
@@ -57,6 +60,7 @@ export default function EventsPage() {
               </StaggerItem>
             ))}
           </StaggerGrid>
+          )}
         </section>
 
         <section className="bg-charcoal py-20 text-center">

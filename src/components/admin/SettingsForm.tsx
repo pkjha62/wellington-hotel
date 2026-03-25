@@ -39,6 +39,33 @@ const sections = [
     ],
   },
   {
+    title: "Page Hero Images",
+    fields: [
+      ["roomsHeroImage", "Rooms Page Hero"],
+      ["diningHeroImage", "Dining Page Hero"],
+      ["spaHeroImage", "Spa Page Hero"],
+      ["eventsHeroImage", "Events Page Hero"],
+      ["contactHeroImage", "Contact Page Hero"],
+    ],
+  },
+  {
+    title: "Section Titles",
+    fields: [
+      ["galleryTitle", "Gallery Title"],
+      ["testimonialsTitle", "Testimonials Title"],
+      ["experiencesTitle", "Experiences Title"],
+      ["offersTitle", "Offers Title"],
+      ["newsletterTitle", "Newsletter Title"],
+    ],
+  },
+  {
+    title: "Location",
+    fields: [
+      ["mapLatitude", "Map Latitude"],
+      ["mapLongitude", "Map Longitude"],
+    ],
+  },
+  {
     title: "Social Media",
     fields: [
       ["instagramHandle", "Instagram handle"],
@@ -105,7 +132,7 @@ export default function SettingsForm({ settings }: { settings: SiteSettings }) {
           <legend className="font-serif text-lg uppercase tracking-[0.1em] text-charcoal">{section.title}</legend>
           <div className="mt-4 grid gap-5 md:grid-cols-2">
             {section.fields.map(([name, label]) => {
-              const isImageField = ["heroImage", "heroVideo", "ogImage"].includes(name);
+              const isImageField = ["heroImage", "heroVideo", "ogImage", "roomsHeroImage", "diningHeroImage", "spaHeroImage", "eventsHeroImage", "contactHeroImage"].includes(name);
               return (
               <label key={name} className={isImageField ? "md:col-span-2 block" : "block"}>
                 <span className="font-sans text-xs font-semibold uppercase tracking-[0.14em] text-stone-500">{label}</span>
@@ -140,6 +167,16 @@ export default function SettingsForm({ settings }: { settings: SiteSettings }) {
             <span className="font-sans text-xs font-semibold uppercase tracking-[0.14em] text-stone-500">Meta description (SEO)</span>
             <textarea {...register("metaDescription")} rows={3} className={inputClass} />
             {errors.metaDescription && <span className="mt-1.5 block font-sans text-xs text-red-600">{errors.metaDescription.message}</span>}
+          </label>
+          <label className="block">
+            <span className="font-sans text-xs font-semibold uppercase tracking-[0.14em] text-stone-500">Newsletter description</span>
+            <textarea {...register("newsletterDescription")} rows={3} className={inputClass} />
+            {errors.newsletterDescription && <span className="mt-1.5 block font-sans text-xs text-red-600">{errors.newsletterDescription.message}</span>}
+          </label>
+          <label className="block">
+            <span className="font-sans text-xs font-semibold uppercase tracking-[0.14em] text-stone-500">Location description</span>
+            <textarea {...register("locationDescription")} rows={3} className={inputClass} />
+            {errors.locationDescription && <span className="mt-1.5 block font-sans text-xs text-red-600">{errors.locationDescription.message}</span>}
           </label>
         </div>
       </motion.fieldset>

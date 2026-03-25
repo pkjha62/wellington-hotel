@@ -22,7 +22,7 @@ export default function SpaPage() {
       <Header settings={settings} />
       <main>
         <PageHero
-          image="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=1920&q=80"
+          image={settings.spaHeroImage || "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=1920&q=80"}
           imageAlt="Luxurious spa and wellness retreat"
           kicker="Wellness"
           title="Spa &amp; Wellness"
@@ -31,6 +31,9 @@ export default function SpaPage() {
 
         <PageTransition>
         <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+          {services.length === 0 ? (
+            <p className="py-20 text-center font-sans text-sm text-text-secondary">No spa services available at the moment. Please check back soon.</p>
+          ) : (
           <StaggerGrid className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {services.map((svc) => (
               <StaggerItem key={svc.id}>
@@ -48,6 +51,7 @@ export default function SpaPage() {
               </StaggerItem>
             ))}
           </StaggerGrid>
+          )}
         </section>
 
         {/* CTA */}

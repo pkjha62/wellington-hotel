@@ -103,13 +103,30 @@ export interface SiteSettings {
   metaTitle: string;
   metaDescription: string;
   ogImage: string;
+  /* Page hero images */
+  roomsHeroImage: string;
+  diningHeroImage: string;
+  spaHeroImage: string;
+  eventsHeroImage: string;
+  contactHeroImage: string;
+  /* Section titles */
+  galleryTitle: string;
+  testimonialsTitle: string;
+  experiencesTitle: string;
+  offersTitle: string;
+  newsletterTitle: string;
+  newsletterDescription: string;
+  /* Location */
+  mapLatitude: string;
+  mapLongitude: string;
+  locationDescription: string;
 }
 
 export interface FAQ {
   id: string;
   question: string;
   answer: string;
-  category: string;
+  category: "general" | "bookings" | "rooms" | "dining" | "spa" | "events" | "temple" | "transport";
   order: number;
   visible: boolean;
 }

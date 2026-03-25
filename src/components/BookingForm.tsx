@@ -6,10 +6,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { motion, AnimatePresence } from "framer-motion";
-import { publicBookingSchema } from "@/lib/schemas";
+import { publicBookingBase } from "@/lib/schemas";
 import type { Room } from "@/types";
 
-const formSchema = publicBookingSchema.extend({
+const formSchema = publicBookingBase.extend({
   checkOut: z.string().min(1),
 });
 

@@ -23,7 +23,7 @@ export default function DiningPage() {
       <Header settings={settings} />
       <main>
         <PageHero
-          image="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1920&q=80"
+          image={settings.diningHeroImage || "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1920&q=80"}
           imageAlt="Elegant fine dining restaurant"
           kicker="Culinary"
           title="Dining"
@@ -32,6 +32,9 @@ export default function DiningPage() {
 
         <PageTransition>
         <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+          {venues.length === 0 ? (
+            <p className="py-20 text-center font-sans text-sm text-text-secondary">No dining venues available at the moment. Please check back soon.</p>
+          ) : (
           <StaggerGrid className="space-y-20">
             {venues.map((item, i) => (
               <StaggerItem key={item.id}>
@@ -51,6 +54,7 @@ export default function DiningPage() {
               </StaggerItem>
             ))}
           </StaggerGrid>
+          )}
         </section>
         </PageTransition>
       </main>

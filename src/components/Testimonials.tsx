@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Testimonial } from "@/types";
 
-export default function Testimonials({ items }: { items: Testimonial[] }) {
+export default function Testimonials({ items, title }: { items: Testimonial[]; title?: string }) {
   const [testimonials, setTestimonials] = useState<Testimonial[]>(items);
   const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -33,7 +33,7 @@ export default function Testimonials({ items }: { items: Testimonial[] }) {
       <div className="max-w-3xl mx-auto px-4 sm:px-6 md:px-8 text-center">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
           <div className="w-12 h-px bg-gold mx-auto mb-6 sm:mb-8" />
-          <h2 className="font-serif text-xl sm:text-2xl md:text-3xl lg:text-4xl text-charcoal tracking-wide uppercase">What Our Guests Say</h2>
+          <h2 className="font-serif text-xl sm:text-2xl md:text-3xl lg:text-4xl text-charcoal tracking-wide uppercase">{title || "What Our Guests Say"}</h2>
           <div className="w-12 h-px bg-gold mx-auto mt-6 sm:mt-8" />
         </motion.div>
 

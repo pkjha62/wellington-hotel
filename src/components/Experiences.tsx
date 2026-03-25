@@ -6,7 +6,7 @@ import { useRef } from "react";
 import { motion } from "framer-motion";
 import type { Experience } from "@/types";
 
-export default function Experiences({ experiences }: { experiences: Experience[] }) {
+export default function Experiences({ experiences, title }: { experiences: Experience[]; title?: string }) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scroll = (direction: "left" | "right") => {
@@ -21,7 +21,7 @@ export default function Experiences({ experiences }: { experiences: Experience[]
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
         <motion.div className="text-center mb-10 sm:mb-14" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
           <div className="w-12 h-px bg-gold mx-auto mb-6 sm:mb-8" />
-          <h2 className="font-serif text-xl sm:text-2xl md:text-3xl lg:text-4xl text-charcoal tracking-wide uppercase">The Pleasure of Experiencing Deoghar</h2>
+          <h2 className="font-serif text-xl sm:text-2xl md:text-3xl lg:text-4xl text-charcoal tracking-wide uppercase">{title || "The Pleasure of Experiencing Deoghar"}</h2>
           <div className="w-12 h-px bg-gold mx-auto mt-6 sm:mt-8" />
         </motion.div>
 

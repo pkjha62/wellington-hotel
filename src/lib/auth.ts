@@ -1,10 +1,12 @@
 import { SignJWT, jwtVerify } from "jose";
 
-const secret = new TextEncoder().encode(
-  process.env.AUTH_SECRET || "deoghar-grand-hotel-jwt-secret-k8x2m"
-);
+if (!process.env.AUTH_SECRET) {
+  throw new Error("AUTH_SECRET environment variable is required");
+}
 
-let runtimePassword = process.env.ADMIN_PASSWORD || "admin@123";
+const secret = new TextEncoder().encode(process.env.AUTH_SECRET);
+
+let runtimePassword = process.env.ADMIN_PASSWORD ?? "admin@123";
 
 export function getAdminPassword() { return runtimePassword; }
 export function setAdminPassword(pw: string) { runtimePassword = pw; }

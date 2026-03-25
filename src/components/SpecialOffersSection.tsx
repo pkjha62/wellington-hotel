@@ -5,7 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import type { SpecialOffer } from "@/types";
 
-export default function SpecialOffersSection({ offers }: { offers: SpecialOffer[] }) {
+export default function SpecialOffersSection({ offers, title }: { offers: SpecialOffer[]; title?: string }) {
   if (offers.length === 0) return null;
 
   return (
@@ -20,7 +20,7 @@ export default function SpecialOffersSection({ offers }: { offers: SpecialOffer[
         >
           <div className="w-12 h-px bg-gold mx-auto mb-6 sm:mb-8" />
           <h2 className="font-serif text-xl sm:text-2xl md:text-3xl lg:text-4xl text-charcoal tracking-wide uppercase">
-            Special Offers
+            {title || "Special Offers"}
           </h2>
           <p className="mt-4 max-w-xl mx-auto font-sans text-sm text-text-secondary leading-relaxed">
             Exclusive packages and seasonal promotions for an unforgettable stay

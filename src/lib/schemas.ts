@@ -6,20 +6,20 @@ export const loginSchema = z.object({
 });
 
 export const roomSchema = z.object({
-  name: z.string().min(3),
+  name: z.string().min(3).max(100),
   type: z.enum(["standard", "deluxe", "suite", "premium"]),
   price: z.coerce.number().positive(),
-  description: z.string().min(20),
-  amenities: z.array(z.string().min(1)).min(1),
-  images: z.array(z.string().min(1)).min(1),
+  description: z.string().min(20).max(2000),
+  amenities: z.array(z.string().min(1)).min(1).max(30),
+  images: z.array(z.string().min(1)).min(1).max(20),
   maxGuests: z.coerce.number().int().positive(),
   isAvailable: z.boolean(),
 });
 
-export const bookingSchema = z.object({
+const bookingBase = z.object({
   guestName: z.string().min(2),
   guestEmail: z.string().email(),
-  guestPhone: z.string().min(10),
+  guestPhone: z.string().min(10).regex(/^\+?[\d\s\-()]{7,15}$/, "Invalid phone number"),
   roomId: z.string().min(1),
   roomName: z.string().min(1),
   checkIn: z.string().min(1),
@@ -29,7 +29,22 @@ export const bookingSchema = z.object({
   totalAmount: z.coerce.number().nonnegative(),
 });
 
-export const publicBookingSchema = bookingSchema.omit({ status: true, totalAmount: true, roomName: true });
+const checkOutAfterCheckIn = (d: { checkIn: string; checkOut: string }) =>
+  new Date(d.checkOut) > new Date(d.checkIn);
+
+export const bookingSchema = bookingBase.refine(checkOutAfterCheckIn, {
+  message: "Check-out must be after check-in",
+  path: ["checkOut"],
+});
+
+export const publicBookingBase = bookingBase
+  .omit({ status: true, totalAmount: true, roomName: true });
+
+export const publicBookingSchema = publicBookingBase
+  .refine(checkOutAfterCheckIn, {
+    message: "Check-out must be after check-in",
+    path: ["checkOut"],
+  });
 
 export const galleryImageSchema = z.object({
   src: z.string().min(1),
@@ -92,32 +107,52 @@ export const settingsSchema = z.object({
   metaTitle: z.string().min(5),
   metaDescription: z.string().min(10),
   ogImage: z.string().min(1),
+  roomsHeroImage: z.string().min(1).or(z.literal("")),
+  diningHeroImage: z.string().min(1).or(z.literal("")),
+  spaHeroImage: z.string().min(1).or(z.literal("")),
+  eventsHeroImage: z.string().min(1).or(z.literal("")),
+  contactHeroImage: z.string().min(1).or(z.literal("")),
+  galleryTitle: z.string().min(2),
+  testimonialsTitle: z.string().min(2),
+  experiencesTitle: z.string().min(2),
+  offersTitle: z.string().min(2),
+  newsletterTitle: z.string().min(2),
+  newsletterDescription: z.string().min(5),
+  mapLatitude: z.string(),
+  mapLongitude: z.string(),
+  locationDescription: z.string().min(5),
 });
 
 export const announcementSchema = z.object({
-  text: z.string().min(5),
+  text: z.string().min(5).max(500),
   type: z.enum(["info", "offer", "event"]),
   active: z.boolean(),
   startDate: z.string().min(1),
   endDate: z.string().min(1),
+}).refine(d => new Date(d.endDate) >= new Date(d.startDate), {
+  message: "End date must be on or after start date",
+  path: ["endDate"],
 });
 
 export const faqSchema = z.object({
-  question: z.string().min(5),
-  answer: z.string().min(10),
-  category: z.string().min(2),
+  question: z.string().min(5).max(300),
+  answer: z.string().min(10).max(2000),
+  category: z.enum(["general", "bookings", "rooms", "dining", "spa", "events", "temple", "transport"]),
   order: z.coerce.number().int().nonnegative(),
   visible: z.boolean(),
 });
 
 export const specialOfferSchema = z.object({
-  title: z.string().min(3),
-  description: z.string().min(10),
+  title: z.string().min(3).max(200),
+  description: z.string().min(10).max(2000),
   price: z.coerce.number().positive(),
   image: z.string().min(1),
   validFrom: z.string().min(1),
   validTo: z.string().min(1),
   visible: z.boolean(),
+}).refine(d => new Date(d.validTo) >= new Date(d.validFrom), {
+  message: "Valid-to date must be on or after valid-from date",
+  path: ["validTo"],
 });
 
 export const statFactSchema = z.object({
@@ -165,11 +200,11 @@ export const eventVenueSchema = z.object({
 });
 
 export const contactEnquirySchema = z.object({
-  name: z.string().min(2),
+  name: z.string().min(2).max(100),
   email: z.string().email(),
-  phone: z.string().min(7),
-  subject: z.string().min(3),
-  message: z.string().min(10),
+  phone: z.string().min(7).regex(/^\+?[\d\s\-()]{7,15}$/, "Invalid phone number"),
+  subject: z.string().min(3).max(200),
+  message: z.string().min(10).max(5000),
 });
 
 export const contactEnquiryAdminSchema = contactEnquirySchema.extend({

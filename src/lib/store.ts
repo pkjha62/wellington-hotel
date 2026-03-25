@@ -5,6 +5,7 @@
  */
 import fs from "fs";
 import path from "path";
+import crypto from "crypto";
 import type {
   Room, Booking, GalleryImage, Testimonial,
   Offering, Experience, Subscriber, SiteSettings,
@@ -16,7 +17,7 @@ const DATA_DIR = path.join(process.cwd(), "data");
 const DATA_FILE = path.join(DATA_DIR, "store.json");
 
 function genId() {
-  return Math.random().toString(36).substring(2, 10);
+  return crypto.randomUUID();
 }
 
 function saveToDisk() {
@@ -83,6 +84,20 @@ let settings: SiteSettings = {
   metaTitle: "The Deoghar Grand Hotel & Spa | Luxury Stay in Deoghar",
   metaDescription: "Experience luxury hospitality near Baba Baidyanath Dham in Deoghar. Explore rooms, wellness, dining, events, and curated spiritual stays.",
   ogImage: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1200&q=80",
+  roomsHeroImage: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1920&q=80",
+  diningHeroImage: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1920&q=80",
+  spaHeroImage: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=1920&q=80",
+  eventsHeroImage: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1920&q=80",
+  contactHeroImage: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1920&q=80",
+  galleryTitle: "Gallery",
+  testimonialsTitle: "What Our Guests Say",
+  experiencesTitle: "Curated Experiences",
+  offersTitle: "Special Offers",
+  newsletterTitle: "Stay Inspired",
+  newsletterDescription: "Subscribe to receive exclusive offers, travel inspiration, and updates from The Deoghar Grand.",
+  mapLatitude: "24.4921",
+  mapLongitude: "86.6954",
+  locationDescription: "Nestled in the heart of Deoghar, just steps from the sacred Baba Baidyanath Dham temple.",
 };
 
 let rooms: Room[] = [
@@ -141,9 +156,9 @@ let announcements: Announcement[] = [
 
 let faqs: FAQ[] = [
   { id: "faq1", question: "What are the check-in and check-out times?", answer: "Check-in is at 2:00 PM and check-out is at 12:00 noon. Early check-in and late check-out are available upon request and subject to availability.", category: "general", order: 1, visible: true },
-  { id: "faq2", question: "Is the hotel near Baba Baidyanath Dham?", answer: "Yes, The Deoghar Grand is located on Temple Road, just a 5-minute walk from Baba Baidyanath Dham.", category: "location", order: 2, visible: true },
+  { id: "faq2", question: "Is the hotel near Baba Baidyanath Dham?", answer: "Yes, The Deoghar Grand is located on Temple Road, just a 5-minute walk from Baba Baidyanath Dham.", category: "general", order: 2, visible: true },
   { id: "faq3", question: "Do you provide airport or railway station transfers?", answer: "Yes, we provide paid transfers from Jasidih Junction railway station and Deoghar Airport. Please contact reception to arrange.", category: "transport", order: 3, visible: true },
-  { id: "faq4", question: "What is the cancellation policy?", answer: "Free cancellation up to 48 hours before check-in. Cancellations within 48 hours will be charged one night's stay.", category: "booking", order: 4, visible: true },
+  { id: "faq4", question: "What is the cancellation policy?", answer: "Free cancellation up to 48 hours before check-in. Cancellations within 48 hours will be charged one night's stay.", category: "bookings", order: 4, visible: true },
   { id: "faq5", question: "Is parking available?", answer: "Yes, complimentary valet parking is available for all guests.", category: "general", order: 5, visible: true },
 ];
 

@@ -52,12 +52,12 @@ export default function Home() {
         <Introduction settings={settings} />
         <StatsStrip statFacts={statFacts} />
         <KeyOfferings offerings={offerings} />
-        <Experiences experiences={experiences} />
-        <SpecialOffersSection offers={specialOffers} />
-        <Testimonials items={testimonials} />
+        <Experiences experiences={experiences} title={settings.experiencesTitle} />
+        <SpecialOffersSection offers={specialOffers} title={settings.offersTitle} />
+        <Testimonials items={testimonials} title={settings.testimonialsTitle} />
         <Location settings={settings} />
-        <InstagramGrid images={gallery} instagramHandle={settings.instagramHandle} />
-        <Newsletter />
+        <InstagramGrid images={gallery} instagramHandle={settings.instagramHandle} title={settings.galleryTitle} />
+        <Newsletter title={settings.newsletterTitle} description={settings.newsletterDescription} />
         <FAQSection faqs={faqs} />
       </main>
       <Footer settings={settings} />

@@ -29,7 +29,7 @@ export default function Location({ settings }: { settings: SiteSettings }) {
           <h2 className="font-serif text-xl sm:text-2xl md:text-3xl lg:text-4xl text-charcoal tracking-wide uppercase">In the Sacred City of Deoghar</h2>
           <div className="w-12 h-px bg-gold mx-auto mt-6 sm:mt-8 mb-8 sm:mb-10" />
           <p className="font-sans text-sm md:text-base text-text-secondary leading-relaxed max-w-2xl mx-auto">
-            Located at {settings.address}, {settings.city} {settings.pincode}, our hotel places guests close to Baba Baidyanath Dham while staying connected to Deoghar&apos;s hills, gardens, and cultural landmarks.
+            {settings.locationDescription || `Located at ${settings.address}, ${settings.city} ${settings.pincode}, our hotel places guests close to Baba Baidyanath Dham while staying connected to Deoghar's hills, gardens, and cultural landmarks.`}
           </p>
         </motion.div>
 

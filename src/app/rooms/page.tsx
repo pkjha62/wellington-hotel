@@ -24,7 +24,7 @@ export default function RoomsPage() {
       <Header settings={settings} />
       <main>
         <PageHero
-          image="https://images.unsplash.com/photo-1590490360182-c33d955c3a16?w=1920&q=80"
+          image={settings.roomsHeroImage || "https://images.unsplash.com/photo-1590490360182-c33d955c3a16?w=1920&q=80"}
           imageAlt="Elegant luxury hotel room"
           kicker="Accommodation"
           title="Rooms &amp; Suites"
@@ -34,6 +34,9 @@ export default function RoomsPage() {
         <PageTransition>
         {/* Room Grid */}
         <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
+          {rooms.length === 0 ? (
+            <p className="py-20 text-center font-sans text-sm text-text-secondary">No rooms available at the moment. Please check back soon.</p>
+          ) : (
           <StaggerGrid className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
             {rooms.map((room) => (
               <StaggerItem key={room.id}>
@@ -79,6 +82,7 @@ export default function RoomsPage() {
               </StaggerItem>
             ))}
           </StaggerGrid>
+          )}
         </section>
         </PageTransition>
       </main>

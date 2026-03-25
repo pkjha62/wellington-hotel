@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Montserrat } from "next/font/google";
 import CookieConsent from "@/components/CookieConsent";
+import { getSettings } from "@/lib/store";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -15,14 +16,16 @@ const montserrat = Montserrat({
   weight: ["300", "400", "500", "600", "700"],
 });
 
-export const metadata: Metadata = {
-  title: {
-    default: "The Deoghar Grand Hotel & Spa | Luxury Stay in Deoghar",
-    template: "%s | The Deoghar Grand Hotel & Spa",
-  },
-  description:
-    "Experience luxury hospitality near Baba Baidyanath Dham in Deoghar. Explore rooms, wellness, dining, events, and curated spiritual stays.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = getSettings();
+  return {
+    title: {
+      default: settings.metaTitle || "The Deoghar Grand Hotel & Spa | Luxury Stay in Deoghar",
+      template: `%s | ${settings.hotelName || "The Deoghar Grand Hotel & Spa"}`,
+    },
+    description: settings.metaDescription || "Experience luxury hospitality near Baba Baidyanath Dham in Deoghar.",
+  };
+}
 
 export default function RootLayout({
   children,

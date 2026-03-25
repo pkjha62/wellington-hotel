@@ -47,7 +47,7 @@ function Lightbox({ image, onClose }: { image: GalleryImage; onClose: () => void
   );
 }
 
-export default function InstagramGrid({ images, instagramHandle }: { images: GalleryImage[]; instagramHandle: string }) {
+export default function InstagramGrid({ images, instagramHandle, title }: { images: GalleryImage[]; instagramHandle: string; title?: string }) {
   const [lightboxImage, setLightboxImage] = useState<GalleryImage | null>(null);
 
   return (
@@ -56,7 +56,7 @@ export default function InstagramGrid({ images, instagramHandle }: { images: Gal
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
           <motion.div className="text-center mb-10 sm:mb-14" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
             <div className="w-12 h-px bg-gold mx-auto mb-6 sm:mb-8" />
-            <h2 className="font-serif text-xl sm:text-2xl md:text-3xl lg:text-4xl text-charcoal tracking-wide uppercase">Gallery</h2>
+            <h2 className="font-serif text-xl sm:text-2xl md:text-3xl lg:text-4xl text-charcoal tracking-wide uppercase">{title || "Gallery"}</h2>
             <p className="font-sans text-xs tracking-[0.2em] uppercase text-gold mt-4">{instagramHandle}</p>
             <div className="w-12 h-px bg-gold mx-auto mt-6 sm:mt-8" />
           </motion.div>
