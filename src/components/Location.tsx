@@ -58,7 +58,7 @@ export default function Location({ settings }: { settings: SiteSettings }) {
             allowFullScreen
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
-            title="The Deoghar Grand Hotel location"
+            title={`${settings.hotelName} location`}
             className="w-full h-full"
           />
         </motion.div>

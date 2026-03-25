@@ -10,6 +10,19 @@ export default function AdminSettingsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/admin/settings", { cache: "no-store", credentials: "include" })
+      .then((r) => {
+        if (!r.ok) throw new Error("Failed to load settings");
+        return r.json();
+      })
+      .then((data) => { if (!cancelled) setSettings(data); })
+      .catch((e) => { if (!cancelled) setError(e.message); })
+      .finally(() => { if (!cancelled) setLoading(false); });
+    return () => { cancelled = true; };
+  }, []);
+
   const load = () => {
     setLoading(true);
     setError("");
@@ -22,8 +35,6 @@ export default function AdminSettingsPage() {
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false));
   };
-
-  useEffect(() => { load(); }, []);
 
   return (
     <AdminShell title="Settings" description="Edit hotel identity, hero content, contact details, and social links that appear across the public site.">

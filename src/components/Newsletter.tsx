@@ -48,7 +48,7 @@ export default function Newsletter({ title, description }: { title?: string; des
         <div className="w-12 h-px bg-gold mx-auto mb-6 sm:mb-8" />
         <h2 className="font-serif text-xl sm:text-2xl md:text-3xl text-white tracking-wide uppercase">{title || "Newsletter"}</h2>
         <p className="font-sans text-sm text-white/60 mt-4 sm:mt-5 leading-relaxed">
-          {description || "Subscribe to receive exclusive offers, spiritual event updates, and the latest news from The Deoghar Grand."}
+          {description || "Subscribe to receive exclusive offers, spiritual event updates, and the latest news from our hotel."}
         </p>
         <div className="w-12 h-px bg-gold mx-auto mt-6 sm:mt-8 mb-8 sm:mb-10" />
 

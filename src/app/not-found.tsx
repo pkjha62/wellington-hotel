@@ -1,6 +1,9 @@
 import Link from "next/link";
+import { getSettings } from "@/lib/store";
 
 export default function NotFound() {
+  const settings = getSettings();
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-beige px-4 text-center">
       <p className="font-sans text-[11px] uppercase tracking-[0.22em] text-gold">Page Not Found</p>
@@ -8,7 +11,7 @@ export default function NotFound() {
         404
       </h1>
       <p className="mt-6 max-w-md mx-auto font-sans text-sm leading-7 text-text-secondary">
-        The page you are looking for may have been moved or no longer exists. Please return to the homepage to continue exploring The Deoghar Grand.
+        The page you are looking for may have been moved or no longer exists. Please return to the homepage to continue exploring {settings.hotelName}.
       </p>
       <Link
         href="/"

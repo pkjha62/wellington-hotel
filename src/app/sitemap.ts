@@ -1,11 +1,17 @@
 import type { MetadataRoute } from "next";
-import { getRooms, getSettings } from "@/lib/store";
+import { getRooms } from "@/lib/store";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const settings = getSettings();
   const rooms = getRooms().filter((r) => r.isAvailable);
+
+  const roomPages: MetadataRoute.Sitemap = rooms.map((room) => ({
+    url: `${SITE_URL}/rooms/${room.id}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly" as const,
+    priority: 0.8,
+  }));
 
   const staticPages: MetadataRoute.Sitemap = [
     { url: SITE_URL, lastModified: new Date(), changeFrequency: "weekly", priority: 1.0 },
@@ -20,5 +26,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/cookies`, lastModified: new Date(), changeFrequency: "yearly", priority: 0.3 },
   ];
 
-  return staticPages;
+  return [...staticPages, ...roomPages];
 }
