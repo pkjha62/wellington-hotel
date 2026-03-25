@@ -1,6 +1,7 @@
 import { deleteBooking, getBooking, updateBooking } from "@/lib/store";
 import { bookingSchema } from "@/lib/schemas";
 import { error, json, parseJson, requireAdmin } from "@/lib/api";
+import { revalidatePath } from "next/cache";
 
 export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
   const admin = await requireAdmin();
@@ -19,7 +20,9 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
     return error(parsed.error.issues[0]?.message || "Invalid booking data");
   }
 
-  return json(updateBooking(id, parsed.data));
+  const updated = updateBooking(id, parsed.data);
+  revalidatePath("/", "layout");
+  return json(updated);
 }
 
 export async function DELETE(_request: Request, { params }: { params: Promise<{ id: string }> }) {
@@ -34,5 +37,6 @@ export async function DELETE(_request: Request, { params }: { params: Promise<{ 
     return error("Booking not found", 404);
   }
 
+  revalidatePath("/", "layout");
   return json({ success: true });
 }

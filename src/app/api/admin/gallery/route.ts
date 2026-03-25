@@ -1,6 +1,7 @@
 import { addGalleryImage, getGallery } from "@/lib/store";
 import { error, json, parseJson, requireAdmin } from "@/lib/api";
 import { galleryImageSchema } from "@/lib/schemas";
+import { revalidatePath } from "next/cache";
 
 export async function GET() {
   const admin = await requireAdmin();
@@ -23,5 +24,7 @@ export async function POST(request: Request) {
     return error(parsed.error.issues[0]?.message || "Invalid gallery item");
   }
 
-  return json(addGalleryImage(parsed.data), { status: 201 });
+  const image = addGalleryImage(parsed.data);
+  revalidatePath("/", "layout");
+  return json(image, { status: 201 });
 }

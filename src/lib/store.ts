@@ -1,8 +1,10 @@
 ﻿/**
- * In-memory data store with seed data.
- * Works on all platforms including Vercel serverless.
- * Data resets on cold-start (suitable for demo/portfolio).
+ * JSON-file-backed data store with seed data.
+ * Data persists to data/store.json across server restarts.
+ * Falls back to seed data when no persisted file exists.
  */
+import fs from "fs";
+import path from "path";
 import type {
   Room, Booking, GalleryImage, Testimonial,
   Offering, Experience, Subscriber, SiteSettings,
@@ -10,8 +12,50 @@ import type {
   DiningVenue, SpaService, EventVenue, ContactEnquiry,
 } from "@/types";
 
+const DATA_DIR = path.join(process.cwd(), "data");
+const DATA_FILE = path.join(DATA_DIR, "store.json");
+
 function genId() {
   return Math.random().toString(36).substring(2, 10);
+}
+
+function saveToDisk() {
+  try {
+    if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+    fs.writeFileSync(DATA_FILE, JSON.stringify({
+      settings, rooms, bookings, gallery, testimonials, offerings,
+      experiences, subscribers, announcements, faqs, specialOffers,
+      statFacts, diningVenues, spaServices, eventVenues, contactEnquiries,
+    }, null, 2));
+  } catch (e) {
+    console.error("Failed to persist store:", e);
+  }
+}
+
+function loadFromDisk() {
+  try {
+    if (!fs.existsSync(DATA_FILE)) return;
+    const raw = fs.readFileSync(DATA_FILE, "utf-8");
+    const d = JSON.parse(raw);
+    if (d.settings) settings = d.settings;
+    if (d.rooms) rooms = d.rooms;
+    if (d.bookings) bookings = d.bookings;
+    if (d.gallery) gallery = d.gallery;
+    if (d.testimonials) testimonials = d.testimonials;
+    if (d.offerings) offerings = d.offerings;
+    if (d.experiences) experiences = d.experiences;
+    if (d.subscribers) subscribers = d.subscribers;
+    if (d.announcements) announcements = d.announcements;
+    if (d.faqs) faqs = d.faqs;
+    if (d.specialOffers) specialOffers = d.specialOffers;
+    if (d.statFacts) statFacts = d.statFacts;
+    if (d.diningVenues) diningVenues = d.diningVenues;
+    if (d.spaServices) spaServices = d.spaServices;
+    if (d.eventVenues) eventVenues = d.eventVenues;
+    if (d.contactEnquiries) contactEnquiries = d.contactEnquiries;
+  } catch (e) {
+    console.error("Failed to load store:", e);
+  }
 }
 
 // ─── Seed Data ───────────────────────────────────────────────────────────────
@@ -122,6 +166,7 @@ export function getSettings(): SiteSettings {
 }
 export function updateSettings(data: Partial<SiteSettings>): SiteSettings {
   settings = { ...settings, ...data };
+  saveToDisk();
   return settings;
 }
 
@@ -136,17 +181,20 @@ export function getRoom(id: string): Room | undefined {
 export function addRoom(data: Omit<Room, "id" | "createdAt">): Room {
   const room: Room = { ...data, id: genId(), createdAt: new Date().toISOString().split("T")[0] };
   rooms.push(room);
+  saveToDisk();
   return room;
 }
 export function updateRoom(id: string, data: Partial<Room>): Room | null {
   const idx = rooms.findIndex((r) => r.id === id);
   if (idx === -1) return null;
   rooms[idx] = { ...rooms[idx], ...data };
+  saveToDisk();
   return rooms[idx];
 }
 export function deleteRoom(id: string): boolean {
   const len = rooms.length;
   rooms = rooms.filter((r) => r.id !== id);
+  saveToDisk();
   return rooms.length < len;
 }
 
@@ -161,17 +209,20 @@ export function getBooking(id: string): Booking | undefined {
 export function addBooking(data: Omit<Booking, "id" | "createdAt">): Booking {
   const booking: Booking = { ...data, id: genId(), createdAt: new Date().toISOString().split("T")[0] };
   bookings.push(booking);
+  saveToDisk();
   return booking;
 }
 export function updateBooking(id: string, data: Partial<Booking>): Booking | null {
   const idx = bookings.findIndex((b) => b.id === id);
   if (idx === -1) return null;
   bookings[idx] = { ...bookings[idx], ...data };
+  saveToDisk();
   return bookings[idx];
 }
 export function deleteBooking(id: string): boolean {
   const len = bookings.length;
   bookings = bookings.filter((b) => b.id !== id);
+  saveToDisk();
   return bookings.length < len;
 }
 
@@ -183,17 +234,20 @@ export function getGallery(): GalleryImage[] {
 export function addGalleryImage(data: Omit<GalleryImage, "id">): GalleryImage {
   const img: GalleryImage = { ...data, id: genId() };
   gallery.push(img);
+  saveToDisk();
   return img;
 }
 export function updateGalleryImage(id: string, data: Partial<GalleryImage>): GalleryImage | null {
   const idx = gallery.findIndex((g) => g.id === id);
   if (idx === -1) return null;
   gallery[idx] = { ...gallery[idx], ...data };
+  saveToDisk();
   return gallery[idx];
 }
 export function deleteGalleryImage(id: string): boolean {
   const len = gallery.length;
   gallery = gallery.filter((g) => g.id !== id);
+  saveToDisk();
   return gallery.length < len;
 }
 
@@ -206,17 +260,20 @@ export function getTestimonials(onlyApproved = false): Testimonial[] {
 export function addTestimonial(data: Omit<Testimonial, "id" | "createdAt">): Testimonial {
   const t: Testimonial = { ...data, id: genId(), createdAt: new Date().toISOString().split("T")[0] };
   testimonials.push(t);
+  saveToDisk();
   return t;
 }
 export function updateTestimonial(id: string, data: Partial<Testimonial>): Testimonial | null {
   const idx = testimonials.findIndex((t) => t.id === id);
   if (idx === -1) return null;
   testimonials[idx] = { ...testimonials[idx], ...data };
+  saveToDisk();
   return testimonials[idx];
 }
 export function deleteTestimonial(id: string): boolean {
   const len = testimonials.length;
   testimonials = testimonials.filter((t) => t.id !== id);
+  saveToDisk();
   return testimonials.length < len;
 }
 
@@ -229,17 +286,20 @@ export function getOfferings(onlyVisible = false): Offering[] {
 export function addOffering(data: Omit<Offering, "id">): Offering {
   const o: Offering = { ...data, id: genId() };
   offerings.push(o);
+  saveToDisk();
   return o;
 }
 export function updateOffering(id: string, data: Partial<Offering>): Offering | null {
   const idx = offerings.findIndex((o) => o.id === id);
   if (idx === -1) return null;
   offerings[idx] = { ...offerings[idx], ...data };
+  saveToDisk();
   return offerings[idx];
 }
 export function deleteOffering(id: string): boolean {
   const len = offerings.length;
   offerings = offerings.filter((o) => o.id !== id);
+  saveToDisk();
   return offerings.length < len;
 }
 
@@ -251,17 +311,20 @@ export function getExperiences(onlyVisible = false): Experience[] {
 export function addExperience(data: Omit<Experience, "id">): Experience {
   const e: Experience = { ...data, id: genId() };
   experiences.push(e);
+  saveToDisk();
   return e;
 }
 export function updateExperience(id: string, data: Partial<Experience>): Experience | null {
   const idx = experiences.findIndex((e) => e.id === id);
   if (idx === -1) return null;
   experiences[idx] = { ...experiences[idx], ...data };
+  saveToDisk();
   return experiences[idx];
 }
 export function deleteExperience(id: string): boolean {
   const len = experiences.length;
   experiences = experiences.filter((e) => e.id !== id);
+  saveToDisk();
   return experiences.length < len;
 }
 
@@ -274,11 +337,13 @@ export function addSubscriber(data: Omit<Subscriber, "id" | "subscribedAt">): Su
   if (subscribers.some((s) => s.email === data.email)) return null;
   const s: Subscriber = { ...data, id: genId(), subscribedAt: new Date().toISOString().split("T")[0] };
   subscribers.push(s);
+  saveToDisk();
   return s;
 }
 export function deleteSubscriber(id: string): boolean {
   const len = subscribers.length;
   subscribers = subscribers.filter((s) => s.id !== id);
+  saveToDisk();
   return subscribers.length < len;
 }
 
@@ -291,17 +356,20 @@ export function getAnnouncements(onlyActive = false): Announcement[] {
 export function addAnnouncement(data: Omit<Announcement, "id">): Announcement {
   const a: Announcement = { ...data, id: genId() };
   announcements.push(a);
+  saveToDisk();
   return a;
 }
 export function updateAnnouncement(id: string, data: Partial<Announcement>): Announcement | null {
   const idx = announcements.findIndex((a) => a.id === id);
   if (idx === -1) return null;
   announcements[idx] = { ...announcements[idx], ...data };
+  saveToDisk();
   return announcements[idx];
 }
 export function deleteAnnouncement(id: string): boolean {
   const len = announcements.length;
   announcements = announcements.filter((a) => a.id !== id);
+  saveToDisk();
   return announcements.length < len;
 }
 
@@ -340,17 +408,20 @@ export function getFAQs(onlyVisible = false): FAQ[] {
 export function addFAQ(data: Omit<FAQ, "id">): FAQ {
   const f: FAQ = { ...data, id: genId() };
   faqs.push(f);
+  saveToDisk();
   return f;
 }
 export function updateFAQ(id: string, data: Partial<FAQ>): FAQ | null {
   const idx = faqs.findIndex((f) => f.id === id);
   if (idx === -1) return null;
   faqs[idx] = { ...faqs[idx], ...data };
+  saveToDisk();
   return faqs[idx];
 }
 export function deleteFAQ(id: string): boolean {
   const len = faqs.length;
   faqs = faqs.filter((f) => f.id !== id);
+  saveToDisk();
   return faqs.length < len;
 }
 
@@ -363,17 +434,20 @@ export function getSpecialOffers(onlyVisible = false): SpecialOffer[] {
 export function addSpecialOffer(data: Omit<SpecialOffer, "id">): SpecialOffer {
   const o: SpecialOffer = { ...data, id: genId() };
   specialOffers.push(o);
+  saveToDisk();
   return o;
 }
 export function updateSpecialOffer(id: string, data: Partial<SpecialOffer>): SpecialOffer | null {
   const idx = specialOffers.findIndex((o) => o.id === id);
   if (idx === -1) return null;
   specialOffers[idx] = { ...specialOffers[idx], ...data };
+  saveToDisk();
   return specialOffers[idx];
 }
 export function deleteSpecialOffer(id: string): boolean {
   const len = specialOffers.length;
   specialOffers = specialOffers.filter((o) => o.id !== id);
+  saveToDisk();
   return specialOffers.length < len;
 }
 
@@ -386,17 +460,20 @@ export function getStatFacts(onlyVisible = false): StatFact[] {
 export function addStatFact(data: Omit<StatFact, "id">): StatFact {
   const s: StatFact = { ...data, id: genId() };
   statFacts.push(s);
+  saveToDisk();
   return s;
 }
 export function updateStatFact(id: string, data: Partial<StatFact>): StatFact | null {
   const idx = statFacts.findIndex((s) => s.id === id);
   if (idx === -1) return null;
   statFacts[idx] = { ...statFacts[idx], ...data };
+  saveToDisk();
   return statFacts[idx];
 }
 export function deleteStatFact(id: string): boolean {
   const len = statFacts.length;
   statFacts = statFacts.filter((s) => s.id !== id);
+  saveToDisk();
   return statFacts.length < len;
 }
 
@@ -425,17 +502,20 @@ export function getDiningVenues(onlyVisible = false): DiningVenue[] {
 export function addDiningVenue(data: Omit<DiningVenue, "id">): DiningVenue {
   const d: DiningVenue = { ...data, id: genId() };
   diningVenues.push(d);
+  saveToDisk();
   return d;
 }
 export function updateDiningVenue(id: string, data: Partial<DiningVenue>): DiningVenue | null {
   const idx = diningVenues.findIndex((d) => d.id === id);
   if (idx === -1) return null;
   diningVenues[idx] = { ...diningVenues[idx], ...data };
+  saveToDisk();
   return diningVenues[idx];
 }
 export function deleteDiningVenue(id: string): boolean {
   const len = diningVenues.length;
   diningVenues = diningVenues.filter((d) => d.id !== id);
+  saveToDisk();
   return diningVenues.length < len;
 }
 
@@ -457,17 +537,20 @@ export function getSpaServices(onlyVisible = false): SpaService[] {
 export function addSpaService(data: Omit<SpaService, "id">): SpaService {
   const s: SpaService = { ...data, id: genId() };
   spaServices.push(s);
+  saveToDisk();
   return s;
 }
 export function updateSpaService(id: string, data: Partial<SpaService>): SpaService | null {
   const idx = spaServices.findIndex((s) => s.id === id);
   if (idx === -1) return null;
   spaServices[idx] = { ...spaServices[idx], ...data };
+  saveToDisk();
   return spaServices[idx];
 }
 export function deleteSpaService(id: string): boolean {
   const len = spaServices.length;
   spaServices = spaServices.filter((s) => s.id !== id);
+  saveToDisk();
   return spaServices.length < len;
 }
 
@@ -487,17 +570,20 @@ export function getEventVenues(onlyVisible = false): EventVenue[] {
 export function addEventVenue(data: Omit<EventVenue, "id">): EventVenue {
   const e: EventVenue = { ...data, id: genId() };
   eventVenues.push(e);
+  saveToDisk();
   return e;
 }
 export function updateEventVenue(id: string, data: Partial<EventVenue>): EventVenue | null {
   const idx = eventVenues.findIndex((e) => e.id === id);
   if (idx === -1) return null;
   eventVenues[idx] = { ...eventVenues[idx], ...data };
+  saveToDisk();
   return eventVenues[idx];
 }
 export function deleteEventVenue(id: string): boolean {
   const len = eventVenues.length;
   eventVenues = eventVenues.filter((e) => e.id !== id);
+  saveToDisk();
   return eventVenues.length < len;
 }
 
@@ -511,16 +597,22 @@ export function getContactEnquiries(): ContactEnquiry[] {
 export function addContactEnquiry(data: Omit<ContactEnquiry, "id" | "status" | "createdAt">): ContactEnquiry {
   const c: ContactEnquiry = { ...data, id: genId(), status: "new", createdAt: new Date().toISOString().split("T")[0] };
   contactEnquiries.push(c);
+  saveToDisk();
   return c;
 }
 export function updateContactEnquiry(id: string, data: Partial<ContactEnquiry>): ContactEnquiry | null {
   const idx = contactEnquiries.findIndex((c) => c.id === id);
   if (idx === -1) return null;
   contactEnquiries[idx] = { ...contactEnquiries[idx], ...data };
+  saveToDisk();
   return contactEnquiries[idx];
 }
 export function deleteContactEnquiry(id: string): boolean {
   const len = contactEnquiries.length;
   contactEnquiries = contactEnquiries.filter((c) => c.id !== id);
+  saveToDisk();
   return contactEnquiries.length < len;
 }
+
+// ─── Load persisted data (overrides seed data if file exists) ────────────────
+loadFromDisk();

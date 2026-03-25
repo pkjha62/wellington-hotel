@@ -1,6 +1,7 @@
 import { addEventVenue, getEventVenues } from "@/lib/store";
 import { error, json, parseJson, requireAdmin } from "@/lib/api";
 import { eventVenueSchema } from "@/lib/schemas";
+import { revalidatePath } from "next/cache";
 
 export async function GET() {
   const admin = await requireAdmin();
@@ -16,5 +17,7 @@ export async function POST(request: Request) {
   const parsed = eventVenueSchema.safeParse(body);
   if (!parsed.success) return error(parsed.error.issues[0]?.message || "Invalid event venue data");
 
-  return json(addEventVenue(parsed.data), { status: 201 });
+  const venue = addEventVenue(parsed.data);
+  revalidatePath("/", "layout");
+  return json(venue, { status: 201 });
 }

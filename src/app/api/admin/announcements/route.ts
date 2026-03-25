@@ -1,6 +1,7 @@
 import { addAnnouncement, getAnnouncements } from "@/lib/store";
 import { announcementSchema } from "@/lib/schemas";
 import { error, json, parseJson, requireAdmin } from "@/lib/api";
+import { revalidatePath } from "next/cache";
 
 export async function GET() {
   const admin = await requireAdmin();
@@ -23,5 +24,7 @@ export async function POST(request: Request) {
     return error(parsed.error.issues[0]?.message || "Invalid announcement");
   }
 
-  return json(addAnnouncement(parsed.data), { status: 201 });
+  const announcement = addAnnouncement(parsed.data);
+  revalidatePath("/", "layout");
+  return json(announcement, { status: 201 });
 }

@@ -1,13 +1,35 @@
-// In-memory file storage (consistent with the in-memory data store)
-// Files are lost on server restart, same as all other data
+// Disk-backed file storage — uploaded files persist across server restarts
+import fs from "fs";
+import path from "path";
 
-const files = new Map<string, { buffer: Buffer; contentType: string }>();
+const UPLOAD_DIR = path.join(process.cwd(), "data", "uploads");
+
+function ensureDir() {
+  if (!fs.existsSync(UPLOAD_DIR)) {
+    fs.mkdirSync(UPLOAD_DIR, { recursive: true });
+  }
+}
 
 export function saveUploadedFile(name: string, buffer: Buffer, contentType: string): string {
-  files.set(name, { buffer, contentType });
+  ensureDir();
+  fs.writeFileSync(path.join(UPLOAD_DIR, name), buffer);
+  fs.writeFileSync(path.join(UPLOAD_DIR, `${name}.type`), contentType);
   return `/api/uploads/${name}`;
 }
 
 export function getUploadedFile(name: string) {
-  return files.get(name) ?? null;
+  // Prevent path traversal
+  if (name.includes("..") || name.includes("/") || name.includes("\\")) return null;
+
+  const filePath = path.join(UPLOAD_DIR, name);
+  const metaPath = path.join(UPLOAD_DIR, `${name}.type`);
+
+  if (!fs.existsSync(filePath)) return null;
+
+  const buffer = fs.readFileSync(filePath);
+  const contentType = fs.existsSync(metaPath)
+    ? fs.readFileSync(metaPath, "utf-8")
+    : "application/octet-stream";
+
+  return { buffer, contentType };
 }

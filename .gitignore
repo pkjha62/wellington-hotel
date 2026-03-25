@@ -5,6 +5,9 @@
 /hotel.db-wal
 /hotel.db-shm
 
+# Persistent data store & uploads
+/data/
+
 # Local env
 .env.local
 

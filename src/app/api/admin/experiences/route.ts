@@ -1,6 +1,7 @@
 import { addExperience, getExperiences } from "@/lib/store";
 import { error, json, parseJson, requireAdmin } from "@/lib/api";
 import { experienceSchema } from "@/lib/schemas";
+import { revalidatePath } from "next/cache";
 
 export async function GET() {
   const admin = await requireAdmin();
@@ -23,5 +24,7 @@ export async function POST(request: Request) {
     return error(parsed.error.issues[0]?.message || "Invalid experience");
   }
 
-  return json(addExperience(parsed.data), { status: 201 });
+  const exp = addExperience(parsed.data);
+  revalidatePath("/", "layout");
+  return json(exp, { status: 201 });
 }

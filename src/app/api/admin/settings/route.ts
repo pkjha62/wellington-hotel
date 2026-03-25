@@ -1,6 +1,7 @@
 import { error, json, parseJson, requireAdmin } from "@/lib/api";
 import { getSettings, updateSettings } from "@/lib/store";
 import { settingsSchema } from "@/lib/schemas";
+import { revalidatePath } from "next/cache";
 
 export async function GET() {
   const admin = await requireAdmin();
@@ -23,5 +24,7 @@ export async function PATCH(request: Request) {
     return error(parsed.error.issues[0]?.message || "Invalid settings payload");
   }
 
-  return json(updateSettings(parsed.data));
+  const updated = updateSettings(parsed.data);
+  revalidatePath("/", "layout");
+  return json(updated);
 }

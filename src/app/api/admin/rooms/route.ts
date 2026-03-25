@@ -1,6 +1,7 @@
 import { error, json, parseJson, requireAdmin } from "@/lib/api";
 import { addRoom, getRooms } from "@/lib/store";
 import { roomSchema } from "@/lib/schemas";
+import { revalidatePath } from "next/cache";
 
 export async function GET() {
   const admin = await requireAdmin();
@@ -23,5 +24,7 @@ export async function POST(request: Request) {
     return error(parsed.error.issues[0]?.message || "Invalid room data");
   }
 
-  return json(addRoom(parsed.data), { status: 201 });
+  const room = addRoom(parsed.data);
+  revalidatePath("/", "layout");
+  return json(room, { status: 201 });
 }

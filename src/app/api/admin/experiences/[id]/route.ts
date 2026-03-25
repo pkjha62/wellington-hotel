@@ -1,6 +1,7 @@
 import { deleteExperience, updateExperience } from "@/lib/store";
 import { experienceSchema } from "@/lib/schemas";
 import { error, json, parseJson, requireAdmin } from "@/lib/api";
+import { revalidatePath } from "next/cache";
 
 export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
   const admin = await requireAdmin();
@@ -20,6 +21,7 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
     return error("Experience not found", 404);
   }
 
+  revalidatePath("/", "layout");
   return json(updated);
 }
 
@@ -35,5 +37,6 @@ export async function DELETE(_request: Request, { params }: { params: Promise<{ 
     return error("Experience not found", 404);
   }
 
+  revalidatePath("/", "layout");
   return json({ success: true });
 }

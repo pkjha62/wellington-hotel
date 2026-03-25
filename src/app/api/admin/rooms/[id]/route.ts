@@ -1,6 +1,7 @@
 import { deleteRoom, getRoom, updateRoom } from "@/lib/store";
 import { error, json, parseJson, requireAdmin } from "@/lib/api";
 import { roomSchema } from "@/lib/schemas";
+import { revalidatePath } from "next/cache";
 
 export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
   const admin = await requireAdmin();
@@ -19,7 +20,9 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
     return error(parsed.error.issues[0]?.message || "Invalid room data");
   }
 
-  return json(updateRoom(id, parsed.data));
+  const updated = updateRoom(id, parsed.data);
+  revalidatePath("/", "layout");
+  return json(updated);
 }
 
 export async function DELETE(_request: Request, { params }: { params: Promise<{ id: string }> }) {
@@ -34,5 +37,6 @@ export async function DELETE(_request: Request, { params }: { params: Promise<{ 
     return error("Room not found", 404);
   }
 
+  revalidatePath("/", "layout");
   return json({ success: true });
 }

@@ -1,6 +1,7 @@
 import { addDiningVenue, getDiningVenues } from "@/lib/store";
 import { error, json, parseJson, requireAdmin } from "@/lib/api";
 import { diningVenueSchema } from "@/lib/schemas";
+import { revalidatePath } from "next/cache";
 
 export async function GET() {
   const admin = await requireAdmin();
@@ -16,5 +17,7 @@ export async function POST(request: Request) {
   const parsed = diningVenueSchema.safeParse(body);
   if (!parsed.success) return error(parsed.error.issues[0]?.message || "Invalid dining venue data");
 
-  return json(addDiningVenue(parsed.data), { status: 201 });
+  const venue = addDiningVenue(parsed.data);
+  revalidatePath("/", "layout");
+  return json(venue, { status: 201 });
 }

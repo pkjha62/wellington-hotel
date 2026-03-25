@@ -1,6 +1,7 @@
 import { deleteEventVenue, updateEventVenue } from "@/lib/store";
 import { eventVenueSchema } from "@/lib/schemas";
 import { error, json, parseJson, requireAdmin } from "@/lib/api";
+import { revalidatePath } from "next/cache";
 
 export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
   const admin = await requireAdmin();
@@ -13,6 +14,7 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
 
   const updated = updateEventVenue(id, parsed.data);
   if (!updated) return error("Event venue not found", 404);
+  revalidatePath("/", "layout");
   return json(updated);
 }
 
@@ -23,5 +25,6 @@ export async function DELETE(_request: Request, { params }: { params: Promise<{ 
   const { id } = await params;
   const deleted = deleteEventVenue(id);
   if (!deleted) return error("Event venue not found", 404);
+  revalidatePath("/", "layout");
   return json({ success: true });
 }

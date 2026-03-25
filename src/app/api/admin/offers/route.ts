@@ -1,6 +1,7 @@
 import { error, json, parseJson, requireAdmin } from "@/lib/api";
 import { addSpecialOffer, getSpecialOffers } from "@/lib/store";
 import { specialOfferSchema } from "@/lib/schemas";
+import { revalidatePath } from "next/cache";
 
 export async function GET() {
   const admin = await requireAdmin();
@@ -23,5 +24,7 @@ export async function POST(request: Request) {
     return error(parsed.error.issues[0]?.message || "Invalid offer data");
   }
 
-  return json(addSpecialOffer(parsed.data), { status: 201 });
+  const offer = addSpecialOffer(parsed.data);
+  revalidatePath("/", "layout");
+  return json(offer, { status: 201 });
 }
