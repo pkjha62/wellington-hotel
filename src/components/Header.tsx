@@ -33,34 +33,13 @@ export default function Header({ settings, announcements = [] }: { settings: Sit
     return () => { document.body.style.overflow = ""; };
   }, [menuOpen]);
 
-  const activeAnnouncements = announcements.filter((a) => a.active);
+  // announcements prop kept for API compatibility but bar is hidden
+  void announcements;
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${scrolled ? "header-glass shadow-md" : "bg-transparent"}`}>
-      {/* Announcement Bar — collapses on scroll */}
-      {activeAnnouncements.length > 0 && (
-        <div className={`overflow-hidden bg-charcoal transition-all duration-500 ${scrolled ? "max-h-0 py-0" : "max-h-12 py-2"}`}>
-          <div className="announcement-track whitespace-nowrap">
-            {[...activeAnnouncements, ...activeAnnouncements].map((a, i) => (
-              <span key={`${a.id}-${i}`} className="mx-8 inline-flex items-center gap-3 font-sans text-[11px] uppercase tracking-[0.22em] text-white/85">
-                <span className="inline-block h-1.5 w-1.5 rounded-full bg-gold" />
-                {a.text}
-              </span>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Top Bar */}
-      <div className={`hidden md:flex items-center justify-between px-8 py-2 text-xs tracking-widest transition-colors duration-500 ${scrolled ? "text-charcoal" : "text-white"}`}>
-        <a href={`tel:${settings.phone.replace(/\s+/g, "")}`} className="font-sans font-light hover:text-gold transition-colors">{settings.phone}</a>
-        <Link href="/booking" className="font-sans hover:text-gold transition-colors tracking-[0.2em]">MY BOOKING</Link>
-      </div>
-
-      <div className={`hidden md:block mx-8 h-px transition-colors duration-500 ${scrolled ? "bg-gold/20" : "bg-white/20"}`} />
-
       {/* Main Header */}
-      <div className="flex items-center justify-between px-4 sm:px-6 md:px-8 py-3 md:py-4">
+      <div className="flex items-center justify-between px-4 sm:px-6 md:px-8 py-3">
         <button onClick={() => setMenuOpen(!menuOpen)} className={`lg:hidden transition-colors p-1 ${scrolled ? "text-charcoal" : "text-white"}`} aria-label="Toggle menu">
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             {menuOpen ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" /> : <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" />}
@@ -69,25 +48,25 @@ export default function Header({ settings, announcements = [] }: { settings: Sit
 
         <div className="flex-1 text-center">
           <Link href="/" className="inline-block">
-            <p className={`font-serif text-base sm:text-lg md:text-xl lg:text-2xl tracking-[0.15em] uppercase transition-colors duration-500 ${scrolled ? "text-charcoal" : "text-white"}`}>
+            <p className={`font-serif text-base sm:text-lg md:text-xl tracking-[0.12em] uppercase transition-colors duration-500 ${scrolled ? "text-charcoal" : "text-white"}`}>
               {settings.hotelName}
-              <span className="block text-[9px] sm:text-[10px] md:text-xs tracking-[0.3em] font-sans font-light mt-0.5">{settings.subtitle}</span>
+              <span className="block text-[9px] sm:text-[10px] tracking-[0.25em] font-sans font-light mt-0.5">{settings.subtitle}</span>
             </p>
           </Link>
         </div>
 
-        <Link href="/booking" className="bg-gold hover:bg-gold-dark text-white font-sans text-xs tracking-[0.2em] px-5 sm:px-6 py-2.5 transition-colors duration-300">BOOK</Link>
+        <Link href="/booking" className="bg-gold hover:bg-gold-dark text-white font-sans text-[10px] tracking-[0.18em] px-4 sm:px-5 py-2 transition-colors duration-300">BOOK</Link>
       </div>
 
       {/* Desktop Nav */}
       <nav className="hidden lg:block">
-        <div className={`mx-8 h-px transition-colors duration-500 ${scrolled ? "bg-gold/20" : "bg-white/20"}`} />
-        <ul className="flex items-center justify-center gap-8 py-3 px-8">
+        <div className={`mx-6 h-px transition-colors duration-500 ${scrolled ? "bg-gold/20" : "bg-white/20"}`} />
+        <ul className="flex items-center justify-center gap-4 xl:gap-6 py-2 px-4">
           {navLinks.map((link) => {
             const isActive = link.href === pathname || (link.href.startsWith("/#") && isHome);
             return (
               <li key={link.label}>
-                <Link href={link.href} className={`relative font-sans text-[11px] tracking-[0.15em] uppercase transition-colors duration-300 hover:text-gold group ${isActive ? "text-gold" : scrolled ? "text-charcoal" : "text-white"}`}>
+                <Link href={link.href} className={`relative font-sans text-[10px] tracking-[0.1em] uppercase transition-colors duration-300 hover:text-gold group ${isActive ? "text-gold" : scrolled ? "text-charcoal" : "text-white"}`}>
                   {link.label}
                   <span className={`absolute -bottom-1 left-0 h-px bg-gold transition-all duration-300 ${isActive ? "w-full" : "w-0 group-hover:w-full"}`} />
                 </Link>
