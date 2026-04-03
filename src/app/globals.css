@@ -105,3 +105,29 @@ h1, h2, h3, h4, h5, h6 {
   min-width: 200%;
   animation: marquee 22s linear infinite;
 }
+
+/* Gold shimmer for loading skeletons */
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(197, 162, 88, 0.06) 0%,
+    rgba(197, 162, 88, 0.18) 40%,
+    rgba(197, 162, 88, 0.06) 60%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.8s ease-in-out infinite;
+}
+
+/* Hide scrollbar utility */
+.scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}

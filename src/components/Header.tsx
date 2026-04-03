@@ -113,12 +113,24 @@ export default function Header({ settings, announcements = [] }: { settings: Sit
             <a href={`tel:${settings.phone.replace(/\s+/g, "")}`} className="font-sans text-xs text-text-secondary">{settings.phone}</a>
           </div>
           <ul className="py-4 overflow-y-auto max-h-[calc(100vh-180px)]">
-            {navLinks.map((link) => (
-              <li key={link.label}>
-                <Link href={link.href} onClick={() => setMenuOpen(false)} className="block px-6 py-3.5 font-sans text-xs tracking-[0.15em] uppercase text-charcoal hover:text-gold hover:bg-beige/50 transition-colors">{link.label}</Link>
+            {[...navLinks, { label: "Book Now", href: "/booking" }].map((link, i) => (
+              <li key={link.label}
+                style={{
+                  transitionDelay: menuOpen ? `${i * 50}ms` : "0ms",
+                  opacity: menuOpen ? 1 : 0,
+                  transform: menuOpen ? "translateX(0)" : "translateX(-16px)",
+                  transition: "opacity 0.35s ease, transform 0.35s ease",
+                }}
+              >
+                <Link
+                  href={link.href}
+                  onClick={() => setMenuOpen(false)}
+                  className={`block px-6 py-3.5 font-sans text-xs tracking-[0.15em] uppercase transition-colors hover:bg-beige/50 ${link.label === "Book Now" ? "text-gold font-semibold hover:text-gold-dark" : "text-charcoal hover:text-gold"}`}
+                >
+                  {link.label}
+                </Link>
               </li>
             ))}
-            <li><Link href="/booking" onClick={() => setMenuOpen(false)} className="block px-6 py-3.5 font-sans text-xs tracking-[0.15em] uppercase text-gold font-semibold">BOOK NOW</Link></li>
           </ul>
         </div>
       </div>

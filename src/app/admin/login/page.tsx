@@ -43,14 +43,6 @@ export default function AdminLoginPage() {
             <p className="mt-2 font-sans text-[11px] uppercase tracking-[0.24em] text-gold">Hotel and Spa Admin</p>
           </motion.div>
           <LoginForm />
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-            className="mt-4 font-sans text-xs text-white/40"
-          >
-            Default credentials unless overridden by env: admin / deoghar123
-          </motion.p>
         </section>
       </div>
     </main>

@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 export default function BackToTop() {
   const [show, setShow] = useState(false);
+  const [hovered, setHovered] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setShow(window.scrollY > 500);
@@ -20,12 +21,21 @@ export default function BackToTop() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 20 }}
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="fixed bottom-6 right-6 w-12 h-12 bg-gold hover:bg-gold-dark text-white flex items-center justify-center shadow-lg z-50 transition-colors duration-300"
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
+          className="fixed bottom-6 right-6 z-50 flex h-12 w-12 items-center justify-center overflow-hidden bg-gold text-white shadow-lg transition-colors duration-300 hover:bg-gold-dark"
           aria-label="Back to top"
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <motion.svg
+            animate={{ rotate: hovered ? -360 : 0 }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+            className="h-5 w-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
-          </svg>
+          </motion.svg>
         </motion.button>
       )}
     </AnimatePresence>

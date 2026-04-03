@@ -27,7 +27,7 @@ export default function RoomsPage() {
       <Header settings={settings} />
       <main>
         <PageHero
-          image={settings.roomsHeroImage || "https://images.unsplash.com/photo-1590490360182-c33d955c3a16?w=1920&q=80"}
+          image={settings.roomsHeroImage || "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=1920&q=80"}
           imageAlt="Elegant luxury hotel room"
           kicker="Accommodation"
           title="Rooms &amp; Suites"

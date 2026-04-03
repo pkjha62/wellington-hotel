@@ -6,6 +6,7 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
+import RoomImageCarousel from "@/components/RoomImageCarousel";
 import { getRooms, getRoom, getSettings } from "@/lib/store";
 import type { Metadata } from "next";
 import { normalizeImageList, normalizeImageUrl } from "@/lib/image-url";
@@ -147,18 +148,9 @@ export default async function RoomDetailPage({ params }: Props) {
                   </div>
                 </div>
 
-                {/* Image gallery */}
-                {safeImages.length > 1 && (
-                  <div>
-                    <h2 className="font-serif text-xl uppercase tracking-[0.1em] text-charcoal">Gallery</h2>
-                    <div className="mt-4 grid grid-cols-2 gap-4">
-                      {safeImages.slice(1).map((img, i) => (
-                        <div key={i} className="relative aspect-[4/3] overflow-hidden rounded-2xl">
-                          <Image src={normalizeImageUrl(img)} alt={`${room.name} - view ${i + 2}`} fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+                {/* Image gallery carousel */}
+                {safeImages.length > 0 && (
+                  <RoomImageCarousel images={safeImages} roomName={room.name} />
                 )}
               </div>
 

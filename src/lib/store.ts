@@ -220,6 +220,31 @@ export function getBookings(): Booking[] {
 export function getBooking(id: string): Booking | undefined {
   return bookings.find((b) => b.id === id);
 }
+
+/**
+ * Returns true if the room has no active (non-cancelled) booking that overlaps
+ * the requested date range. Excludes a specific booking ID when checking edits.
+ */
+export function isRoomAvailableForDates(
+  roomId: string,
+  checkIn: string,
+  checkOut: string,
+  excludeBookingId?: string
+): boolean {
+  const reqIn = new Date(checkIn).getTime();
+  const reqOut = new Date(checkOut).getTime();
+
+  return !bookings.some((b) => {
+    if (b.roomId !== roomId) return false;
+    if (excludeBookingId && b.id === excludeBookingId) return false;
+    if (b.status === "cancelled" || b.status === "checked-out") return false;
+    const bIn = new Date(b.checkIn).getTime();
+    const bOut = new Date(b.checkOut).getTime();
+    // Overlap: requested range starts before existing ends AND ends after existing starts
+    return reqIn < bOut && reqOut > bIn;
+  });
+}
+
 export function addBooking(data: Omit<Booking, "id" | "createdAt">): Booking {
   const booking: Booking = { ...data, id: genId(), createdAt: new Date().toISOString().split("T")[0] };
   bookings.push(booking);
@@ -497,7 +522,7 @@ let diningVenues: DiningVenue[] = [
   { id: "dv1", name: "Annapurna — Multi-Cuisine Restaurant", cuisine: "Multi-Cuisine", description: "Our flagship restaurant serves an extensive breakfast, lunch, and dinner buffet featuring North Indian, Jharkhandi, and continental cuisine. Enjoy the finest vegetarian and non-vegetarian dishes prepared by our master chefs.", image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80", hours: "7:00 AM – 10:30 PM", order: 1, visible: true },
   { id: "dv2", name: "Prasad — Pure Vegetarian Kitchen", cuisine: "Vegetarian", description: "A dedicated pure vegetarian restaurant offering traditional thalis, sattvic meals, and regional specialities. Ideal for devotees observing dietary customs during their pilgrimage.", image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80", hours: "6:30 AM – 9:30 PM", order: 2, visible: true },
   { id: "dv3", name: "Courtyard Lounge & Café", cuisine: "Café & Lounge", description: "An open-air lounge perfect for chai, fresh juices, pastries, and light bites. Live devotional music on Saturday evenings transforms this space into a tranquil cultural gathering.", image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&q=80", hours: "10:00 AM – 11:00 PM", order: 3, visible: true },
-  { id: "dv4", name: "Private Dining & Banquets", cuisine: "Custom Menu", description: "Host intimate dinners, celebrations, or corporate meals in our private dining rooms. Customised menus, dedicated service, and elegant ambience for up to 40 guests.", image: "https://images.unsplash.com/photo-1550966871-3ed3cdb51f3a?w=800&q=80", hours: "By reservation", order: 4, visible: true },
+  { id: "dv4", name: "Private Dining & Banquets", cuisine: "Custom Menu", description: "Host intimate dinners, celebrations, or corporate meals in our private dining rooms. Customised menus, dedicated service, and elegant ambience for up to 40 guests.", image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80", hours: "By reservation", order: 4, visible: true },
 ];
 
 export function getDiningVenues(onlyVisible = false): DiningVenue[] {
@@ -563,7 +588,7 @@ export function deleteSpaService(id: string): boolean {
 
 let eventVenues: EventVenue[] = [
   { id: "ev1", name: "Grand Ballroom", capacity: "Up to 500 guests", description: "Our largest venue features crystal chandeliers, a built-in stage, state-of-the-art AV equipment, and a dedicated pre-function area. Perfect for grand weddings, receptions, and gala events.", image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800&q=80", features: ["Crystal Chandeliers", "Built-in Stage", "AV Equipment", "Pre-function Area"], order: 1, visible: true },
-  { id: "ev2", name: "Divya Banquet Hall", capacity: "Up to 200 guests", description: "An elegant mid-size banquet hall ideal for engagement ceremonies, birthday celebrations, anniversary parties, and corporate events. Full catering and decor services available.", image: "https://images.unsplash.com/photo-1540575467063-178a50c8e9a9?w=800&q=80", features: ["Full Catering", "Decor Services", "Sound System", "Staging"], order: 2, visible: true },
+  { id: "ev2", name: "Divya Banquet Hall", capacity: "Up to 200 guests", description: "An elegant mid-size banquet hall ideal for engagement ceremonies, birthday celebrations, anniversary parties, and corporate events. Full catering and decor services available.", image: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&q=80", features: ["Full Catering", "Decor Services", "Sound System", "Staging"], order: 2, visible: true },
   { id: "ev3", name: "Conference Centre", capacity: "Up to 100 guests", description: "Equipped with projector, podium, high-speed Wi-Fi, and theatre/classroom seating layouts. Ideal for seminars, workshops, corporate offsites, and board meetings.", image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80", features: ["Projector", "Podium", "High-speed Wi-Fi", "Flexible Seating"], order: 3, visible: true },
   { id: "ev4", name: "Courtyard Garden", capacity: "Up to 150 guests", description: "An open-air venue surrounded by manicured gardens and soft lighting. Ideal for evening receptions, sangeet ceremonies, and al fresco dinners under the stars.", image: "https://images.unsplash.com/photo-1510076857177-7470076d4098?w=800&q=80", features: ["Garden Setting", "Soft Lighting", "Open Air", "Power & PA"], order: 4, visible: true },
 ];

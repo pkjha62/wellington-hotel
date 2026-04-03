@@ -1,5 +1,5 @@
 import { error, json, parseJson } from "@/lib/api";
-import { addBooking, getRoom } from "@/lib/store";
+import { addBooking, getRoom, isRoomAvailableForDates } from "@/lib/store";
 import { publicBookingSchema } from "@/lib/schemas";
 import { sendBookingConfirmation } from "@/lib/email";
 import { rateLimit, getClientIp } from "@/lib/rate-limit";
@@ -38,6 +38,10 @@ export async function POST(request: Request) {
 
   if (new Date(parsed.data.checkOut) <= new Date(parsed.data.checkIn)) {
     return error("Check-out date must be after check-in date.");
+  }
+
+  if (!isRoomAvailableForDates(room.id, parsed.data.checkIn, parsed.data.checkOut)) {
+    return error("This room is already booked for the selected dates. Please choose different dates or another room.", 409);
   }
 
   const nights = nightsBetween(parsed.data.checkIn, parsed.data.checkOut);
