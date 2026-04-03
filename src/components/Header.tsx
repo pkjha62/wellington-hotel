@@ -8,6 +8,7 @@ import type { SiteSettings, Announcement } from "@/types";
 const navLinks = [
   { label: "Rooms & Suites", href: "/rooms" },
   { label: "Cuisine", href: "/dining" },
+  { label: "Banquet Hall", href: "/banquet" },
   { label: "Spa & Wellness", href: "/spa" },
   { label: "Events", href: "/events" },
   { label: "Experiences", href: "/#experiences" },

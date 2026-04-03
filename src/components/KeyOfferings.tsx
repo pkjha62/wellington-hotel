@@ -58,7 +58,7 @@ export default function KeyOfferings({ offerings }: { offerings: Offering[] }) {
   const hrefMap: Record<string, string> = {
     o1: "/rooms",
     o2: "/dining",
-    o3: "/events",
+    o3: "/banquet",
     o4: "/spa",
   };
 

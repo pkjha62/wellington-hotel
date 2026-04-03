@@ -30,7 +30,7 @@ export interface GalleryImage {
   id: string;
   src: string;
   alt: string;
-  category: "rooms" | "dining" | "exterior" | "events" | "spa" | "temple";
+  category: "rooms" | "dining" | "exterior" | "events" | "spa" | "temple" | "banquet";
   order: number;
 }
 

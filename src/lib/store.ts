@@ -71,11 +71,11 @@ let settings: SiteSettings = {
   pincode: "814112",
   heroImage: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1920&q=80",
   heroVideo: "https://videos.pexels.com/video-files/3773486/3773486-hd_1920_1080_30fps.mp4",
-  heroHeadline: "Where Divine Tranquility Meets Timeless Luxury",
-  heroSubheadline: "in the Sacred City of Deoghar",
-  introTitle: "Elegance and Serenity in the Heart of Jharkhand's Holiest City",
-  introSubtitle: "A divine experience awaits you",
-  introBody: "The Deoghar Grand Hotel & Spa is a premier luxury destination nestled in the sacred city of Deoghar, just steps from the revered Baba Baidyanath Dham. Blending timeless elegance with warm Indian hospitality, our hotel offers an unparalleled retreat for pilgrims, families, and discerning travellers seeking comfort, culture, and spiritual rejuvenation.",
+  heroHeadline: "Where Every Stay Becomes a Sacred Journey",
+  heroSubheadline: "Steps from Baba Baidyanath Dham · Deoghar, Jharkhand",
+  introTitle: "A Sanctuary of Comfort in the Holiest City of Jharkhand",
+  introSubtitle: "Luxury, warmth, and devotion — all under one roof",
+  introBody: "The Deoghar Grand Hotel & Spa stands at the heart of Deoghar, just minutes from the hallowed Baba Baidyanath Jyotirlinga — one of the twelve sacred Jyotirlingas of Lord Shiva. We have welcomed pilgrims, families, and travellers for over fifteen years, offering 85 thoughtfully appointed rooms, award-winning cuisine, a tranquil wellness centre, and a magnificent banquet hall fit for life's grandest occasions. Whether you arrive seeking devotion, rest, or celebration, The Deoghar Grand is your home in this eternal city.",
   instagramHandle: "@thedeoghargrand",
   facebookUrl: "#",
   instagramUrl: "#",
@@ -97,7 +97,7 @@ let settings: SiteSettings = {
   newsletterDescription: "Subscribe to receive exclusive offers, travel inspiration, and updates from The Deoghar Grand.",
   mapLatitude: "24.4921",
   mapLongitude: "86.6954",
-  locationDescription: "Nestled in the heart of Deoghar, just steps from the sacred Baba Baidyanath Dham temple.",
+  locationDescription: "Situated on Temple Road, The Deoghar Grand is a 5-minute walk from Baba Baidyanath Dham, 12 km from Jasidih Junction railway station, and 8 km from Deoghar Airport. Our central location makes us the most sought-after address in the pilgrim city.",
 };
 
 let rooms: Room[] = [
@@ -115,25 +115,33 @@ let bookings: Booking[] = [
 ];
 
 let gallery: GalleryImage[] = [
-  { id: "g1", src: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=600&q=80", alt: "Luxury hotel suite", category: "rooms", order: 1 },
-  { id: "g2", src: "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=600&q=80", alt: "Hotel pool and courtyard", category: "exterior", order: 2 },
-  { id: "g3", src: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=80", alt: "Fine dining restaurant", category: "dining", order: 3 },
-  { id: "g4", src: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=600&q=80", alt: "Hotel exterior at dusk", category: "exterior", order: 4 },
-  { id: "g5", src: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600&q=80", alt: "Spa wellness area", category: "spa", order: 5 },
-  { id: "g6", src: "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600&q=80", alt: "Grand lobby with chandelier", category: "exterior", order: 6 },
+  { id: "g1", src: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=600&q=80", alt: "Deluxe Heritage Room", category: "rooms", order: 1 },
+  { id: "g2", src: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=600&q=80", alt: "Grand Ballroom — wedding reception", category: "banquet", order: 2 },
+  { id: "g3", src: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=80", alt: "Annapurna Restaurant — multi-cuisine dining", category: "dining", order: 3 },
+  { id: "g4", src: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=600&q=80", alt: "Divya Banquet Hall — celebration setup", category: "banquet", order: 4 },
+  { id: "g5", src: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600&q=80", alt: "Shanti Wellness Centre — spa treatment", category: "spa", order: 5 },
+  { id: "g6", src: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=600&q=80", alt: "Hotel exterior — The Deoghar Grand", category: "exterior", order: 6 },
+  { id: "g7", src: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80", alt: "Royal Presidential Suite", category: "rooms", order: 7 },
+  { id: "g8", src: "https://images.unsplash.com/photo-1510076857177-7470076d4098?w=600&q=80", alt: "Courtyard Garden — evening event", category: "banquet", order: 8 },
+  { id: "g9", src: "https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=600&q=80", alt: "Family Room — comfortable retreat", category: "rooms", order: 9 },
+  { id: "g10", src: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=600&q=80", alt: "Courtyard Lounge — evening chai", category: "dining", order: 10 },
+  { id: "g11", src: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600&q=80", alt: "Rooftop yoga session at dawn", category: "spa", order: 11 },
+  { id: "g12", src: "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600&q=80", alt: "Grand lobby — welcome to The Deoghar Grand", category: "exterior", order: 12 },
 ];
 
 let testimonials: Testimonial[] = [
-  { id: "t1", guestName: "Sunita Devi", location: "Patna, Bihar", rating: 5, comment: "Absolutely wonderful stay! The hotel is beautifully maintained and the staff made our pilgrimage trip so comfortable. The temple is just a short walk away.", approved: true, createdAt: "2026-02-15" },
-  { id: "t2", guestName: "Vikram Singh", location: "New Delhi", rating: 5, comment: "World-class hospitality in Deoghar. The rooms are spacious, food is excellent, and the spa is incredibly relaxing after a long day of sightseeing.", approved: true, createdAt: "2026-02-20" },
-  { id: "t3", guestName: "Meera Joshi", location: "Mumbai, Maharashtra", rating: 4, comment: "Great location near Baidyanath temple. The family room was perfect for us with two kids. Will definitely return during Shravan.", approved: true, createdAt: "2026-03-01" },
-  { id: "t4", guestName: "Anand Tiwari", location: "Ranchi, Jharkhand", rating: 5, comment: "Best hotel in Deoghar without a doubt. The food quality is outstanding and the wellness centre helped me truly unwind.", approved: false, createdAt: "2026-03-10" },
+  { id: "t1", guestName: "Sunita & Rajan Devi", location: "Patna, Bihar", rating: 5, comment: "We come to Baba Baidyanath every Shravan and The Deoghar Grand has become our only choice. The staff arranged VIP darshan for us before 6 AM — something we could never have managed on our own. The pure veg thali at Prasad restaurant is exactly what a devotee needs. Jai Baba Baidyanath!", approved: true, createdAt: "2026-02-15" },
+  { id: "t2", guestName: "Capt. Vikram Singh (Retd.)", location: "New Delhi", rating: 5, comment: "I have stayed in five-star properties across India, and The Deoghar Grand surprised me completely. The Presidential Suite was immaculate, the in-room butler service was attentive, and the Ayurvedic massage at Shanti Wellness Centre was among the finest I have experienced. Exceptional property for a tier-2 city.", approved: true, createdAt: "2026-02-20" },
+  { id: "t3", guestName: "Meera & Sanjay Joshi", location: "Pune, Maharashtra", rating: 5, comment: "We hosted our daughter's wedding reception in the Grand Ballroom and everything was beyond what we imagined. The event team handled lighting, catering, and floral decor seamlessly. Our 350 guests were looked after impeccably. We cannot thank the banquet team enough — you made our family's most important day unforgettable.", approved: true, createdAt: "2026-03-01" },
+  { id: "t4", guestName: "Dr. Anand Tiwari", location: "Ranchi, Jharkhand", rating: 5, comment: "Took the family for a weekend retreat — parents for pilgrimage, kids for nature. The Cultural Heritage Tour arranged by the hotel was brilliant: Trikut Hill ropeway, Nandan Pahar, and Tapovan all in one day with a knowledgeable guide. The Family Room had extra beds set up without us even asking. That kind of anticipation is rare.", approved: true, createdAt: "2026-03-10" },
+  { id: "t5", guestName: "Priya Agarwal", location: "Kolkata, West Bengal", rating: 5, comment: "My parents are elderly and the concierge arranged a wheelchair for Baba Dham on our first morning without me having to ask twice. The ground-floor room they gave us was spacious and quiet. The Courtyard Lounge during Saturday evening devotional music is a memory I will carry forever.", approved: true, createdAt: "2026-03-18" },
+  { id: "t6", guestName: "Amit & Kavya Bose", location: "Bhubaneswar, Odisha", rating: 4, comment: "Comfortable, clean, and centrally located. The Deluxe Heritage Room was tastefully decorated with local motifs. The only suggestion: the coffee shop could stay open a little later on weekends. Everything else was excellent — especially the staff who were genuinely warm and helpful.", approved: true, createdAt: "2026-03-22" },
 ];
 
 let offerings: Offering[] = [
   { id: "o1", title: "Rooms and Suites", subtitle: "Dreamlike rest", description: "Choose from our collection of elegantly appointed rooms and suites, each thoughtfully designed with a blend of traditional Jharkhandi aesthetics and modern luxury. From cosy pilgrim rooms to grand presidential suites, every stay is an experience.", image: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=1200&q=80", imageAlt: "Luxury hotel room with elegant furnishings", order: 1, visible: true },
   { id: "o2", title: "Cuisine", subtitle: "Authentic flavours, crafted with love", description: "Savour exquisite North Indian and Jharkhandi cuisine prepared by our master chefs. From pure vegetarian thalis for devotees to a lavish multi-cuisine buffet, every meal at The Deoghar Grand is a celebration of regional flavours.", image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1200&q=80", imageAlt: "Fine dining with Indian cuisine", order: 2, visible: true },
-  { id: "o3", title: "Events and Celebrations", subtitle: "Grand occasions, flawless execution", description: "From sacred ceremonies and grand weddings to corporate conferences and private banquets, our Grand Ballroom and banquet halls provide the perfect setting. Our dedicated events team ensures every detail is impeccable.", image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1200&q=80", imageAlt: "Elegant event hall with luxurious decoration", order: 3, visible: true },
+  { id: "o3", title: "Banquet Hall &amp; Events", subtitle: "Grand occasions, flawless execution", description: "From sacred ceremonies and grand weddings to corporate conferences and Sangeet evenings, our Grand Ballroom (500 guests), Divya Banquet Hall (200 guests), and open-air Nirmala Courtyard (150 guests) provide the perfect setting. Over 400 successful weddings since 2009.", image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1200&q=80", imageAlt: "Grand Ballroom — wedding reception at The Deoghar Grand", order: 3, visible: true },
   { id: "o4", title: "Spa & Wellness", subtitle: "Rejuvenate body and soul", description: "Unwind at Shanti Wellness Centre, our tranquil urban retreat. Enjoy Ayurvedic treatments, modern spa therapies, a fully equipped fitness centre, and yoga sessions — all designed to restore your inner balance.", image: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=1200&q=80", imageAlt: "Spa and wellness area", order: 4, visible: true },
 ];
 
@@ -149,28 +157,35 @@ let subscribers: Subscriber[] = [
 ];
 
 let announcements: Announcement[] = [
-  { id: "a1", text: "Shravan season reservations are now open with temple-transfer packages.", type: "offer", active: true, startDate: "2026-05-01", endDate: "2026-08-31" },
-  { id: "a2", text: "Live devotional music every Saturday evening in the courtyard lounge.", type: "event", active: true, startDate: "2026-01-01", endDate: "2026-12-31" },
+  { id: "a1", text: "Shravan Mela 2026 packages now open — VIP darshan, transfers & breakfast included. Call +91 6432 234 567.", type: "offer", active: true, startDate: "2026-05-01", endDate: "2026-08-31" },
+  { id: "a2", text: "Every Saturday: Live Shiv Bhajans in the Courtyard Lounge, 7:30 PM. All guests welcome.", type: "event", active: true, startDate: "2026-01-01", endDate: "2026-12-31" },
+  { id: "a3", text: "Book your Vivah & Reception in our Grand Ballroom — 2026 dates filling fast. Enquire today.", type: "offer", active: true, startDate: "2026-04-01", endDate: "2026-12-31" },
 ];
 
 let faqs: FAQ[] = [
-  { id: "faq1", question: "What are the check-in and check-out times?", answer: "Check-in is at 2:00 PM and check-out is at 12:00 noon. Early check-in and late check-out are available upon request and subject to availability.", category: "general", order: 1, visible: true },
-  { id: "faq2", question: "Is the hotel near Baba Baidyanath Dham?", answer: "Yes, The Deoghar Grand is located on Temple Road, just a 5-minute walk from Baba Baidyanath Dham.", category: "general", order: 2, visible: true },
-  { id: "faq3", question: "Do you provide airport or railway station transfers?", answer: "Yes, we provide paid transfers from Jasidih Junction railway station and Deoghar Airport. Please contact reception to arrange.", category: "transport", order: 3, visible: true },
-  { id: "faq4", question: "What is the cancellation policy?", answer: "Free cancellation up to 48 hours before check-in. Cancellations within 48 hours will be charged one night's stay.", category: "bookings", order: 4, visible: true },
-  { id: "faq5", question: "Is parking available?", answer: "Yes, complimentary valet parking is available for all guests.", category: "general", order: 5, visible: true },
+  { id: "faq1", question: "What are the check-in and check-out times?", answer: "Check-in is at 2:00 PM and check-out is at 12:00 noon. Early check-in (from 8:00 AM) and late check-out (until 6:00 PM) are available on request, subject to availability, and may attract a nominal charge.", category: "general", order: 1, visible: true },
+  { id: "faq2", question: "How far is the hotel from Baba Baidyanath Dham?", answer: "The Deoghar Grand is on Temple Road — Baba Baidyanath Dham is a comfortable 5-minute walk. Our concierge can arrange a rickshaw or arrange a pre-dawn temple visit with VIP darshan coordination.", category: "general", order: 2, visible: true },
+  { id: "faq3", question: "Do you provide railway station and airport transfers?", answer: "Yes. We provide paid transfers from Jasidih Junction (12 km) and Deoghar Airport (8 km). Please notify us 24 hours in advance while booking or contact our reception at +91 6432 234 567.", category: "transport", order: 3, visible: true },
+  { id: "faq4", question: "What is the cancellation policy?", answer: "Cancellations made 48 hours or more before check-in are fully refunded. Cancellations within 48 hours of check-in will be charged one night's tariff. For group bookings and wedding packages, separate cancellation terms apply — please ask at the time of booking.", category: "bookings", order: 4, visible: true },
+  { id: "faq5", question: "Is parking available at the hotel?", answer: "Yes, complimentary valet parking is available for all in-house guests. A dedicated car park with 24-hour security is located adjacent to the hotel.", category: "general", order: 5, visible: true },
+  { id: "faq6", question: "Does your restaurant serve only vegetarian food?", answer: "We cater to all dietary preferences. Prasad restaurant is 100% pure vegetarian and sattvic. Annapurna, our flagship multi-cuisine restaurant, serves both vegetarian and non-vegetarian dishes. Both are open daily.", category: "dining", order: 6, visible: true },
+  { id: "faq7", question: "Can you arrange VIP darshan at Baba Baidyanath Dham?", answer: "Yes, this is one of our most requested services especially during Shravan Mela. Our dedicated concierge can arrange priority darshan passes, prasad, and a knowledgeable guide for your temple visit. Please request this at check-in.", category: "temple", order: 7, visible: true },
+  { id: "faq8", question: "How many guests can your banquet hall accommodate?", answer: "Our Grand Ballroom can host up to 500 guests for wedding receptions, galas, and large functions. The Divya Banquet Hall seats up to 200 guests and is ideal for engagement ceremonies, birthday gatherings, and intimate receptions. The Courtyard Garden accommodates up to 150 guests for open-air evening events.", category: "events", order: 8, visible: true },
+  { id: "faq9", question: "What is included in a banquet or wedding package?", answer: "Our wedding packages include venue hire, customised decor and floral arrangements, catering (with choice of menu), sound and lighting, a dedicated event coordinator, and accommodation blocks for out-of-town guests. Contact our banquet team for custom pricing.", category: "events", order: 9, visible: true },
+  { id: "faq10", question: "Is the spa open to non-resident guests?", answer: "Yes, Shanti Wellness Centre is open to day visitors from 9:00 AM to 8:00 PM. Advance booking is highly recommended for Ayurvedic treatments. In-house guests receive a 10% discount on all spa services.", category: "spa", order: 10, visible: true },
 ];
 
 let specialOffers: SpecialOffer[] = [
-  { id: "so1", title: "Shravan Special Package", description: "3 nights stay with VIP darshan assistance, guided temple tour, and complimentary breakfast. Perfect for devotees visiting during the holy month.", price: 12000, image: "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=800&q=80", validFrom: "2026-07-01", validTo: "2026-08-31", visible: true },
-  { id: "so2", title: "Weekend Wellness Retreat", description: "2 nights with full spa access, Ayurvedic consultation, yoga sessions, and gourmet dining experience.", price: 18000, image: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&q=80", validFrom: "2026-01-01", validTo: "2026-12-31", visible: true },
+  { id: "so1", title: "Shravan Mela Pilgrimage Package", description: "3 nights in a Deluxe Heritage Room with VIP darshan coordination, guided temple tour to Baidyanath & Basukinath, complimentary sattvic breakfast daily, and a puja prasad thali. The most sacred month of the year — experience it in comfort.", price: 12000, image: "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=800&q=80", validFrom: "2026-07-01", validTo: "2026-08-31", visible: true },
+  { id: "so2", title: "Romance & Wellness Retreat", description: "2 nights in our Premium Suite with couples Ayurvedic massage, candlelit private dinner, champagne on arrival, full Shanti Wellness Centre access, and late check-out at 3 PM.", price: 18000, image: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&q=80", validFrom: "2026-01-01", validTo: "2026-12-31", visible: true },
+  { id: "so3", title: "Grand Wedding Package", description: "A complete wedding celebration in our Grand Ballroom — venue for up to 500 guests, custom floral & lighting décor, multi-cuisine banquet, bridal suite, dedicated event coordinator, and accommodation blocks for your family. Call us to craft your dream wedding.", price: 250000, image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800&q=80", validFrom: "2026-01-01", validTo: "2026-12-31", visible: true },
 ];
 
 let statFacts: StatFact[] = [
-  { id: "sf1", label: "Luxury Rooms", value: 85, suffix: "+", order: 1, visible: true },
+  { id: "sf1", label: "Luxury Rooms & Suites", value: 85, suffix: "+", order: 1, visible: true },
   { id: "sf2", label: "Years of Hospitality", value: 15, suffix: "+", order: 2, visible: true },
-  { id: "sf3", label: "Happy Guests", value: 12000, suffix: "+", order: 3, visible: true },
-  { id: "sf4", label: "Guest Rating", value: 4.8, suffix: "★", order: 4, visible: true },
+  { id: "sf3", label: "Happy Guests Welcomed", value: 50000, suffix: "+", order: 3, visible: true },
+  { id: "sf4", label: "Banquet Capacity", value: 500, suffix: "+", order: 4, visible: true },
 ];
 
 // ─── Settings ────────────────────────────────────────────────────────────────
@@ -587,10 +602,10 @@ export function deleteSpaService(id: string): boolean {
 // ─── Event Venues ────────────────────────────────────────────────────────────
 
 let eventVenues: EventVenue[] = [
-  { id: "ev1", name: "Grand Ballroom", capacity: "Up to 500 guests", description: "Our largest venue features crystal chandeliers, a built-in stage, state-of-the-art AV equipment, and a dedicated pre-function area. Perfect for grand weddings, receptions, and gala events.", image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800&q=80", features: ["Crystal Chandeliers", "Built-in Stage", "AV Equipment", "Pre-function Area"], order: 1, visible: true },
-  { id: "ev2", name: "Divya Banquet Hall", capacity: "Up to 200 guests", description: "An elegant mid-size banquet hall ideal for engagement ceremonies, birthday celebrations, anniversary parties, and corporate events. Full catering and decor services available.", image: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&q=80", features: ["Full Catering", "Decor Services", "Sound System", "Staging"], order: 2, visible: true },
-  { id: "ev3", name: "Conference Centre", capacity: "Up to 100 guests", description: "Equipped with projector, podium, high-speed Wi-Fi, and theatre/classroom seating layouts. Ideal for seminars, workshops, corporate offsites, and board meetings.", image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80", features: ["Projector", "Podium", "High-speed Wi-Fi", "Flexible Seating"], order: 3, visible: true },
-  { id: "ev4", name: "Courtyard Garden", capacity: "Up to 150 guests", description: "An open-air venue surrounded by manicured gardens and soft lighting. Ideal for evening receptions, sangeet ceremonies, and al fresco dinners under the stars.", image: "https://images.unsplash.com/photo-1510076857177-7470076d4098?w=800&q=80", features: ["Garden Setting", "Soft Lighting", "Open Air", "Power & PA"], order: 4, visible: true },
+  { id: "ev1", name: "Grand Ballroom", capacity: "Up to 500 guests", description: "The crown jewel of The Deoghar Grand — a soaring, pillar-free hall spanning over 6,000 sq ft with double-height ceilings, bespoke crystal chandeliers, a raised performance stage, and a grand bridal entry arch. Designed for weddings, milestone receptions, and gala dinners that deserve nothing less than magnificence. Our in-house banquet team has executed over 400 successful weddings since 2009.", image: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800&q=80", features: ["6,000 sq ft pillar-free hall", "Crystal chandeliers", "Built-in performance stage", "Bridal entry arch", "4K projection & AV", "Dedicated pre-function foyer", "Catering for 500+", "In-house décor team"], order: 1, visible: true },
+  { id: "ev2", name: "Divya Banquet Hall", capacity: "Up to 200 guests", description: "An intimate yet impressive banquet space ideal for engagement ceremonies, Mehendi & Sangeet functions, milestone birthday celebrations, and close-family receptions. Divya Hall features warm Rajasthani-inspired interiors, a dedicated bridal room adjacent to the hall, and a private bar lounge for pre-function socialising.", image: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&q=80", features: ["Warm Rajasthani interiors", "Adjacent bridal room", "Private pre-function lounge", "Full catering services", "Custom décor & floral", "High-fidelity sound system"], order: 2, visible: true },
+  { id: "ev3", name: "Shiv Shakti Conference Centre", capacity: "Up to 100 guests", description: "A fully equipped business venue with theatre, classroom, and boardroom configurations. Features dual 4K laser projectors, wireless presentation, high-speed fibre Wi-Fi, and direct catering from Annapurna restaurant. Ideal for corporate seminars, NGO workshops, government conclaves, and institutional offsites.", image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80", features: ["4K laser projector", "Wireless presentation", "Fibre high-speed Wi-Fi", "Theatre / Classroom / Boardroom", "Business catering", "Secretarial support"], order: 3, visible: true },
+  { id: "ev4", name: "Nirmala Courtyard Garden", capacity: "Up to 150 guests", description: "An enchanting open-air venue shaded by mature trees and lit by a thousand warm fairy lights. The Nirmala Courtyard is the preferred setting for Sangeet evenings, Haldi ceremonies, outdoor cocktail parties, and intimate al-fresco dinners under a canopy of stars — the Deoghar sky as your backdrop.", image: "https://images.unsplash.com/photo-1510076857177-7470076d4098?w=800&q=80", features: ["Fairy-light canopy", "Open-air garden setting", "Sangeet dance floor", "Bar & beverage station", "Power & PA system", "Floral mandap setup"], order: 4, visible: true },
 ];
 
 export function getEventVenues(onlyVisible = false): EventVenue[] {
