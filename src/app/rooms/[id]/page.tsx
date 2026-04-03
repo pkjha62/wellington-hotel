@@ -1,15 +1,15 @@
 export const revalidate = 60;
 
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import RoomImageCarousel from "@/components/RoomImageCarousel";
+import AmenityList from "@/components/AmenityList";
 import { getRooms, getRoom, getSettings } from "@/lib/store";
 import type { Metadata } from "next";
-import { normalizeImageList, normalizeImageUrl } from "@/lib/image-url";
+import { normalizeImageList } from "@/lib/image-url";
 
 type Props = { params: Promise<{ id: string }> };
 
@@ -91,29 +91,6 @@ export default async function RoomDetailPage({ params }: Props) {
       <Breadcrumb roomName={room.name} />
       <Header settings={settings} />
       <main>
-        {/* Hero image */}
-        <div className="relative h-[50vh] min-h-[400px]">
-          <Image
-            src={safeImages[0]}
-            alt={room.name}
-            fill
-            priority
-            className="object-cover"
-            sizes="100vw"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-charcoal/60 via-charcoal/20 to-transparent" />
-          <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-10">
-            <div className="mx-auto max-w-5xl">
-              <span className="inline-block rounded-full bg-gold px-4 py-1.5 font-sans text-[11px] uppercase tracking-[0.18em] text-white">
-                {room.type}
-              </span>
-              <h1 className="mt-4 font-serif text-3xl sm:text-4xl md:text-5xl uppercase tracking-[0.1em] text-white">
-                {room.name}
-              </h1>
-            </div>
-          </div>
-        </div>
-
         <PageTransition>
           <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6 sm:py-16">
             {/* Breadcrumb nav */}
@@ -124,6 +101,16 @@ export default async function RoomDetailPage({ params }: Props) {
               <span className="mx-2">/</span>
               <span className="text-charcoal">{room.name}</span>
             </nav>
+
+            {/* Room type + title */}
+            <div className="mb-8">
+              <span className="inline-block rounded-full bg-gold px-4 py-1.5 font-sans text-[11px] uppercase tracking-[0.18em] text-white">
+                {room.type}
+              </span>
+              <h1 className="mt-4 font-serif text-3xl sm:text-4xl md:text-5xl uppercase tracking-[0.1em] text-charcoal">
+                {room.name}
+              </h1>
+            </div>
 
             <div className="grid gap-10 lg:grid-cols-3">
               {/* Main content */}
@@ -136,16 +123,7 @@ export default async function RoomDetailPage({ params }: Props) {
                 {/* Amenities */}
                 <div>
                   <h2 className="font-serif text-xl uppercase tracking-[0.1em] text-charcoal">Amenities</h2>
-                  <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-3">
-                    {room.amenities.map((a) => (
-                      <div key={a} className="flex items-center gap-2 rounded-xl border border-stone-200 px-4 py-3">
-                        <svg className="h-4 w-4 text-gold shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                        </svg>
-                        <span className="font-sans text-sm text-charcoal">{a}</span>
-                      </div>
-                    ))}
-                  </div>
+                  <AmenityList amenities={room.amenities} />
                 </div>
 
                 {/* Image gallery carousel */}

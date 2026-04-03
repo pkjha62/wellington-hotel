@@ -39,7 +39,7 @@ export default function SpaPage() {
           <StaggerGrid className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {services.map((svc) => (
               <StaggerItem key={svc.id}>
-              <article className="rounded-[28px] border border-stone-200 bg-white p-8 transition hover:border-gold hover:shadow-lg">
+              <article className="rounded-[28px] border border-stone-200 bg-white p-8 transition-all duration-300 hover:border-gold hover:shadow-[0_0_30px_rgba(197,162,88,0.18)] hover:-translate-y-1">
                 <p className="font-sans text-[11px] uppercase tracking-[0.18em] text-gold">{svc.category}</p>
                 <h3 className="mt-2 font-serif text-xl uppercase tracking-[0.1em] text-charcoal">{svc.name}</h3>
                 <p className="mt-4 font-sans text-sm leading-7 text-text-secondary">{svc.description}</p>

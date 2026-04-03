@@ -42,10 +42,10 @@ export default function DiningPage() {
             {venues.map((item, i) => (
               <StaggerItem key={item.id}>
               <article
-                className={`flex flex-col gap-10 lg:items-center ${i % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"}`}
+                className={`group flex flex-col gap-10 lg:items-center ${i % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"}`}
               >
                 <div className="relative h-80 w-full overflow-hidden rounded-[28px] lg:w-1/2">
-                  <Image src={normalizeImageUrl(item.image)} alt={item.name} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
+                  <Image src={normalizeImageUrl(item.image)} alt={item.name} fill className="object-cover transition-transform duration-700 group-hover:scale-105" sizes="(max-width: 1024px) 100vw, 50vw" />
                 </div>
                 <div className="lg:w-1/2">
                   <p className="font-sans text-[11px] uppercase tracking-[0.18em] text-gold">{item.cuisine}</p>

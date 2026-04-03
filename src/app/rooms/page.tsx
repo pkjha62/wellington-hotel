@@ -4,13 +4,10 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PageHero from "@/components/PageHero";
 import PageTransition from "@/components/PageTransition";
-import { StaggerGrid, StaggerItem } from "@/components/StaggerGrid";
+import RoomsGrid from "@/components/RoomsGrid";
 import { getRooms, getSettings } from "@/lib/store";
-import Image from "next/image";
-import Link from "next/link";
 import type { Metadata } from "next";
 import BreadcrumbSchema from "@/components/BreadcrumbSchema";
-import { normalizeImageUrl } from "@/lib/image-url";
 
 export const metadata: Metadata = {
   title: "Rooms & Suites | The Deoghar Grand Hotel & Spa",
@@ -35,60 +32,9 @@ export default function RoomsPage() {
         />
 
         <PageTransition>
-        {/* Room Grid */}
-        <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
-          {rooms.length === 0 ? (
-            <p className="py-20 text-center font-sans text-sm text-text-secondary">No rooms available at the moment. Please check back soon.</p>
-          ) : (
-          <StaggerGrid className="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
-            {rooms.map((room) => (
-              <StaggerItem key={room.id}>
-              <article className="group overflow-hidden rounded-[28px] border border-stone-200 bg-white transition hover:shadow-lg">
-                <Link href={`/rooms/${room.id}`} className="block relative h-64 overflow-hidden">
-                  <Image
-                    src={normalizeImageUrl(room.images[0])}
-                    alt={room.name}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  />
-                  <div className="absolute bottom-4 left-4 rounded-full bg-gold px-4 py-1.5 font-sans text-xs uppercase tracking-[0.18em] text-white">
-                    {room.type}
-                  </div>
-                </Link>
-                <div className="p-6">
-                  <Link href={`/rooms/${room.id}`}>
-                    <h3 className="font-serif text-xl uppercase tracking-[0.1em] text-charcoal hover:text-gold transition-colors">{room.name}</h3>
-                  </Link>
-                  <p className="mt-3 font-sans text-sm leading-6 text-text-secondary line-clamp-3">{room.description}</p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {room.amenities.slice(0, 4).map((a) => (
-                      <span key={a} className="rounded-full border border-stone-200 px-3 py-1 font-sans text-[11px] text-text-secondary">{a}</span>
-                    ))}
-                    {room.amenities.length > 4 && (
-                      <span className="rounded-full border border-stone-200 px-3 py-1 font-sans text-[11px] text-text-secondary">+{room.amenities.length - 4} more</span>
-                    )}
-                  </div>
-                  <div className="mt-6 flex items-center justify-between">
-                    <div>
-                      <span className="font-serif text-2xl text-charcoal">&#x20B9;{room.price.toLocaleString("en-IN")}</span>
-                      <span className="font-sans text-xs text-text-secondary"> / night</span>
-                    </div>
-                    <span className="font-sans text-xs text-text-secondary">Up to {room.maxGuests} guests</span>
-                  </div>
-                  <Link
-                    href={`/booking?roomId=${room.id}`}
-                    className="mt-6 block w-full rounded-full bg-gold py-3 text-center font-sans text-xs uppercase tracking-[0.18em] text-white transition hover:bg-gold-dark"
-                  >
-                    Book This Room
-                  </Link>
-                </div>
-              </article>
-              </StaggerItem>
-            ))}
-          </StaggerGrid>
-          )}
-        </section>
+          <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6">
+            <RoomsGrid rooms={rooms} />
+          </section>
         </PageTransition>
       </main>
       <Footer settings={settings} />

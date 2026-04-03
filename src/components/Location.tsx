@@ -7,7 +7,7 @@ const quickLinks = [
   { label: "Temples", href: "https://www.google.com/maps/search/temples+near+Deoghar+Jharkhand", icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 2C8.13 2 5 5.13 5 9c0 4.12 4.56 8.44 6.36 10.13a1 1 0 001.28 0C14.44 17.44 19 13.12 19 9c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1112 7a2.5 2.5 0 010 5z" /></svg> },
   { label: "Nature", href: "https://www.google.com/maps/search/nature+parks+near+Deoghar+Jharkhand", icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 17l6-6 4 4 8-8M14 7h7v7" /></svg> },
   { label: "Culture", href: "https://www.google.com/maps/search/cultural+sites+near+Deoghar+Jharkhand", icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg> },
-  { label: "Local Cuisine", href: "/dining", icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6v6l4 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> },
+  { label: "Local Cuisine", href: "/dining", icon: <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 3v6c0 2.21 1.79 4 4 4h0c2.21 0 4-1.79 4-4V3M7 3v4M21 3v4a4 4 0 01-4 4h0V21M17 21H7" /></svg> },
 ];
 
 const contactStagger = {
@@ -44,7 +44,7 @@ export default function Location({ settings }: { settings: SiteSettings }) {
 
         {/* Google Maps Embed */}
         <motion.div
-          className="mt-10 sm:mt-14 relative h-[250px] sm:h-[300px] md:h-[400px] overflow-hidden"
+          className="mt-10 sm:mt-14 relative h-[300px] sm:h-[350px] md:h-[450px] overflow-hidden"
           initial={{ opacity: 0, clipPath: "circle(0% at 50% 50%)" }}
           whileInView={{ opacity: 1, clipPath: "circle(75% at 50% 50%)" }}
           viewport={{ once: true }}
@@ -85,15 +85,15 @@ export default function Location({ settings }: { settings: SiteSettings }) {
         >
           <motion.div variants={contactItem}>
             <p className="font-sans text-[11px] uppercase tracking-[0.18em] text-text-light">Phone</p>
-            <a href={`tel:${settings.phone.replace(/\s+/g, "")}`} className="mt-2 block font-serif text-xl text-charcoal">{settings.phone}</a>
+            <a href={`tel:${settings.phone.replace(/\s+/g, "")}`} className="mt-2 block font-serif text-lg text-charcoal">{settings.phone}</a>
           </motion.div>
           <motion.div variants={contactItem}>
             <p className="font-sans text-[11px] uppercase tracking-[0.18em] text-text-light">Email</p>
-            <a href={`mailto:${settings.email}`} className="mt-2 block font-serif text-xl text-charcoal">{settings.email}</a>
+            <a href={`mailto:${settings.email}`} className="mt-2 block font-serif text-lg text-charcoal break-all">{settings.email}</a>
           </motion.div>
           <motion.div variants={contactItem}>
             <p className="font-sans text-[11px] uppercase tracking-[0.18em] text-text-light">Address</p>
-            <p className="mt-2 font-serif text-xl text-charcoal">{settings.city}, Jharkhand</p>
+            <p className="mt-2 font-serif text-lg text-charcoal">{settings.city}, Jharkhand</p>
           </motion.div>
         </motion.div>
       </div>

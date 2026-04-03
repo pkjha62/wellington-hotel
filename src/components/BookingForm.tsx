@@ -175,7 +175,18 @@ export default function BookingForm({ rooms }: { rooms: Room[] }) {
 
           <motion.div custom={7} variants={fieldVariants} initial="hidden" animate="visible" className="md:col-span-2 rounded-[28px] bg-beige p-5">
             <p className="font-sans text-[11px] uppercase tracking-[0.18em] text-text-light">Estimated stay total</p>
-            <p className="mt-3 font-serif text-3xl text-charcoal">{estimatedAmount > 0 ? `₹${estimatedAmount.toLocaleString("en-IN")}` : "Select dates to estimate"}</p>
+            {estimatedAmount > 0 && selectedRoom && checkIn && checkOut ? (
+              <>
+                <div className="mt-3 flex flex-col gap-1 font-sans text-sm text-text-secondary">
+                  <div className="flex justify-between">
+                    <span>{nightsBetween(checkIn, checkOut)} night{nightsBetween(checkIn, checkOut) !== 1 ? "s" : ""} × ₹{selectedRoom.price.toLocaleString("en-IN")}</span>
+                  </div>
+                </div>
+                <p className="mt-2 font-serif text-3xl text-charcoal">₹{estimatedAmount.toLocaleString("en-IN")}</p>
+              </>
+            ) : (
+              <p className="mt-3 font-serif text-xl text-charcoal">Select dates to estimate</p>
+            )}
             <p className="mt-3 font-sans text-sm text-text-secondary">Room pricing is calculated from the selected room and travel dates. Final confirmation appears after submission.</p>
           </motion.div>
 

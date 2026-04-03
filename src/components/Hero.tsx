@@ -51,18 +51,24 @@ export default function Hero({ settings }: { settings: SiteSettings }) {
             <source src={settings.heroVideo} type="video/mp4" />
           </video>
         ) : (
-          <Image
-            src={heroImage}
-            alt={`${settings.hotelName} hero image`}
-            fill
-            className="object-cover"
-            priority
-            sizes="100vw"
-          />
+          <motion.div
+            className="absolute inset-0"
+            animate={{ scale: 1.06 }}
+            transition={{ duration: 10, ease: "linear", repeat: Infinity, repeatType: "reverse" }}
+          >
+            <Image
+              src={heroImage}
+              alt={`${settings.hotelName} hero image`}
+              fill
+              className="object-cover"
+              priority
+              sizes="100vw"
+            />
+          </motion.div>
         )}
       </motion.div>
 
-      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/50" />
 
       {/* Headline */}
       <motion.div style={{ opacity }} className="absolute inset-0 flex flex-col items-center justify-center px-4 sm:px-6 text-center">

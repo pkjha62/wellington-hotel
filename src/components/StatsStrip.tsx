@@ -42,7 +42,7 @@ function CountUp({ end, suffix = "", duration = 2 }: { end: number; suffix?: str
 export default function StatsStrip({ statFacts }: { statFacts: StatFact[] }) {
   return (
     <section className="bg-charcoal py-10 sm:py-12">
-      <div className="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-4 sm:px-6 md:grid-cols-4 md:px-8">
+      <div className="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-4 sm:px-6 md:grid-cols-4 md:px-8 divide-y-0 divide-x-0 md:divide-x md:divide-gold/20">
         {statFacts.map((item, index) => (
           <motion.div
             key={item.id}
@@ -50,9 +50,9 @@ export default function StatsStrip({ statFacts }: { statFacts: StatFact[] }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: index * 0.1 }}
-            className="text-center"
+            className="text-center relative"
           >
-            <p className="font-serif text-3xl text-gold sm:text-4xl"><CountUp end={item.value} suffix={item.suffix} /></p>
+            <p className="font-serif text-4xl text-gold sm:text-5xl"><CountUp end={item.value} suffix={item.suffix} /></p>
             <p className="mt-2 font-sans text-[11px] uppercase tracking-[0.22em] text-white/65">{item.label}</p>
           </motion.div>
         ))}

@@ -81,36 +81,36 @@ export default function ContactForm() {
             <p className="rounded-lg bg-red-50 p-3 font-sans text-sm text-red-600">{error}</p>
           )}
 
-          <div>
+          <motion.div animate={errors.name ? { x: [-8, 8, -4, 4, 0] } : {}} transition={{ duration: 0.35 }}>
             <label className={labelClass}>Full Name</label>
             <input {...register("name")} placeholder="Your full name" className={fieldClass} />
             {errors.name && <p className={errorClass}>{errors.name.message}</p>}
-          </div>
+          </motion.div>
 
           <div className="grid gap-5 sm:grid-cols-2">
-            <div>
+            <motion.div animate={errors.email ? { x: [-8, 8, -4, 4, 0] } : {}} transition={{ duration: 0.35 }}>
               <label className={labelClass}>Email</label>
               <input {...register("email")} type="email" placeholder="you@example.com" className={fieldClass} />
               {errors.email && <p className={errorClass}>{errors.email.message}</p>}
-            </div>
-            <div>
+            </motion.div>
+            <motion.div animate={errors.phone ? { x: [-8, 8, -4, 4, 0] } : {}} transition={{ duration: 0.35 }}>
               <label className={labelClass}>Phone</label>
               <input {...register("phone")} type="tel" placeholder="+91 xxxxx xxxxx" className={fieldClass} />
               {errors.phone && <p className={errorClass}>{errors.phone.message}</p>}
-            </div>
+            </motion.div>
           </div>
 
-          <div>
+          <motion.div animate={errors.subject ? { x: [-8, 8, -4, 4, 0] } : {}} transition={{ duration: 0.35 }}>
             <label className={labelClass}>Subject</label>
             <input {...register("subject")} placeholder="How can we help?" className={fieldClass} />
             {errors.subject && <p className={errorClass}>{errors.subject.message}</p>}
-          </div>
+          </motion.div>
 
-          <div>
+          <motion.div animate={errors.message ? { x: [-8, 8, -4, 4, 0] } : {}} transition={{ duration: 0.35 }}>
             <label className={labelClass}>Message</label>
             <textarea {...register("message")} rows={5} placeholder="Tell us more..." className={`${fieldClass} resize-none`} />
             {errors.message && <p className={errorClass}>{errors.message.message}</p>}
-          </div>
+          </motion.div>
 
           <button
             type="submit"

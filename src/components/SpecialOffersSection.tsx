@@ -33,11 +33,12 @@ export default function SpecialOffersSection({ offers, title }: { offers: Specia
           {offers.map((offer, i) => (
             <motion.article
               key={offer.id}
-              className="group overflow-hidden rounded-[28px] border border-stone-200 bg-white transition hover:shadow-lg"
+              className="group overflow-hidden rounded-[28px] border border-stone-200 bg-white"
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: i * 0.12 }}
+              whileHover={{ y: -6, boxShadow: "0 20px 40px rgba(0,0,0,0.12)" }}
             >
               <div className="relative h-56 md:h-64 lg:h-72 overflow-hidden">
                 <Image
@@ -47,7 +48,7 @@ export default function SpecialOffersSection({ offers, title }: { offers: Specia
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
                 <div className="absolute bottom-4 left-4 right-4">
                   <p className="font-serif text-2xl text-white">&#x20B9;{offer.price.toLocaleString("en-IN")}</p>
                   <p className="mt-1 font-sans text-[10px] uppercase tracking-[0.18em] text-white/80">

@@ -86,7 +86,7 @@ export default function FAQSection({ faqs }: { faqs: FAQ[] }) {
             transition={{ duration: 0.6 }}
             className="mb-8 last:mb-0"
           >
-            <p className="mb-4 font-sans text-[11px] uppercase tracking-[0.22em] text-gold">{cat}</p>
+            <p className="mb-4 font-sans text-[11px] uppercase tracking-[0.22em] text-gold">{cat.charAt(0).toUpperCase() + cat.slice(1)}</p>
             <div className="rounded-[28px] border border-stone-200 bg-white px-6">
               {faqs
                 .filter((f) => f.category === cat)

@@ -7,6 +7,7 @@ import PageTransition from "@/components/PageTransition";
 import { StaggerGrid, StaggerItem } from "@/components/StaggerGrid";
 import { getSettings, getEventVenues } from "@/lib/store";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import type { Metadata } from "next";
 import BreadcrumbSchema from "@/components/BreadcrumbSchema";
 import { normalizeImageUrl } from "@/lib/image-url";
@@ -41,11 +42,15 @@ export default function EventsPage() {
           <StaggerGrid className="space-y-20">
             {venues.map((venue, i) => (
               <StaggerItem key={venue.id}>
-              <article
+              <motion.article
                 className={`flex flex-col gap-10 lg:items-center ${i % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"}`}
+                initial={{ opacity: 0, x: i % 2 === 0 ? -30 : 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.7, ease: "easeOut" }}
               >
                 <div className="relative h-80 w-full overflow-hidden rounded-[28px] lg:w-1/2">
-                  <Image src={normalizeImageUrl(venue.image)} alt={venue.name} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
+                  <Image src={normalizeImageUrl(venue.image)} alt={venue.name} fill className="object-cover transition-transform duration-700 group-hover:scale-105" sizes="(max-width: 1024px) 100vw, 50vw" />
                 </div>
                 <div className="lg:w-1/2">
                   <p className="font-sans text-[11px] uppercase tracking-[0.18em] text-gold">Up to {venue.capacity} guests</p>
@@ -59,7 +64,7 @@ export default function EventsPage() {
                     </ul>
                   )}
                 </div>
-              </article>
+              </motion.article>
               </StaggerItem>
             ))}
           </StaggerGrid>
