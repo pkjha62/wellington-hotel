@@ -51,7 +51,7 @@ export default function Location({ settings }: { settings: SiteSettings }) {
           transition={{ duration: 1.2, ease: "easeOut" }}
         >
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d500!2d86.6999889!3d24.4925198!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f1162b1519c019:0xdb8ce9bf0b62d036!2sShree%20Baba%20Baidyanath%20Jyotirlinga%20Mandir%20Deoghar!5e0!3m2!1sen!2sin!4v1711234567890!5m2!1sen!2sin"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6060.474869139331!2d86.69602988002934!3d24.498893893818906!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f1162d497e5601%3A0xfd0bcc690fc431ce!2sDeoghar%20(%20baba%20dham%20)!5e1!3m2!1sen!2sin!4v1775209085273!5m2!1sen!2sin"
             width="100%"
             height="100%"
             style={{ border: 0 }}
