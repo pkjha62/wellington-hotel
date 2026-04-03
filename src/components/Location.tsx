@@ -51,7 +51,7 @@ export default function Location({ settings }: { settings: SiteSettings }) {
           transition={{ duration: 1.2, ease: "easeOut" }}
         >
           <iframe
-            src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3618.0!2d${settings.mapLongitude || "86.6954"}!3d${settings.mapLatitude || "24.4921"}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f04f0accbe52fb%3A0x5646c5e68e265bb5!2sDeoghar%2C%20Jharkhand!5e0!3m2!1sen!2sin!4v1711234567890!5m2!1sen!2sin`}
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d500!2d86.6999889!3d24.4925198!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f1162b1519c019:0xdb8ce9bf0b62d036!2sShree%20Baba%20Baidyanath%20Jyotirlinga%20Mandir%20Deoghar!5e0!3m2!1sen!2sin!4v1711234567890!5m2!1sen!2sin"
             width="100%"
             height="100%"
             style={{ border: 0 }}
@@ -61,6 +61,19 @@ export default function Location({ settings }: { settings: SiteSettings }) {
             title={`${settings.hotelName} location`}
             className="w-full h-full"
           />
+          {/* Get Directions button overlaid on the map */}
+          <a
+            href="https://maps.app.goo.gl/14FrhQ9cftBzgw6r6"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="absolute bottom-4 left-4 z-10 flex items-center gap-2 bg-white px-4 py-2 shadow-lg font-sans text-xs uppercase tracking-[0.15em] text-charcoal hover:bg-gold hover:text-white transition-all duration-300"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            Get Directions
+          </a>
         </motion.div>
 
         <motion.div
